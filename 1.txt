@@ -1,0 +1,4 @@
+git ls : list
+git pull : 내려받기
+git comment -m " " : comment 남기기
+git push -u origin master : (장소 지정)저장하기 
