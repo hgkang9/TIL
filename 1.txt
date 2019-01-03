@@ -1,4 +1,6 @@
 git ls : list
 git pull : 내려받기
+git status : 현재 상태
+git add . : 파일 추가
 git comment -m " " : comment 남기기
-git push -u origin master : (장소 지정)저장하기 
+git push -u origin master : (장소 지정)저장하기
