@@ -1,6 +1,8 @@
 git ls : list
 git pull : 내려받기
+cd .. : 상위폴더(항상 내 이름 폴더에서)
 git status : 현재 상태
 git add . : 파일 추가
-git comment -m " " : comment 남기기
+git commit -m " " : comment 남기기
 git push -u origin master : (장소 지정)저장하기
+git checkout -- . : 원상복구 명령어(함부로 쓰지 x)
