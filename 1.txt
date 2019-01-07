@@ -1,5 +1,16 @@
 git ls : list
 git pull : 내려받기
+git clone : 복사한 것 내려받을 때(git clone 내github주소 파일이름설정)
+pwd : 현재 위치 알려줌
+git credintial reject : 이전 로그인 정보 삭제
+protocol=https
+host=github.com
+(enter)
+-> git push 입력 후 로그인
+git config --global --list : 등록 메일, 이름 리스트 보여줌(누가 git에 commit 하는지에 대한 정보)
+git config --global user.name ''
+git config --global user.email '@gmail.com'
+git remote add origin : github 어디에 추가할지 설정
 cd .. : 상위폴더(항상 내 이름 폴더에서)
 git status : 현재 상태
 git add . : 파일 추가
