@@ -1,0 +1,11 @@
+.font{
+    font-size: 40px;
+    font-style: italic;
+    font-weight: 700; /*bold*/
+    /* font-family: 'Times New Roman', Times, serif; */
+    font-family: 'Do Hyeon', sans-serif;
+    line-height: 1.2;/*줄 간격 설정, 1:*1이라는 의미*/
+    letter-spacing: -2px;/*문자간 간격*/
+    text-align: center;/*정렬/left,right,center*/
+    
+}

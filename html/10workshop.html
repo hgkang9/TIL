@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #ssafy > p:nth-of-type(2){
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <div id="ssafy">
+        <h2>어떤게 선택될까?</h2>
+        <p>첫번째 단락</p>
+        <p>두번째 단락</p>
+        <p>세번째 단락</p>
+        <p>네번째 단락</p>
+    </div>
+</body>
+</html>
+
+<!-- nth-child(2) : 부모로 한번 거슬러 올라갔다가 내려오기 때문에 두번째인 '첫번째 단락이 선택됨'
+ -->
+ <!-- nth-of-type(2) : p값이 아닌 것은 빼고 생각하기 때문에 '두번째 단락'이 선택됨(p값만 선택함, 아닐 경우 선택 X) -->

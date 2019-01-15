@@ -1,0 +1,35 @@
+/* position 속성 */
+/* 1. static(기본값) */
+.box-static{
+    background-color:gray;
+    border:2px solid red;
+    width: 100px;
+    height: 100px;
+}
+/* 2. absolute */
+.box-absolute{
+    position: absolute;
+    background: green;
+    width: 100px;
+    height: 100px;
+    top: 50px;
+    left: 50px;
+    z-index:10;
+}
+/* 3. relative (원래 있던 공간 기준으로 이동 / 원래 있던 공간은 없어지지 않고 남아있다)*/
+.box-relative{
+    position: relative;
+    background: blue;
+    width: 100px;
+    height: 100px;
+    z-index:9;
+}
+/* 4. fixed 박스 고정(웹툰 오른쪽 박스처럼)*/
+.box-fixed{
+    position:fixed;
+    background-color:pink;
+    width:100px;
+    height:100px;
+    top:50px;
+    right:50px;
+}
