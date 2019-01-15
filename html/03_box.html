@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 가로, 세로 */
+        .box{
+            width:100px;
+            height:100px;
+            /* box-sizing : content-box; */
+            /* padding:25px; 상하좌우 똑같이
+            padding (top right bottom left) 가능 */
+            padding-top:25px; /*한쪽만 지정*/
+            margin : 25px; /*margin도 padding과 마찬가지*/
+            /* 테두리 안쪽 여백 padding, 테두리 바깥 여백 margin */
+            /* 테두리 */
+            /* border: 2px solid purple; 한줄로 가능하다, 띄어쓰기로 구분 */
+            border-width: 2px; /*두께*/
+            border-style: solid; /*패턴*/
+            border-color: purple;
+            border-radius: 10px; /*꼭지점 부분 둥글게, width, style, color와 함께 쓸 수 없다*/
+            /* box sizing */
+            box-sizing: border-box; /*contents-box*/
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        이것은 박스입니다.
+    </div>
+    
+</body>
+</html>
