@@ -1,0 +1,379 @@
+데이터베이스(DB) - 체계화정보들의 모임
+자료의 구조   ㅡ 
+스키마 - 데이터베이스의 구조와 제약 조건에 관려디
+
+splite3
+.mode csv
+.import hellodb.csv examples
+SELECT*FROM examples;
+table내용 가져올 때
+.headers on
+.mode column
+SELECT*FROM examples; 
+.exit
+sqlite3 tutorial.sqlite3
+.databases
+
+create table table명
+테이블 생성
+drop table table명
+테이블 삭제
+insert into table(column1, column2....)
+values(value1,value2...)
+특정 table에 새로운 행을 추가하여 데이터 추가할 수 있다.
+.tables
+현재 있는 테이블 확인
+.schema table명
+테이블 구조 확인
+***주소가 꼭 필요한 정보라면 공백으로 비워두면 안된다
+id는 primary key이므로 반드시 필요***
+select column1, column2 from table
+특정 column값만 가져올 때
+select column1, column2 from table
+limit num(숫자)
+앞의 (숫자)만큼만 자료 가져올 때
+limit num1 offset num2
+num2만큼 제외하고 다음 값부터 num1만큼 가져올 때
+where column=value(부등호도 사용가능)
+특정한 column 중 값이 value인 데이터만 가져옴
+delete from table
+where condition
+특정 테이블에 특정한 레코드 삭제
+(중복이 불가능한 id값을 기준으로 하자)
+update table
+set column1=value1, column2=value2...
+where condition
+특정 테이블에 특정 레코드 수정
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
