@@ -1,0 +1,8 @@
+pyenv virtualenv 3.6.7 [가상환경 이름]
+pyenv local [가상환경 이름]
+->가상환경 지울 때 : pyenv uninstall [가상환경이름]
+->pyenv versions : 가상환경 목록
+pip install django
+django-admin startproject [프로젝트 이름] .
+python manage.py startapp [앱 이름]
+python manage.py runserver $IP:$PORT 서버실행
