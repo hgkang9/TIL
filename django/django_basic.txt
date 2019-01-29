@@ -6,3 +6,6 @@ pip install django
 django-admin startproject [프로젝트 이름] .
 python manage.py startapp [앱 이름]
 python manage.py runserver $IP:$PORT 서버실행
+python manage.py makemigrations 데이터베이스 설계도 역할하는 파일 생성
+python manage.py migrate 설계도 파일을 실제 데이터베이스 생성, 적용하는 역할 
+python manage.py shell 장고 전용 쉘 여는 명령어
