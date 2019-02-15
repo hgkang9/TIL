@@ -19,3 +19,20 @@ for k in data:
 
 print(temps)
 
+# 강사님
+howmany = len(data)
+
+count = [0] * 5
+result = [0] * howmany
+
+for i in range(howmany):
+    count[data[i]] += 1
+
+for i in range(1, len(count)):
+    count[i] += count[i-1]
+
+for i in range(len(data)-1, -1, -1):
+    count[data[i]] -= 1
+    result[count[data[i]]] = data[i]
+
+print(result)
