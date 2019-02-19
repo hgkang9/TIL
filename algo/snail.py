@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open("exercise3.txt", "r")
+sys.stdin = open("snail".txt", "r")
 
 # def issafe(y,x):
 #     if x >= 0 and x < 5 and y>=0 and y<5:
