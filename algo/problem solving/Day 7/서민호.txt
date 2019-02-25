@@ -1,0 +1,164 @@
+# forth
+
+def cal(sem):
+    global calculation, back, front, result
+    if len(calculation) >= 2:
+        back = calculation.pop()
+        front = calculation.pop()
+        return
+    else:
+        result = 'error'
+        return
+
+test = int(input())
+for tc in range(test):
+    datas = list(input().split())
+
+    calculation = []
+    front = None
+    back = None
+    result = None
+    for d in datas:
+        if d == '+':
+            cal('+')
+            calculation.append(front + back)
+        elif d == '-':
+            cal('-')
+            calculation.append(front - back)
+        elif d == '*':
+            cal('*')
+            calculation.append(front * back)
+        elif d == '/':
+            cal('/')
+            calculation.append(front / back)
+        elif d == '.':
+            if result != 'error' and len(calculation) == 1:
+                result = calculation.pop()
+                print(f'#{tc+1} {result}')
+            else:
+                print(f'#{tc+1} {result}')
+        else:
+            calculation.append(int(d))
+
+
+#------------------------------------------------------------------------------------------------------
+# 미로
+
+def issafe(y,x):
+    if x < 0 or x > case-1 or y < 0 or y > case-1:
+        return False
+    else:
+        return True
+
+def miro(y,x):
+    global result
+    for direct in range(4):
+        new_x = x+dx[direct]
+        new_y = y+dy[direct]
+        if issafe(new_y,new_x) and datas[new_y][new_x] == 0:
+            now_y = new_y
+            now_x = new_x
+            # datas[now_y,now_x] = 1
+        else:
+            return
+
+        if datas[now_y][now_x] == 3:
+            result = 1
+            return
+        else:
+            miro(now_y,now_x)
+    
+
+
+test = int(input())
+for tc in range(test):
+    case = int(input())
+    datas = []
+    for row in range(case):
+        datas += [list(map(int,input()))]
+
+    y = x = None
+    for row in range(case):
+        for col in range(case):
+            if datas[row][col] == 2:
+                y = row
+                x = col
+                break
+
+    dy = [-1, 0, 1, 0]
+    dx = [0, 1, 0, -1]
+    result = 0
+
+    miro(y,x)
+
+    if result == 1:
+        print(f'#{tc+1} {1}')
+    else:    
+        print(f'#{tc+1} {0}')
+
+
+#------------------------------------------------------------------------------------------------------
+# 계산기
+
+for tc in range(10):
+    case = int(input())
+    datas = list(input())
+
+    push = 0
+    sem = []
+    result = []
+
+    for data in datas:
+        if data == '(':
+            sem.append(data)
+        elif data == ')':
+            while push == 0:
+                sem_i = sem.pop()
+                if sem_i != '(':
+                    result.append(sem_i)
+                else:
+                    push = 1
+            push = 0
+        elif data == '*' or data == '/':
+            sem.append(data)
+        elif data == '+' or data == '-':
+            while push == 0:
+                if sem == []:
+                    sem.append(data)
+                    push = 1
+                else:
+                    sem_i = sem.pop()
+                    if sem_i == '*' or sem_i == '/':
+                        result.append(sem_i)
+                    else:
+                        sem.append(sem_i)
+                        sem.append(data)
+                        push = 1
+            push = 0
+        else:
+            result.append(int(data))
+
+    for sem_v in sem[::-1]:
+        result.append(sem_v)
+
+    calculation = []
+    buho = ['+','-','*','/']
+
+    for value in result:
+        if not value in buho:
+            calculation.append(value)
+        else:
+            back = calculation.pop()
+            front = calculation.pop()
+            if value == '+':
+                cal = front + back
+            elif value == '*':
+                cal = front * back
+            elif value == '-':
+                cal = front - back
+            elif value == '/':
+                cal = front / back
+            calculation.append(cal)
+
+    c = calculation.pop()    
+    print(f'#{tc+1} {c}')

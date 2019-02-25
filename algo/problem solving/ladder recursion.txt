@@ -1,0 +1,35 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+dy = [0, 0, -1]
+dx = [-1, 1, 0]
+
+def IsPossible(y, x):
+    if y >=0 and y < 100 and x >= 0 and x  < 100 and (Mymap[y][x] ==1) :  return True
+
+def GetSome(y, x):
+    Mymap[y][x] = -1
+    if y==0 :
+        print("#%d " % tc, x)
+        return
+
+
+    for dir in range(3):
+        newY = y + dy[dir]
+        newX = x + dx[dir]
+        if IsPossible(newY, newX) :
+            GetSome(newY, newX)
+            return
+
+
+for tc in range(1,11):
+    input()
+    Mymap = [[0 for x in range(100)] for y in range (100)]
+    for i in range(100) :
+        Mymap[i] = list(map(int, input().split()))
+
+    for x in range(100):
+         if Mymap[99][x] == 2 :   startX = x
+    x = startX
+    y = 99
+    GetSome(99, startX)

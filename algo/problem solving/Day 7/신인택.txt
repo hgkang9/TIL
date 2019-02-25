@@ -1,0 +1,106 @@
+<계산기>
+def piyunsanza(token):
+    num = int(token)
+    if num == 0 or num == 1 or num == 2 or num == 3 or num == 4 or num == 5 or num == 6 or num == 7 or num == 8 or num == 9:
+        return True
+
+def yunsanza():
+    global top
+    global soonseo
+    if ICP[token] > ISP[Stack[top]]:
+        top = top + 1
+        Stack[top] = token
+        # print(f'{Stack}스택1추가!')
+        # print(f'top은{top}이 되었습니다.')
+        return
+    else:
+        output[soonseo] = Stack[top]
+        # print(f'{output}결과에 연산자가 쌓였네요 :0')
+        soonseo = soonseo + 1
+        Stack[top] = 0
+        top = top - 1
+        # print(f'{Stack}스택 1 감소...')
+        # print(f'top은{top}이 되었습니다.')
+        yunsanza()
+
+for tc in range(10):
+    lenTC = int(input())
+    Data = input()
+    token = []
+    Stack = [0] * lenTC
+    top = -1
+    output = [0] * lenTC
+    soonseo = 0
+    apropush = 0
+    result = 0
+    # in-coming priority : ICP, in-stack priority : ISP
+    ICP = {'+': 1, '-': 1, '*': 2, '/': 2, '(': 3}
+    ISP = {'(': 0, '+': 1, '-': 1, '*': 2, '/': 2, 0: -1}  # Stack이 비어있을 때는 0값을 음수로 둬서 조건이 성립되게 만든다!^^
+
+    for index in range(lenTC):
+        # print('지금은', index, '번째 : 값', Data[index])
+        token = Data[index]
+        if token == '(':
+            top = top + 1
+            Stack[top] = token
+            # print(f'{Stack}스택1추가!')
+            # print(f'top은{top}이 되었습니다.')
+        elif token == '+' or token == '*':
+            yunsanza()
+            # print(f'{ICP[token]}은 ICP값이다.')
+            # print(f'{ISP[Stack[top]]}이건 ISP')
+        elif token == ')':
+            while not Stack[top] == '(':
+                output[soonseo] = Stack[top]
+                # print(f'{output}결과에 연산자가 쌓였네요 :0')
+                soonseo = soonseo + 1
+                Stack[top] = 0
+                top = top - 1
+                # print(f'{Stack}스택 1 감소...')
+                # print(f'top은{top}이 되었습니다.')
+            Stack[top] = 0
+            top = top - 1
+            # print(f'{Stack}스택 1 감소...')
+            # print(f'top은{top}이 되었습니다.')
+        elif piyunsanza(token):
+            output[soonseo] = int(token)
+            soonseo = soonseo + 1
+            # print(f'{output}결과가 착착 쌓여가네요 :)')
+    while Stack[top] != 0:
+        output[soonseo] = Stack[top]
+        # print(f'{output}결과에 연산자가 쌓였네요 :0')
+        soonseo = soonseo + 1
+        Stack[top] = 0
+        top = top - 1
+        # print(f'{Stack}스택 1 감소...')
+        # print(f'top은{top}이 되었습니다.')
+
+    print(f'중간 결과 : {output}')
+    for index in range(len(output)):
+        # print('지금은', index, '번째 : 값', output[index])
+        token = output[index]
+        if token == '+':
+            apropush = Stack[top - 1] + Stack[top]
+            Stack[top-1] = apropush
+            Stack[top] = 0
+            top = top - 1
+        elif token == '-':
+            apropush = Stack[top - 1] - Stack[top]
+            Stack[top-1] = apropush
+            Stack[top] = 0
+            top = top - 1
+        elif token == '*':
+            apropush = Stack[top - 1] * Stack[top]
+            Stack[top-1] = apropush
+            Stack[top] = 0
+            top = top - 1
+        elif token == '/':
+            apropush = Stack[top - 1] / Stack[top]
+            Stack[top-1] = apropush
+            Stack[top] = 0
+            top = top - 1
+        elif token != 0:
+            Stack[top+1] = int(token)
+            top = top + 1
+    result = Stack[top]
+    print(f'#{tc+1} {result}')

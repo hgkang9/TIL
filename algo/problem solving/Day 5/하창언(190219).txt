@@ -1,0 +1,150 @@
+1. 색칠하기
+# 10X10
+def init(color,colormap,start,end):
+    for row in range(start[0],end[0]+1):
+        for col in range(start[1],end[1]+1):
+            colormap[col][row]=color
+    return colormap
+
+def check(redmap,bluemap,result):
+    for col in range(10):
+        for row in range(10):
+            if redmap[col][row]!=0 and bluemap[col][row]!=0:
+                result+=1
+    return result
+
+
+casesize = int(input())
+for cs in range(casesize):
+    colorsize = int(input())
+    caseinfo = [list(map(int,input().split())) for _ in range(colorsize)]
+    redmap = [[0]*10 for _ in range(10)]
+    bluemap = [[0] * 10 for _ in range(10)]
+    result = 0
+    for color in caseinfo:
+        if color[4]==1:
+            redmap = init(color[4],redmap,(color[0],color[1]),(color[2],color[3]))
+        else :
+            bluemap = init(color[4], bluemap, (color[0], color[1]), (color[2], color[3]))
+    result = check(redmap,bluemap,result)
+    print(f'#{cs+1} {result}')
+
+2. 부분집합
+def solve(n,k,result):
+    allset = [1,2,3,4,5,6,7,8,9,10,11,12]
+    for i in range(1<<12):
+        if bin(i)[2:].count('1')!=3:
+            continue
+        partset = []
+        for j in range(12):
+            if i & (1<<j) :
+                partset.append(allset[j])
+        if sum(partset)==k:
+            result+=1
+    return result
+
+casesize = int(input())
+for cs in range(casesize):
+    caseinfo = list(map(int,input().split()))
+    result = solve(caseinfo[0],caseinfo[1],0)
+    print(f'#{cs+1} {result}')
+
+3.부분집합
+def solve(caseinfo):
+    pages=caseinfo[0]       #전체 페이지
+    asearch = caseinfo[1]       #a가 찾을 페이지
+    bsearch = caseinfo[2]
+    astart,bstart = 1,1
+    aend,bend = pages,pages
+    awin=0      #누가 이겼는지 알아보는 변수 1인 친구를 출력/ 둘다 1일경우 0 출력
+    bwin=0
+    while True:
+        amid = (astart+aend)//2
+        # print(astart,aend,amid)
+        if amid>asearch:
+            aend=amid
+        elif amid<asearch:
+            astart=amid
+        else:
+            awin = 1
+        bmid = (bstart + bend) // 2
+
+4.특별한 정렬
+def solve(inputlist,length):
+    result = []
+    inputlist.sort()
+    for i in range(min(length//2,5)):
+        result.append(inputlist[-(i + 1)])
+        result.append(inputlist[i])
+    if len(result)<min(length,10):      #홀수인 경우
+        result.append(inputlist[length//2])
+    return result
+
+casesize = int(input())
+for cs in range(casesize):
+    length = int(input())
+    inputlist = list(map(int,input().split()))
+    result = solve(inputlist, length)
+    print(f'#{cs+1}',end=" ")
+    for i in result:
+        print(i,end=" ")
+    print()
+
+        # print(bstart, bend, bmid)
+        if bmid > bsearch:
+            bend = bmid
+        elif bmid < bsearch:
+            bstart = bmid
+        else:
+            bwin = 1
+
+        if awin == 1 or bwin ==1 :
+            if awin==1 and bwin==1:
+                return ('0')
+            elif awin==1:
+                return ('A')
+            elif bwin==1:
+                return ('B')
+
+
+casesize = int(input())
+for cs in range(casesize):
+    caseinfo = list(map(int,input().split()))
+    print(f'#{cs+1} {solve(caseinfo)}')
+
+5. 금속막대
+def solve(inputmetal):
+    result = [0]
+    startM = inputmetal[0][0]   # 시작위치는 처음 나사; 결합될 경우 결합된것의 숫나사로 위치 변경
+    startW = inputmetal[0][1]
+    metal = 0
+    while metal<len((inputmetal)):      # 시작나사의 숫나사부터 연결을 시작하여 가능할 때까지 연결; breakpoint = 연결된 나사가 없다; 연결될 경우 시작 숫나사 변경 후 처음부터 다시
+        # print(startM,metal,inputmetal[metal][1])
+        if startM == inputmetal[metal][1]:
+            result.insert(0,metal)
+            startM = inputmetal[metal][0]
+            metal = 0
+        metal+=1
+    metal = 0
+    while metal<len((inputmetal)):      # 시작나사의 암나사부터 ~
+        # print(startM, metal, inputmetal[metal][1])
+        if startW == inputmetal[metal][0]:
+            result.append(metal)
+            startW = inputmetal[metal][1]
+            metal = 0
+        metal+=1
+    return result       #  result 에 나사가 연결된 순서가 저장됨 [1,0,2 ..]
+
+casesize = int(input())
+for cs in range(casesize):
+    metalsize = int(input())
+    caseinfo = list(map(int,input().split()))      # 나사 전체를 리스트로
+    inputmetal = []     #[(1,4),(2,3) ..]
+    for metal in range(metalsize):
+        inputmetal.append((caseinfo[0+metal*2],caseinfo[1+metal*2]))        # tuple 의 형태로 변경
+    result = solve(inputmetal)
+    # print(result)
+    print(f'#{cs+1}',end=" ")
+    for re in result:
+        print(inputmetal[re][0],inputmetal[re][1],end=" ")
+    print()

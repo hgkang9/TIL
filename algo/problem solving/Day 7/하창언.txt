@@ -1,0 +1,134 @@
+1. 계산기3
+def makeback(inputline):
+    backinput = []
+    stack = []
+    oper = {'*':(2,2),'+':(1,1),'(':(0,3)}
+    for letter in inputline:
+        # print(stack,backinput)
+        if letter.isdigit():
+            backinput.append(letter)
+        else :
+            if not stack:
+                stack.append(letter)
+            elif letter ==')':
+                tmp = stack.pop()
+                # print(tmp)
+                while tmp != '(':
+                    backinput.append(tmp)
+                    tmp = stack.pop()
+            else:
+                while len(stack)!=0 and oper[stack[-1]][0]>=oper[letter][1]:
+                    backinput.append(stack.pop())
+                stack.append(letter)
+    for i in range(len(stack)):
+        backinput.append(stack.pop())
+    return backinput
+
+
+def solve(lst):
+    # print(lst)
+    result=[]
+    for i in lst:
+        if i.isdigit():
+            result.append(i)
+        else:
+            first = int(result.pop())
+            second = int(result.pop())
+            if i == '+':
+                result.append(second+first)
+            else:
+                result.append(second * first)
+        # print(result)
+    return result[0]
+casesize = 10
+for case in range(casesize):
+    abc =input()
+    inputline = input()
+    inputline = inputline[1:-1]
+    print(f'#{case+1} {solve(makeback(inputline))}')
+
+2.forth
+casesize = int(input())
+for case in range(casesize):
+    caseinfo = list(input().split())
+    stack = []
+    flag = 1
+    for ele in caseinfo:
+        # print(stack)
+        if ele.isdigit():
+            stack.append(ele)
+        elif ele == '+':
+            try:
+                first = stack.pop()
+                second = stack.pop()
+                stack.append(int(second)+int(first))
+            except:
+                flag=0
+                break
+        elif ele == '-':
+            try:
+                first = stack.pop()
+                second = stack.pop()
+                stack.append(int(second)-int(first))
+            except:
+                flag=0
+                break
+        elif ele == '*':
+            try:
+                first = stack.pop()
+                second = stack.pop()
+                stack.append(int(second) * int(first))
+            except:
+                flag=0
+                break
+        elif ele == '/':
+            try:
+                first = stack.pop()
+                second = stack.pop()
+                stack.append(int(second) // int(first))
+            except:
+                flag=0
+                break
+    # print(stack,caseinfo)
+    print(flag)
+    if len(stack) > 1 or not flag:
+        print(f'#{case+1} error')
+    else:
+        print(f'#{case+1} {stack[-1]}')
+
+
+3.미로
+
+def DFS(start,visited,mapsize,casemap):     #각위치에서 네방향으로 이동; 방문한 적이 있거나 길이 없다면 방문 하지 않는다
+    dc=[0,-1,0,1]
+    dr=[-1,0,1,0]
+    global result
+    # print(start,visited)
+    visited[start[0]][start[1]] = 1
+    if casemap[start[0]][start[1]]==3:
+        # print('출구찾음')
+        result=1
+        return True
+    else:
+        for i in range(4):
+            nextcol = start[0] + dc[i]
+            nextrow = start[1] + dr[i]
+            if nextcol<0 or nextrow < 0 or nextcol >= mapsize or nextrow>=mapsize:      #다음위치가 맵 밖으로 나갈경우
+                continue
+            elif casemap[nextcol][nextrow]!=1 and visited[nextcol][nextrow]!=1:
+                if DFS((nextcol,nextrow),visited,mapsize,casemap):
+                    return True
+casesize = int(input())
+for case in range(casesize):
+    mapsize = int(input())
+    casemap = [list(map(int,list(input()))) for _ in range(mapsize)]
+    # print(casemap)
+    for col in range(mapsize):
+        for row in range(mapsize):
+            if casemap[col][row] == 2:
+                start=(col,row)
+            elif casemap[col][row] == 3:
+                end = (col, row)
+    visited = [[0]*mapsize for _ in range(mapsize)]
+    print(f'#{case+1}',end=" ")
+    print('1' if  DFS(start, visited,mapsize,casemap) else '0')

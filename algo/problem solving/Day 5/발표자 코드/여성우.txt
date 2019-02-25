@@ -1,0 +1,90 @@
+1. »ç´Ù¸® Àç±Í
+import sys
+sys.stdin = open('input.txt', 'r')
+
+
+def safe(y, x):
+    if y >= 0 and y < 100 and x >= 0 and x < 100:
+        return True
+    else:
+        return False
+
+
+def turn(y, x, flag):
+    global answer
+    if y == 0:
+        answer = x
+        return
+    if flag == 2:
+        if safe(y, x-1) and ladders[y][x-1]:
+            flag = 0
+            turn(y, x-1, flag)
+        elif safe(y, x+1) and ladders[y][x+1]:
+            flag = 1
+            turn(y, x+1, flag)
+        else:
+            turn(y-1, x, flag)
+    elif flag == 1:
+        if ladders[y-1][x]:
+            flag = 2
+            turn(y-1, x, flag)
+        else:
+            turn(y, x+1, flag)
+    elif flag == 0:
+        if ladders[y-1][x]:
+            flag = 2
+            turn(y-1, x, flag)
+        else:
+            turn(y, x-1, flag)
+
+
+for T in range(10):
+    t = int(input())
+    ladders = []
+    for i in range(100):
+        line = list(map(int, input().split()))
+        ladders.append(line)
+        if i == 99:
+            final = line.index(2)
+    answer = 0
+    turn(99, final, 2)
+    print(f'#{t} {answer}')
+
+2. »ç´Ù¸® ºñÀç±Í
+import sys
+sys.stdin = open('input.txt', 'r')
+
+for T in range(10):
+    t = int(input())
+    ladders = []
+    startlist = []
+    for i in range(100):
+        line = list(map(int, input().split()))
+        ladders.append(line)
+        if i == 0:
+            for j in range(100):
+                if line[j] == 1:
+                    startlist.append(j)
+        if i == 99:
+            final = line.index(2)
+    y = 99
+    x = final
+    x_index = startlist.index(x)
+    while y != 1:
+        y -= 1
+        if x == 0:
+            if ladders[y][x+1]:
+                x_index += 1
+                x = startlist[x_index]
+        elif x == 99:
+            if ladders[y][x-1]:
+                x_index -= 1
+                x = startlist[x_index]
+        else:
+            if ladders[y][x-1]:
+                x_index -= 1
+                x = startlist[x_index]
+            elif ladders[y][x+1]:
+                x_index += 1
+                x = startlist[x_index]
+    print(f'#{t} {x}')

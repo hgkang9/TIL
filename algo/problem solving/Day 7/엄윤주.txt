@@ -1,0 +1,53 @@
+<forth>
+
+예시는 결과 출력이 되지만, 답안 제출 시 10개 중 6개 맞았습니다. 수정하겠습니다.
+
+import sys
+sys.stdin = open("input.txt", "r")
+
+top = -1
+operator = ['+','-','*','/','.']
+def is_number(x):
+    if x not in operator:
+        return True
+    else:
+        return False
+
+TC = int(input())
+for tc in range(1, TC+1):
+    infix = input().split()
+
+    isDone = False
+    stack = []
+    result = []
+    final = []
+    for item in infix:
+        if is_number(item) == True:
+            stack.append(item)
+            top += 1
+        if item in operator[:4] and len(stack) >= 2:
+            if item == '+':
+                result = int(stack.pop(-2)) + int(stack.pop(-1))
+                stack.append(result)
+                top -= 1
+            elif item == '-':
+                result = int(stack.pop(-2)) - int(stack.pop(-1))
+                stack.append(result)
+                top -= 1
+            elif item == '*':
+                result = int(stack.pop(-2)) * int(stack.pop(-1))
+                stack.append(result)
+                top -= 1
+            elif item == '/':
+                result = int(stack.pop(-2)) / int(stack.pop(-1))
+                stack.append(result)
+                top -= 1
+        elif item in operator[:4] and len(stack) < 2:
+            final = 'error'
+
+        elif item == '.':
+            if final != 'error':
+                final = stack.pop()
+
+
+    print(f'#{tc} {final}')
