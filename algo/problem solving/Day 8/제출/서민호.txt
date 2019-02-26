@@ -1,0 +1,160 @@
+# 준혁이 여자친구
+import sys
+sys.stdin = open("day08_01.txt","r")
+
+n,m = map(int,input().split())
+mymap = [[0] * (n+1) for i in range(n+1)]
+visited = [0] * (n+1)
+# stack = [0] * 10
+# top = -1
+
+result = 0
+min_cost = None
+for mv in range(m):
+    a,b,cost = map(int,input().split())
+    mymap[a][b] = cost
+    mymap[b][a] = cost
+# print(mymap)
+
+def find(start):
+    global n, result, visited, min_cost
+    visited[start] = 1
+    for i in range(1,n+1):
+        if mymap[start][i] != 0 and visited[i] == 0:
+            if i != n:
+                now = i
+                result += mymap[start][i]
+                find(now)
+                # result -= mymap[start][i]
+                visited[i] = 0
+
+            else:
+                result += mymap[start][i]
+                if min_cost == None or min_cost > result:
+                    min_cost = result
+                    result -= mymap[start][i]
+                    return
+
+        elif i == n and mymap[start][i] == 0:
+            # result -= mymap[start][i]
+            return
+
+find(1)
+print(min_cost)
+
+
+
+#---------------------------------------------------------------------------------------------------------
+# min_sum
+
+datas = []
+ing = 0
+result = None
+
+def min_sum(y):
+    global result, ing
+    if y < case:
+        for x in range(case):
+            if select_x[x] == 0 and (result == None or ing < result): 
+            #간적이 없거나 중간에 합쳐진 ing값이 결과값보다 커진 경우
+                ing += datas[y][x]
+                select_x[x] = 1
+                new_y = y+1
+                min_sum(new_y) # 재귀
+                
+                ing -= datas[y][x] # 재귀가 끝나고 return된 후에 실행 (리턴된 만큼 ing 진행값을 빼줌)
+                select_x[x] = 0 # 다시 갈 수 있도록 0으로 바꿔줌
+                new_y = 0 # y에 새로운 값 줄수있도록 준비(없어도 됨)
+    else:
+        if result == None or result > ing:
+            result = ing
+        return
+
+test = int(input())
+for tc in range(test):
+    case = int(input())
+    datas = []
+    select_x = [0]*case
+    ing = 0
+    result = None
+    y = 0
+
+    for row in range(case):
+        datas += [list(map(int,input().split()))]
+
+    min_sum(y)
+    print(f'#{tc+1} {result}')
+
+
+
+#----------------------------------------------------------------------------------------------------------
+# 가위바위보
+
+member = []
+result = None
+
+def rsp(i,j):
+    global result
+    if datas[i] == 1:
+        if datas[j] == 1 or datas[j] == 3:
+            result = i
+        else:
+            result = j
+    elif datas[i] == 2:
+        if datas[j] == 2 or datas[j] == 1:
+            result = i
+        else:
+            result = j
+    elif datas[i] == 3:
+        if datas[j] == 3 or datas[j] == 2:
+            result = i
+        else:
+            result = j
+    return result
+
+def team(i,j):
+    global member, result
+    if (i+j)//2 >= 2:
+        member = (i+j)//2
+        team(i,member) #result
+        result_i = result #result
+        team(member+1, j) #result
+        result_j = result #result
+
+        rsp(result_i,result_j) #result
+        # return
+
+    elif (i+j)//2 == 1:
+        if (i+j)%2 > 0: #[0,1],[2,3]
+            member = (i+j)//2
+            rsp(i,member) #result
+            result_i = result
+            rsp(member+1, j) #result
+            result_j = result
+
+            rsp(result_i,result_j) #result
+            return  
+
+        elif (i+j)%2 == 0: #[0,1],[2]
+            member = (i+j)//2
+            rsp(i,member)
+            result_i = result
+            # team(result_i, j)
+            # result_j = result
+
+            rsp(result_i,j)
+            return   
+
+    # else:
+    #     rsp(i,j) #result = i
+    #     return
+
+
+test = int(input())
+datas = []
+for tc in range(test):
+    case = int(input())
+    datas = list(map(int,input().split()))
+
+    team(0,case-1)
+    print(f'#{tc+1} {result+1}')

@@ -1,0 +1,143 @@
+1. 토너먼트
+def divide(start,end) :
+    if start == end :
+        return start
+    item1 = divide(start, (start+end)//2)
+    item2 = divide((start + end) // 2 + 1,end)
+    if data[item2-1] in di[data[item1-1]]:
+        return item1
+    else:
+        return item2
+
+for tc in range(int(input())) :
+    di = {1:[1,3], 2:[2,1], 3:[2,3]}
+    n = int(input())
+    data = list(map(int, input().split()))
+    print(f'#{tc+1} {divide(1,n)}')
+
+2. powerset
+def backtrack(p) :
+    global item
+    k = sum(item)
+    if k > 10 :
+        return
+    if k == 10 :
+        print(item)
+        return
+    for i in range(p,10) :
+        item.append(i+1)
+        backtrack(p+1)
+        item.pop()
+
+
+# data = [1,2,3,4,5,6,7,8,9,10]
+item = []
+backtrack(0)
+
+3. 여자친구
+def path(pos) :
+    global my_min, visted
+    k = sum(visited)
+    if my_min < k :
+        return
+    if pos == v :
+        if my_min > k :
+            my_min = k
+
+    for i in range(1,v+1) :
+        if my_graph[pos][i] > 0 :
+            visited[i] = my_graph[pos][i]
+            path(i)
+            visited[i] = 0
+
+
+v, e = list(map(int, input().split()))
+my_graph = [[0]*(v+1) for i in range(v+1)]
+visited = [0]*(v+1)
+visited[1] = 1
+my_min = 0
+for i in range(e) :
+    start,end,cost = list(map(int, input().split()))
+    my_graph[start][end] = cost
+    my_min += cost
+check = False
+for i in range(1,e+1) :
+    if my_graph[i][e] > 0 :
+        check = True
+        break
+if check :
+    path(1)
+    print(my_min-1)
+else :
+    print(-1)
+
+4. magnetic
+def check(item) :
+    n = len(item)
+    pos = 0
+    result = 0
+    while n > 1 :
+        if pos >= n-1 :
+            break
+        if item[pos] == 1 and item[pos+1] == 2 :
+            result+=1
+        pos += 1
+    return result
+
+def solve():
+    result = 0
+    for i in range(n) :
+        if len(data[i]) <= 1 :
+            continue
+        else :
+            result+=check(data[i])
+    return result
+
+for tc in range(10) :
+    n = int(input())
+    data = [[] for i in range(n)]
+    for i in range(n) :
+        temp = list(map(int, input().split()))
+        for j in range(len(temp)) :
+            if temp[j] > 0 :
+                data[j].append(temp[j])
+    print(f'#{tc+1} {solve()}')
+
+5. optimuspath
+def check(pos) :
+    global my_min, temp
+    if my_min < temp :
+        return
+    if pos >= n+1 :
+        m = len(visited)
+        x2, y2 = visited[m - 1]
+        x1, y1 = xy_data[n+1]
+        temp += (abs(x2 - x1) + abs(y2 - y1))
+        if temp < my_min :
+            my_min = temp
+        temp -= (abs(x2 - x1) + abs(y2 - y1))
+        return
+    for i in range(1,n+1) :
+        if not xy_data[i] in visited :
+            visited.append(xy_data[i])
+            m = len(visited)
+            x1,y1 = visited[m-1]
+            x2,y2 = visited[m-2]
+            plus = (abs(x2-x1)+abs(y2-y1))
+            temp += plus
+            check(pos+1)
+            temp -= plus
+            visited.pop()
+for tc in range(int(input())) :
+    n = int(input())
+    data = list(map(int, input().split()))
+    xy_data = []
+    xy_data.append((data[0], data[1]))
+    for i in range(4,4+2*n,2) :
+        xy_data.append((data[i],data[i+1]))
+    xy_data.append((data[2], data[3]))
+    visited = [(data[0], data[1])]
+    my_min = 100**2
+    temp = 0
+    check(1)
+    print(f'#{tc+1} {my_min}')

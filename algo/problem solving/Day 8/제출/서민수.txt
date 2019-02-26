@@ -1,0 +1,94 @@
+1. 배열 최소합
+def backtrack(nowY, SUM): # Y, SUM
+    global minsum
+    if nowY == n:
+        if SUM < minsum:
+            minsum = SUM
+        return
+    if SUM > minsum:
+        return
+    for x in range(n):
+        if not visitedX[x]:
+            visitedX[x] = True
+            #SUM += arr[nowY][x]
+            backtrack(nowY+1, SUM + arr[nowY][x])
+            visitedX[x] = False
+            #SUM -= arr[nowY][x]
+
+for tc in range(1, int(input())+1):
+    n = int(input())
+    arr = [list(map(int, input().split())) for _ in range(n)]
+    visitedX = [0] * n
+    minsum = 987654321
+    backtrack(0, 0)
+    print(f'#{tc} {minsum}')
+
+2. 준혁이 여자친구 만나러 가기
+def FindMinPath(here, k, SUM):
+    global mincost
+    if here == n:
+        if SUM < mincost: mincost = SUM
+        return
+
+    if SUM >= mincost:
+        return
+
+    if k >= n: # 노드 개수만큼 이동해서도 n 도착 못하면 결국 도착점 못감
+        mincost = -1
+        return
+
+    for next in range(1, n+1):
+        if not visited[here][next] and MyMap[here][next] != 0:
+            visited[here][next] = visited[next][here] = True
+            FindMinPath(next, k+1, SUM+MyMap[here][next])
+            visited[here][next] = visited[next][here] = False
+
+
+n, m = map(int, input().split())
+MyMap = [[0 for _ in range(n+1)] for _ in range(n+1)]
+visited = [[0 for _ in range(n+1)] for _ in range(n+1)]
+for i in range(m):
+    s, e, cost = list(map(int, input().split()))
+    MyMap[s][e] = MyMap[e][s] = cost # 무방향
+
+mincost = 987654321
+FindMinPath(1, 0, 0)
+print(mincost)
+
+
+4. 최적 경로
+def GetSome(y, x, k, dist):
+    global mindist
+    if k == n:
+        dist += abs(y-ey)+abs(x-ex)
+        if dist < mindist:
+            mindist = dist
+            return
+    if dist >= mindist:
+        return
+
+    for i in range(n):
+        if not visited[i]:
+            visited[i] = True
+            diff = abs(y-customer[i][0]) + abs(x-customer[i][1])
+            GetSome(customer[i][0], customer[i][1], k+1, dist+diff) #y,x,
+            visited[i] = False
+
+for tc in range(1, int(input())+1):
+    n = int(input())
+    Data = list(map(int, input().split()))
+    MyMap = [[0 for _ in range(101)] for _ in range(101)]
+    #visited = [[0 for _ in range(101)] for _ in range(101)]
+    visited = [0 for _ in range(n)]
+    sx = Data[0]; sy = Data[1] # 회사
+    ex = Data[2]; ey = Data[3] # 집
+
+    MyMap[sy][sx] = 2   # 시작: 회사
+    MyMap[ey][ex] = 3   # 끝 : 집
+    mindist = 987654321
+    customer = []
+    for i in range(2, n + 2):
+        customer.append( (Data[(i * 2) + 1], Data[(i * 2)]) )
+
+    GetSome(sy,sx,0,0)
+    print(f'#{tc} {mindist}')

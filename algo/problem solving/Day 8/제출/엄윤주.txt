@@ -1,0 +1,85 @@
+<minimum sum>
+
+minsum = 999
+
+def GetSome(y, condition):
+    global minsum
+    # 지금까지의 합이 최소값보다 크다면, 할 필요 X
+    if condition >= minsum:
+        return
+    if y == nums:
+        if condition < minsum:
+            minsum = condition
+            return
+
+    for x in range(nums):
+        if not visitedX[x]:
+            visitedX[x] = True
+            GetSome(y+1, condition + arr[y][x])
+            visitedX[x] = False
+
+TC = int(input())
+for tc in range(1,TC+1):
+    minsum = 999
+    nums = int(input())
+    arr = [[0] * nums for i in range(nums)]
+    visitedX = [0] * nums
+    for i in range(nums):
+        arr[i] = list(map(int, input().split()))
+
+    GetSome(0,0)
+    print(f'#{tc} {minsum}')
+
+<준혁이 여자친구 만나러>
+
+mincost = 99999
+def DFS(here, c):
+    global mincost
+    if c >= mincost:
+        return
+    if here == N:
+        if c < mincost:
+            mincost = c
+            return
+    for next in range(1,N+1):
+        if MyMap[here][next] and not visited[next]:
+            visited[next] = True
+            DFS(next, c + MyMap[here][next])
+            visited[next] = False
+
+N, M = map(int, input().split())
+MyMap = [[0]*(N+1) for j in range(N+1)]
+visited = [0] * (N+1)
+for i in range(M):
+    start, end, cost = map(int, input().split())
+    MyMap[start][end] = MyMap[end][start] = cost
+
+DFS(1,0)
+print(mincost)
+
+<토너먼트 카드게임>
+어제 스터디에서 잘 안풀려서 미진이 코드 참고했습니다.
+
+def win(a, b):
+    if cards[a-1]==1 and cards[b-1]==3:
+        return a
+    elif cards[a-1]==3 and cards[b-1]==1:
+        return b
+    else:
+        if cards[a-1]>=cards[b-1]:
+            return a
+        else:
+            return b
+
+def devide(start, end):
+    if end == start:
+        return start
+    c = (start + end) // 2
+    return win(devide(start, c),devide(c+1, end))
+
+TC = int(input())
+for tc in range(1, TC+1):
+    students = int(input())
+    cards = list(map(int, input().split()))
+
+    print(f'#{tc} {devide(1, students)}')

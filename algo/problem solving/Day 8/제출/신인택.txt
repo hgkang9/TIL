@@ -1,0 +1,43 @@
+<minimum sum>
+for tc in range(int(input())):
+    ary = []
+    Minsum = 0
+    for N in range(int(input())):
+        ary.append(list(map(int, input().split())))
+    print(ary)
+    visited = [False] * N
+어제 해설보고 한 번 따라해보고 다시 코드를 짜볼 예정입니다.
+
+
+<준혁이 여자친구 만나러 가는 길>
+
+def GetCost(start, sofar):
+    if sofar >= mincost: # backtracking condition
+        print('No way')
+        return
+
+    if start == finish: # closing condition
+        if sofar < mincost:
+            mincost = sofar
+            return
+
+    for end in range(end):  # everything inspect
+        if not visited[start]:
+            visited[start] = True
+            GetCost(end, mincost+Cost[start][end])
+            visited[start] = False
+
+finish, terminal = list(map(int, input().split()))
+load = [0] * finish
+visited = [0] * finish
+Cost = [[0] * (finish+1) for i in range(finish+1)]
+for i in range(terminal+1):
+    start, end, costtmp = list(map(int, input().split()))
+    Cost[start][end] = costtmp
+
+print(Cost)
+print(load)
+print(-1)
+
+앞으로 변수선언 하면 정답을 찾을 것 같습니다.
+

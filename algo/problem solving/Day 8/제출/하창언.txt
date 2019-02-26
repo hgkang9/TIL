@@ -1,0 +1,195 @@
+1. 배열최소합
+casesize = int(input())
+def DFS(visited,level,mapsize,casemap,tmpsum):
+    global minsum
+    if (level)>=mapsize:
+        if tmpsum<minsum:
+            minsum = tmpsum
+    else:
+        for i in range(mapsize):
+            if visited[i]:
+                continue
+            else:
+                tmpsum+=casemap[(level)][i]
+                if tmpsum>=minsum:
+                    tmpsum-=casemap[(level)][i]
+                    continue
+                visited[i]=1
+                DFS(visited,level+1,mapsize,casemap,tmpsum)
+                visited[i]=0
+                tmpsum-=casemap[(level)][i]
+for case in range(casesize):
+    mapsize = int(input())
+    casemap = [list(map(int,input().split())) for _ in range(mapsize)]
+    minsum = 10000
+    DFS([0]*mapsize,0,mapsize,casemap,0)
+    print(f'#{case+1} {minsum}')
+
+2.최적길
+from itertools import permutations
+casesize = int(input())
+for case in range(casesize):
+    customersize = int(input())
+    caselist = list(map(int,input().split()))
+    company = (caselist[0],caselist[1])
+    home = (caselist[2],caselist[3])
+    customers = []
+    for i in range(customersize):
+        customers.append((caselist[4+i*2],caselist[5+i*2]))
+    mindistance = 100000
+
+    def solve(lst):
+        global mindistance
+        for i in permutations(range(1,customersize+1),customersize):
+            tmpsum = 0
+            i=[0]+list(i)+[customersize+1]
+            for j in range(len(i)-1):
+                tmpsum+=abs(lst[i[j]][0]-lst[i[j+1]][0])+abs(lst[i[j]][1]-lst[i[j+1]][1])
+                if tmpsum>=mindistance:
+                    break
+            if tmpsum<mindistance:
+                mindistance=tmpsum
+
+    solve([company]+customers+[home])
+
+    print(f'#{case+1} {mindistance}')
+
+3.바이너리서치 재귀
+def binarysearch(a,key):
+    start = 0
+    end = len(a)-1
+    target = (start + end) // 2
+    if len(a)==1:
+        if a[0]==key:
+            print('b')
+            return True
+        else:
+            return False
+    else:
+        if key<a[target]:
+            if binarysearch(a[0:target],key):
+                return True
+        elif key>a[target]:
+            if binarysearch(a[target+1:],key):
+                return True
+        else:
+            return True
+if (binarysearch([1,2,3,5,6,7],4)):
+    print("검색 성공")
+else :
+    print("검색 실패")
+
+4.마그네틱
+import sys
+sys.stdin = open('input.txt','r')
+def solve(casemap,row):     #1=A , 2=B
+    global result
+    for row in range(100):
+        before = -1
+        for col in range(100):
+            if casemap[col][row]==1:
+                if before == -1:
+                    before = 1      #처음 나온 자성일경우
+            elif casemap[col][row]==2:
+                if before == 1:
+                    result+=1
+                    before=-1
+for case in range(10):
+    row = int(input())
+    casemap = [list(map(int,input().split())) for _ in range(100)]
+    result = 0
+    solve(casemap,row)
+    print(f'#{case+1} {result}')
+
+
+5.토너먼트
+def tournament(left,right,own):
+    # print(left,right)
+    if right-left==1:
+        return match(left,right,own)
+    elif right-left==0:
+        return left
+    else:
+        return match(tournament(left,(left+right)//2,own),tournament((left+right)//2+1,right,own),own)
+def match(left,right,own):
+    # print(left,right,own)
+    if own[left]==1:
+        if own[right]==1 or own[right]==3:
+            return left
+        else:
+            return right
+    elif own[left]==2:
+        if own[right]==2 or own[right]==1:
+            return left
+        else:
+            return right
+    else:
+        if own[right]==3 or own[right]==2:
+            return left
+        else:
+            return right
+
+casesize = int(input())
+for case in range(casesize):
+    peoplenum = int(input())
+    caselist = list(map(int,input().split()))
+    own = {}
+    for i in range(peoplenum):
+        own[i+1]=caselist[i]
+    print(f'#{case+1} {tournament(1,peoplenum,own)}')
+
+6.데이트가는길
+nodesize , arc = map(int,input().split())
+adjmatrix=[[0]*nodesize for _ in range(nodesize)]
+for i in range(arc):
+    inputline = list(map(int,input().split()))
+    adjmatrix[inputline[0]-1][inputline[1]-1]=inputline[2]
+    adjmatrix[inputline[1]-1][inputline[0]-1] = inputline[2]
+visited = [0]*nodesize
+mindistance = 987654321
+howmany =0
+print(adjmatrix)
+def backtrack(start,tmpdistance):
+    global howmany
+    global mindistance
+    howmany+=1
+    if start==nodesize-1:
+        print(tmpdistance)
+        if tmpdistance<mindistance:
+            mindistance=tmpdistance
+    else:
+        for next in range(nodesize):
+            if adjmatrix[start][next]==0:
+                continue
+            else:
+                if not visited[next]:
+                    visited[start]=1
+                    tmpdistance+=adjmatrix[start][next]
+                    if tmpdistance>=mindistance:
+                        tmpdistance -= adjmatrix[start][next]
+                        visited[start] = 0
+                        continue
+                    backtrack(next,tmpdistance)
+                    visited[start]=0
+                    tmpdistance-=adjmatrix[start][next]
+
+backtrack(0,0)
+print(mindistance,howmany)
+
+7.powerset
+def powerset(a,k,depth):
+    if depth==k:
+        tmp=[]
+        for i in range(len(a)):
+            if a[i]==1:
+              tmp.append(i)
+        yield tmp
+    else:
+
+        a[k]=1
+        yield from powerset(a,k+1,depth)
+        a[k]=0
+        yield from powerset(a,k+1,depth)
+
+for i in powerset([0,0,0],0,3):
+    print(i)

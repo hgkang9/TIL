@@ -1,0 +1,71 @@
+#minsum
+
+import sys
+sys.stdin = open("array_sample.txt", "r")
+
+num_sum = 0
+min_sum = 999999999999
+
+def getsome(y):
+    global min_sum, num_sum
+    if y == N:
+        if num_sum > min_sum:
+            num_sum = min_sum
+            return
+    for x in range(N):
+        if visitedX[x] == False:
+
+            num_sum += n_list[y][x]
+            visitedX[x] = True
+            getsome(y + 1)
+            visitedX = False
+            num_sum -= n_list[y][x]
+
+
+T = int(input())
+
+for test_case in range(1, T+1):
+
+    min_sum = 999999999999
+
+    N = int(input())
+    n_list = [[0]*N for i in range(N)]
+    visitedX = [0] * N
+    for i in range(N):
+        n_list[i] = list(map(int, input().split()))
+    getsome(0)
+    print(f'#{test_case} {min_sum}')
+
+#준혁이의 여자친구 만나러 가는 길
+import sys
+sys.stdin = open("way.txt", "r")
+
+min_sum = 9999999999999
+cost_sum = 0
+def moving(y):
+    global cost_sum, min_sum
+    if cost_sum >= min_sum:
+        return
+    if y == n:
+        if cost_sum < min_sum:
+            min_sum = cost_sum
+            return
+    for x in range(n):
+        if way_list[y][x]:
+            visited[x] = 1
+            cost_sum += way_list[y][x]
+            moving(y+1)
+            visited[x] = 0
+            cost_sum -= way_list[y][x]
+
+
+n, m = map(int, input().split())
+
+way_list = [[0]*(n+1) for i in range(n+1)]
+visited = [0]*(n+1)
+for i in range(m):
+    start, end, cost = map(int, input().split())
+    way_list[start][end] = cost
+    way_list[end][start] = cost
+moving(1)
+print(min_sum)

@@ -1,0 +1,46 @@
+import sys
+
+sys.stdin = open("input.txt", "r")
+
+
+MyMap = [[0]*8 for i in range(8)]
+visited = [0] * 8
+Queue = [0]*1000
+Distance = [-1] * 8
+Parent = [-1] * 8
+front = -1
+rear = -1
+
+def BFS(here):
+    global front, rear
+    rear+=1
+    Queue[rear] = here
+    visited[here] = True
+    while front!=rear:
+        front+=1
+        here = Queue[front]
+        print(here)
+
+        for next in range(8) :
+            if MyMap[here][next] and not visited[next]:
+                visited[next] = True
+                Distance[next] = Distance[here] + 1
+                Parent[next] = here
+                rear+=1
+                Queue[rear] = next
+
+
+Data =  list(map(int,input().split()))
+howmany = int(len(Data) / 2)
+
+for i in range(howmany):
+     Start= Data[i*2]
+     Stop = Data[i*2+1]
+     MyMap[Start][Stop] = 1
+     MyMap[Stop][Start] = 1
+
+Distance[1] = 0
+BFS(1)
+
+print(Distance)
+print(Parent)
