@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9cfd1bba-25e4-4983-b8bb-295eb670d846" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algo/problem solving/Day 8/준혁이 여자친구 문제/준혁이의 여자친구 만나러 가는길 문제.txt" beforeDir="false" afterPath="$PROJECT_DIR$/algo/problem solving/Day 8/준혁이 여자친구 문제/준혁이의 여자친구 만나러 가는길 문제.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algo/미로의거리.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo/미로의거리.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,14 +22,16 @@
     <SUITE FILE_PATH="coverage/hg$2D.coverage" NAME="2D Coverage Results" MODIFIED="1550457773537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$delta.coverage" NAME="delta Coverage Results" MODIFIED="1550556709598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$exercise3.coverage" NAME="exercise3 Coverage Results" MODIFIED="1550476033077" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
-    <SUITE FILE_PATH="coverage/hg$.coverage" NAME="미로의거리 Coverage Results" MODIFIED="1551171289633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
+    <SUITE FILE_PATH="coverage/hg$.coverage" NAME="노드의거리 Coverage Results" MODIFIED="1551256624033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$forth.coverage" NAME="forth Coverage Results" MODIFIED="1551051756022" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$D1_3.coverage" NAME="D1-3 Coverage Results" MODIFIED="1550124474706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$color.coverage" NAME="color Coverage Results" MODIFIED="1550556694173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$view.coverage" NAME="view Coverage Results" MODIFIED="1550194200454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$bubblesort.coverage" NAME="bubblesort Coverage Results" MODIFIED="1550556714558" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$D1.coverage" NAME="D1 Coverage Results" MODIFIED="1550112423945" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
-    <SUITE FILE_PATH="coverage/hg$bfs.coverage" NAME="미로bfs Coverage Results" MODIFIED="1551165555793" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
+    <SUITE FILE_PATH="coverage/hg$string.coverage" NAME="string Coverage Results" MODIFIED="1551252254075" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
+    <SUITE FILE_PATH="coverage/hg$itoa.coverage" NAME="itoa Coverage Results" MODIFIED="1551253698981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
+    <SUITE FILE_PATH="coverage/hg$bfs.coverage" NAME="bfs Coverage Results" MODIFIED="1551236409288" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$queue.coverage" NAME="queue Coverage Results" MODIFIED="1551150325238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$D1_4.coverage" NAME="D1-4 Coverage Results" MODIFIED="1550131191988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$stack2.coverage" NAME="stack2 Coverage Results" MODIFIED="1550721144788" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
@@ -41,68 +43,14 @@
     <SUITE FILE_PATH="coverage/hg$babygin.coverage" NAME="babygin Coverage Results" MODIFIED="1550192325472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$graph2.coverage" NAME="graph2 Coverage Results" MODIFIED="1550735873473" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$binarysearch.coverage" NAME="binarysearch Coverage Results" MODIFIED="1550556721813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
+    <SUITE FILE_PATH="coverage/hg$atoi.coverage" NAME="atoi Coverage Results" MODIFIED="1551256395027" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$sequentialsearch.coverage" NAME="sequentialsearch Coverage Results" MODIFIED="1550556681458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$binarysearch2.coverage" NAME="binarysearch2 Coverage Results" MODIFIED="1550556689444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$specialsort.coverage" NAME="specialsort Coverage Results" MODIFIED="1550557528789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
     <SUITE FILE_PATH="coverage/hg$stack1.coverage" NAME="stack1 Coverage Results" MODIFIED="1550712087181" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algo" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/algo/미로bfs.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/algo/미로의거리.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="829">
-              <caret line="57" column="16" lean-forward="true" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/algo/미로의거리.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="5" column="4" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/algo/bfs.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-83">
-              <caret line="5" column="17" lean-forward="true" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/algo/que.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/algo/회전.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -117,13 +65,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/algo/flatten.py" />
-        <option value="$PROJECT_DIR$/algo/2D.txt" />
-        <option value="$PROJECT_DIR$/algo/2D.py" />
-        <option value="$PROJECT_DIR$/algo/delta.py" />
-        <option value="$PROJECT_DIR$/algo/subsetsum.py" />
-        <option value="$PROJECT_DIR$/algo/binarysearch.py" />
-        <option value="$PROJECT_DIR$/algo/sequentialsearch.py" />
         <option value="$PROJECT_DIR$/algo/exercise3.txt" />
         <option value="$PROJECT_DIR$/algo/exercise3.py" />
         <option value="$PROJECT_DIR$/algo/sum.txt" />
@@ -160,14 +101,21 @@
         <option value="$PROJECT_DIR$/algo/배열최소합.py" />
         <option value="$PROJECT_DIR$/algo/준혁.py" />
         <option value="$PROJECT_DIR$/algo/queue.py" />
-        <option value="$PROJECT_DIR$/algo/bfs.py" />
         <option value="$PROJECT_DIR$/algo/que.py" />
         <option value="$PROJECT_DIR$/algo/회전.txt" />
         <option value="$PROJECT_DIR$/algo/회전.py" />
         <option value="$PROJECT_DIR$/algo/미로의거리.txt" />
         <option value="$PROJECT_DIR$/algo/미로.txt" />
         <option value="$PROJECT_DIR$/algo/미로bfs.py" />
+        <option value="$PROJECT_DIR$/algo/노드의거리.txt" />
         <option value="$PROJECT_DIR$/algo/미로의거리.py" />
+        <option value="$PROJECT_DIR$/algo/bfs.py" />
+        <option value="$PROJECT_DIR$/algo/수도경쟁.txt" />
+        <option value="$PROJECT_DIR$/algo/수도경쟁.py" />
+        <option value="$PROJECT_DIR$/algo/string.py" />
+        <option value="$PROJECT_DIR$/algo/itoa.py" />
+        <option value="$PROJECT_DIR$/algo/atoi.py" />
+        <option value="$PROJECT_DIR$/algo/노드의거리.py" />
       </list>
     </option>
   </component>
@@ -191,11 +139,6 @@
               <item name="hg" type="b2602c69:ProjectViewProjectNode" />
               <item name="hg" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="hg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hg" type="462c0819:PsiDirectoryNode" />
-              <item name="algo" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -206,7 +149,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -220,8 +163,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.미로의거리">
-    <configuration name="회전" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.노드의거리">
+    <configuration name="수도경쟁" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hg" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -234,7 +177,29 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algo/회전.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algo/수도경쟁.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="노드의거리" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="hg" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/algo" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algo/노드의거리.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -352,7 +317,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="미로bfs" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="atoi" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hg" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -365,7 +330,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algo/미로bfs.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algo/atoi.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -374,7 +339,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="que" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="itoa" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hg" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -387,7 +352,29 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algo/que.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algo/itoa.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="string" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="hg" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/algo" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algo/string.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -398,11 +385,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.미로의거리" />
-        <item itemvalue="Python.미로bfs" />
-        <item itemvalue="Python.미로" />
-        <item itemvalue="Python.회전" />
-        <item itemvalue="Python.que" />
+        <item itemvalue="Python.노드의거리" />
+        <item itemvalue="Python.atoi" />
+        <item itemvalue="Python.itoa" />
+        <item itemvalue="Python.string" />
+        <item itemvalue="Python.수도경쟁" />
       </list>
     </recent_temporary>
   </component>
@@ -426,11 +413,12 @@
       <workItem from="1551051725073" duration="2213000" />
       <workItem from="1551053950951" duration="25628000" />
       <workItem from="1551139345827" duration="24378000" />
+      <workItem from="1551226370114" duration="23512000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191034000" />
+    <option name="totallyTimeSpent" value="214546000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -445,17 +433,17 @@
     <frame x="745" y="0" width="1182" height="1047" extended-state="0" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.15418895" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.15686275" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.3143483" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="3" weight="0.32858709" />
+      <window_info anchor="bottom" id="Version Control" order="3" weight="0.21248631" />
       <window_info anchor="bottom" id="Python Console" order="4" weight="0.32858709" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" />
-      <window_info anchor="bottom" id="Run" order="8" weight="0.28696606" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.23877327" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.3023001" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -466,6 +454,29 @@
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.15686275" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" order="0" />
+      <window_info anchor="bottom" id="Terminal" order="1" weight="0.3143483" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="3" weight="0.21248631" />
+      <window_info anchor="bottom" id="Python Console" order="4" weight="0.32858709" />
+      <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" />
+      <window_info active="true" anchor="bottom" id="Run" order="8" visible="true" weight="0.23877327" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.3023001" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" weight="0.32858709" />
+      <window_info anchor="right" id="Database" order="0" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="SciView" order="2" />
+      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -576,52 +587,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/python/Lib/codecs.py" />
-    <entry file="file://$PROJECT_DIR$/algo/screw.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="32" lean-forward="true" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo/D1-4.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo/bubblesort.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="11" lean-forward="true" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo/delta.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo/color.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="52" lean-forward="true" selection-start-line="9" selection-start-column="4" selection-end-line="10" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo/snail.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" selection-start-line="17" selection-end-line="18" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo/ladder.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19171">
-          <caret line="1009" column="199" selection-start-line="1009" selection-start-column="199" selection-end-line="1009" selection-end-column="199" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/algo/gostair.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -647,13 +612,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="21" selection-start-column="21" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo/graph2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
         </state>
       </provider>
     </entry>
@@ -735,13 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algo/ladder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/algo/view.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -815,27 +766,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algo/queue.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo/graph2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="29" column="27" lean-forward="true" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo/graph.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/queue.py" />
     <entry file="file://$PROJECT_DIR$/algo/배열최소합.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -853,13 +784,6 @@
     <entry file="file://$PROJECT_DIR$/algo/강현구.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/algo/미로.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="1" selection-start-column="1" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/algo/미로.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="855">
@@ -867,45 +791,136 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algo/미로bfs.py">
+    <entry file="file://$PROJECT_DIR$/algo/미로.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        <state>
+          <caret column="1" selection-start-column="1" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algo/que.py">
+    <entry file="file://$PROJECT_DIR$/algo/graph.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
+        <state relative-caret-position="288">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algo/회전.py">
+    <entry file="file://$PROJECT_DIR$/algo/graph2.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        <state relative-caret-position="450">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algo/bfs.py">
+    <entry file="file://$PROJECT_DIR$/algo/노드의거리.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-83">
-          <caret line="5" column="17" lean-forward="true" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        <state relative-caret-position="450">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/algo/미로의거리.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="4" />
+        <state relative-caret-position="90">
+          <caret line="5" column="5" lean-forward="true" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/회전.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/graph2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="20" lean-forward="true" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/미로bfs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/수도경쟁.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/수도경쟁.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="24" lean-forward="true" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/que.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="28" column="23" lean-forward="true" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/string.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/ladder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/atoi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/itoa.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/bfs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="16" lean-forward="true" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/algo/미로의거리.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="829">
-          <caret line="57" column="16" lean-forward="true" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
+        <state relative-caret-position="843">
+          <caret line="55" column="9" lean-forward="true" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo/노드의거리.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="31" column="28" lean-forward="true" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
         </state>
       </provider>
     </entry>

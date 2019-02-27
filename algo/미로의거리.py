@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open("미로.txt", "r")
+sys.stdin = open("미로의거리.txt", "r")
 
 TC = int(input())
 
@@ -9,7 +9,6 @@ dx = [-1, 1, 0, 0]
 def ispossible(y, x):
     global N
     if y >= 0 and y < N and x >= 0 and x < N and not visited[y][x]:
-
         return True
 
 def bfs(y, x):
@@ -19,9 +18,6 @@ def bfs(y, x):
 
     while que:
         (y, x) = que.pop(0)
-        # if data[y][x] == 3:
-        #     ans = 1
-        #     return
 
         for dir in range(4):
             newy = y + dy[dir]
@@ -53,9 +49,9 @@ for tc in range(1, TC + 1):
                 start_y = y
                 break
     ans = 0
+    res = bfs(start_y, start_x)
 
-    # bfs(start_y, start_x)
     if ans == 1:
-        print(f'#{tc} {bfs(start_y, start_x)}')
+        print(f'#{tc} {res}')
     else:
         print(f'#{tc} {ans}')
