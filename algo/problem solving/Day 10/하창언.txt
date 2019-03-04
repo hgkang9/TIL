@@ -1,0 +1,32 @@
+1.È¸¹®
+def revers(a):
+    result = ""
+    for i in range(len(a)):
+        result=result+a[len(a)-i-1]
+    return result
+
+a="1234"
+print(revers(a))
+
+2.itoa
+def itoa(n):
+    s = ""
+    while n!=0:
+        a=n%10
+        s=chr(a+48)+s
+        n=n//10
+    return s
+print(itoa(123))
+
+3.atoi
+def atoi(s):
+    lenth = len(s)
+    result = 0
+    for i in range(lenth):
+        if ord(s[i])<=57:
+            a=ord(s[i])-48
+        else:
+            a=ord(s[i])-55
+        result+=a*16**(lenth-1-i)
+    return result
+print(atoi('42FB'))

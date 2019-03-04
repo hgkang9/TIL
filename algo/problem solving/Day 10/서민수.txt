@@ -1,0 +1,38 @@
+1. È¸¹®
+# reverse
+s = list('abcde')
+print(s)
+for i in range(len(s)>>1):
+    s[i], s[-1-i] = s[-1-i], s[i]
+print(s)
+
+2. atoi
+# atoi
+Data = list('42FC')
+data = 0
+for now in range(len(Data)):
+    if '0'<=Data[now]<='9':
+        val = ord(Data[now])-ord('0')
+    elif 'A'<=Data[now]<='F':
+        val = ord(Data[now]) - ord('A') + 10
+    data=data*16 + val
+print(data)
+
+
+3. itoa
+number = 12345
+
+s = []
+while number:
+    s += chr(number%10 + ord('0'))
+    number //= 10
+
+print(s)
+start = 0
+end = len(s)-1
+while start < end:
+    s[start], s[end] = s[end], s[start]
+    start+=1
+    end-=1
+print(s)
+

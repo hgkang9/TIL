@@ -1,0 +1,9 @@
+.font {
+    font-size: 40px;
+    font-style: italic;
+    font-weight: 700; /* bold=700*/
+    font-family: 'ZCOOL KuaiLe', cursive;
+    line-height: 1.2;
+    letter-spacing: -4px;
+    text-align: center;
+}

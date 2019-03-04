@@ -1,0 +1,227 @@
+190225 미제출 분량
+1. 계산기
+for T in range(1, 11):
+    n = int(input())
+    s = input()
+    stack = []
+    result = []
+    num = [str(i) for i in range(0, 10)]
+    sbindex = []
+    pri = ['(', '+', '*']
+    top = -1
+    for i in s:
+        if i == "(":
+            stack.append(i)
+            top += 1
+            sbindex.append(top)
+        elif i in num:
+            result.append(int(i))
+        elif i == ")":
+            for si in range(top, sbindex[-1], -1):
+                result.append(stack.pop())
+                top -= 1
+            sbindex.pop()
+            stack.pop()
+            top -= 1
+        else:
+            if pri.index(stack[top]) < pri.index(i):
+                stack.append(i)
+                top += 1
+            else:
+                while pri.index(stack[top]) > pri.index(i):
+                    result.append(stack.pop())
+                    top -= 1
+                stack.append(i)
+                top += 1
+    while top > -1:
+        for si in range(top, -1, -1):
+            if stack[si] != '(':
+                result.append(stack.pop())
+                top -= 1
+            else:
+                stack.pop()
+                top -= 1
+    i = 2
+    while len(result) != 1:
+        if result[i] == '+':
+            result[i] = result[i-2] + result[i-1]
+            del result[i-1]
+            del result[i-2]
+            i -= 1
+        elif result[i] == '*':
+            result[i] = result[i-2] * result[i-1]
+            del result[i-1]
+            del result[i-2]
+            i -= 1
+        else:
+            i += 1
+    print(f'#{T} {result[0]}')
+
+2. forth
+for T in range(int(input())):
+    item = input().split()
+    num = [str(i) for i in range(10)]
+    stack = []
+    top = -1
+    for i in item:
+        if i[0] in num:
+            stack.append(int(i))
+            top += 1
+        else:
+            if i != '.':
+                if top < 1:
+                    print(f'#{T+1} error')
+                    break
+                else:
+                    b = stack.pop()
+                    a = stack.pop()
+                    top -= 2
+                    if i == '+':
+                        stack.append(a+b)
+                        top += 1
+                    elif i == '-':
+                        stack.append(a-b)
+                        top += 1
+                    elif i == '*':
+                        stack.append(a*b)
+                        top += 1
+                    elif i == '/':
+                        stack.append(a//b)
+                        top += 1
+                    else:
+                        print(f'#{T + 1} error')
+                        break
+            else:
+                if top == 0:
+                    print(f'#{T+1} {stack[top]}')
+                else:
+                    print(f'#{T + 1} error')
+
+3. 미로
+def safe(y, x):
+    if y >= 0 and y < n and x >= 0 and x < n:
+        return True
+
+
+def backtracking(y, x, startdir):
+    global found, answer, maps
+    maps[y][x] = 1
+    if y == end_y and x == end_x:
+        found = 1
+        return
+    for dir in range(4):
+        new_x = x + dirX[dir]
+        new_y = y + dirY[dir]
+
+        if safe(new_y, new_x) and maps[new_y][new_x] == 0:
+            backtracking(new_y, new_x, dir)
+            if found == 1:
+                return
+        if safe(new_y, new_x) and maps[new_y][new_x] == 3:
+            found = 1
+            return
+
+
+for T in range(int(input())):
+    n = int(input())
+    maps = [[0 for i in range(n)] for j in range(n)]
+    start_x = 0
+    start_y = 0
+    end_x = 0
+    end_y = 0
+    for i in range(n):
+        line = input()
+        for j in range(n):
+            num = int(line[j])
+            maps[i][j] = num
+            if num == 2:
+                start_y = i
+                start_x = j
+            elif num == 3:
+                end_y = i
+                end_x = j
+    dirY = [-1, 1, 0, 0]
+    dirX = [0, 0, -1, 1]
+    checkdir = [1, 0, 3, 2]
+    answersheet = ['up', 'down', 'left', 'right']
+    found = 0
+    backtracking(start_y, start_x, 1)
+    print(f'#{T+1} {found}')
+
+
+
+
+190228 미제출 분량
+1. contact_bfs
+def bfs(ls):
+    global queueilst, distancelist, nowdepth, big
+    nowdepth += 1
+    big = 0
+    for i in range(len(queueilst)):
+        now = queueilst[0]
+        del queueilst[0]
+        for j in range(100):
+            if ls[now-1][j] == 1 and distancelist[j] == 0:
+                queueilst.append(j+1)
+                distancelist[j] = nowdepth
+                if big < j + 1:
+                    big = j + 1
+
+
+for T in range(1, 11):
+    N, start = map(int, input().split())
+    net = [[0 for i in range(100)] for j in range(100)]
+    status = list(map(int, input().split()))
+    for i in range(0, N-1, 2):
+        net[status[i]-1][status[i+1]-1] = 1
+    queueilst = [start]
+    distancelist = [0 for i in range(100)]
+    distancelist[start-1] = [-1]
+    nowdepth = 0
+    maxdepth = 0
+    big = 0
+    while queueilst:
+        nowbig = big
+        bfs(net)
+    print(nowbig)
+
+2. contact_dfs
+def dfs(start, depth):
+    global distancelist
+    depth += 1
+    child = []
+    for i in range(100):
+        if net[start-1][i] and (distancelist[i] == 0 or distancelist[i] > depth):
+            distancelist[i] = depth
+            dfs(i+1, depth)
+
+
+for T in range(1, 11):
+    N, start = map(int, input().split())
+    net = [[0 for i in range(100)] for j in range(100)]
+    status = list(map(int, input().split()))
+    for i in range(0, N-1, 2):
+        net[status[i]-1][status[i+1]-1] = 1
+    distancelist = [0 for i in range(100)]
+    distancelist[start-1] = -1
+    dfs(start, 0)
+    key = max(distancelist)
+    for i in range(99, -1, -1):
+        if distancelist[i] == key:
+            answer = i + 1
+            break
+    print(f'#{T} {answer}')
+
+3. 수도요금
+for T in range(int(input())):
+    P, Q, R, S, W = map(int, input().split())
+    A = P * W
+    if R >= W:
+        B = Q
+    else:
+        B = Q + (W - R) * S
+    if A < B:
+        answer = A
+    else:
+        answer = B
+    print(f'#{T+1} {answer}')

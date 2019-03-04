@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open("¹®ÀÚ¿­ºñ±³kmp.txt", "r")
+sys.stdin = open("ë¬¸ìì—´ë¹„êµkmp.txt", "r")
 
 TC = int(input())
 
@@ -28,6 +28,7 @@ for tc in range(1,TC+1):
     p = 0
     q = 0
     count = 0
+    temp = 0
 
     while p <= len(stringgg)-1:
         if stringgg[p] == pattern[q]:
@@ -35,8 +36,10 @@ for tc in range(1,TC+1):
             p += 1
             q += 1
         else:
-            p += (count - pitable[count])
+            p = temp + count - pitable[count]
+            temp = p
             q = 0
+            count = 0
         if count == len(pattern):
             isfind = True
             break
