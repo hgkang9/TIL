@@ -1,0 +1,38 @@
+# 테이블
+L=[int(x) for x in input().split()]
+print(L)
+B=[[0]*5 for y in range(14)]  # L R 자녀 부모 레벨
+for x in range(0,len(L),2):
+    if not B[L[x]][0]:
+        B[L[x]][0]=L[x+1]       # L
+    else:
+        B[L[x]][1]=L[x+1]       # R
+    B[L[x]][2]+=1               # 자녀수
+    B[L[x+1]][3]=L[x]           # 부모
+    B[L[x+1]][4]=B[L[x]][4]+1   # 레벨
+print(B)
+
+# 13의 모든 부모
+x=13
+while B[x][3]:
+    print(B[x][3], end=' ')
+    x=B[x][3]
+
+# 이진 힙
+TC=int(input())
+for n in range(TC):
+    N=int(input())
+    L=[int(x) for x in input().split()]
+    L.insert(0, 0)
+    B=[0]
+    B.append(L[1])
+    result=0
+    for x in range(2,len(L)):
+        B.append(L[x])
+        while B[x]<B[x//2]:
+            B[x],B[x//2]=B[x//2],B[x]
+            x=x//2
+    while N!=1:
+        N=N//2
+        result+=B[N]
+    print("#%d %d"%(n+1,result))

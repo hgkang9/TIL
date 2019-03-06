@@ -5,8 +5,8 @@ howmany = int(len(data)/2)
 top = -1
 stack = []
 
-'''
-재귀
+
+# 재귀
 def dfs(here):
     print(here)
     visited[here] = True
@@ -23,8 +23,6 @@ for i in range(howmany):
     mymap[stop][start] = 1
 
 dfs(1)
-'''
-
 
 def push(x):
     global top

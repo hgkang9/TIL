@@ -1,0 +1,65 @@
+1. 이진힙
+def BinMinHeap(node):
+    parent = node//2
+    while parent >= 1:
+        if Data[node] < Data[parent]:
+            Data[node], Data[parent] = Data[parent], Data[node]
+            node//=2
+        parent//=2
+
+def SUM(last):
+    result=0
+    while Data[last//2]:
+        result += Data[last//2]
+        last//=2
+    return result
+
+for tc in range(1, int(input())+1):
+    N = int(input())
+    Data= [0]*(N+1)
+    Data[1:] = list(map(int, input().split()))
+    Heap=[]
+    for node in range(1, len(Data)):
+        BinMinHeap(node)
+    # print(Data)
+    print('#{} {}'.format(tc, SUM(len(Data)-1)))
+
+2. 중위순회
+def inorder_traversal(T):
+    if T:
+        inorder_traversal(Tree[T][0])
+        result.append(Data[T])
+        inorder_traversal(Tree[T][1])
+
+
+for tc in range(1, 11):
+    N = int(input())
+    Data = [0 for _ in range(N+1)]
+    Tree = [[0]*2 for _ in range(N+1)]
+    for i in range(1,N+1):
+        node = list(map(str, input().split())) # 번호, 문자, 왼쪽자식, 오른쪽자식
+        Data[i] = node[1]
+        for j in range(2, len(node)):
+            if node[j]:
+                Tree[i][j-2] = int(node[j])
+    #print(Data)
+    result = []
+    inorder_traversal(1)
+    print('#{} {}'.format(tc, ''.join(result)))
+
+3. 사칙연산 유효성 검사
+def IsValid():
+    result = 1
+    for i in range(1, N + 1):
+        node = list(map(str, input().split()))
+        Data[i] = node[1]
+        if Data[i] == '+' or Data[i] == '-' or Data[i] == '*' or Data[i] == '/':
+            if len(node) != 4:
+                result = 0
+    return result
+
+for tc in range(1, 11):
+    N = int(input())
+    Data = [0 for _ in range(N+1)]
+    Tree = [[0]*2 for _ in range(N + 1)]
+    print('#{} {}'.format(tc, IsValid()))

@@ -1,0 +1,101 @@
+#1. Tree 연습문제 
+
+V = int(input())
+E = V-1     # edge는 정점(vertax)-1
+Tree = [[0] * 5 for _ in range(V+1)]
+Data = list(map(int, input().split()))
+for i in range(V-1):
+    parent, child = Data[i*2:i*2+2]
+    if Tree[parent][0]==0:
+        Tree[parent][0] = child
+        Tree[parent][2] += 1
+        Tree[child][3] = parent # 부모
+        Tree[child][4] = Tree[parent][4] + 1
+    else:
+        Tree[parent][1] = child # 오른쪽 자식
+        Tree[parent][2] += 1
+        Tree[child][3] = parent # 부모
+        Tree[child][4] = Tree[parent][4] + 1
+def preorder_traverse(T):
+    if T:
+        print("%d" % T, end=' ')
+        preorder_traverse(Tree[T][0])   # LeftChild
+        preorder_traverse(Tree[T][1])   # RightChild
+
+
+def inorder_traverse(T):
+    if T:
+        inorder_traverse(Tree[T][0])
+        print("%d" % T, end=' ')
+        inorder_traverse(Tree[T][1])
+
+
+def postorder_traverse(T):
+    if T:
+        postorder_traverse(Tree[T][0])
+        postorder_traverse(Tree[T][1])
+        print("%d" % T, end=' ')
+
+
+def levelorder_traverse(T):     # 표준답안을 이용하여 푸는 함수.
+    for i in range(1,V+1):
+        print('레벨:%d' % Tree[i][4], i, end=' ')
+
+
+def parent_print(T):
+    for i in range(1,V+1):
+        print('%d의부모' % i, Tree[i][3], end=' ')
+
+preorder_traverse(1)
+print('')
+inorder_traverse(1)
+print('')
+postorder_traverse(1)
+print('')
+levelorder_traverse(1)
+print('')
+parent_print(1)
+
+
+#2. Tree-8일차- 이진 힙
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    Heap = [0]*(N+1)
+    sum = 0
+    # Tree의 노드 번호가 부모 자식 관계일 때 부모의 2배수, 2배수+1이 자식의 노드번호인 점을 이용한다.
+    Value = list(map(int, input().split()))
+    # print(Value)
+
+    def minheap(i):
+        if Heap[i] < Heap[i // 2]:
+            Heap[i], Heap[i // 2] = Heap[i // 2], Heap[i]
+            minheap(i // 2)
+
+    def josang(N):
+        global sum
+        if N !=1:
+            sum += Heap[N//2]
+            josang(N//2)
+        else:
+            print('#%d' % tc, sum)
+
+
+#3. 사칙연산 유효성 검사 [마이구미]
+
+T = 10
+for tc in range(1, T+1):
+    N = int(input())
+    Tree = [[0]*4 for _ in range(N+1)]
+    for _ in range(1, N+1):
+        Tree[_] = list(input().split())
+    # print(Tree)
+    result = 1
+
+    for i in range(1, N+1):
+        if Tree[i][1] == '+' or Tree[i][1] == '-' or Tree[i][1] == '*' or Tree[i][1] == '/':
+            if len(Tree[i]) != 4:
+                result = 0
+
+    print('#%d' % tc, result)

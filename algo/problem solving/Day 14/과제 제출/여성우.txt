@@ -1,0 +1,140 @@
+1. 순회 시리즈, 조상 다 구하기, 촌수 구하기
+def preorder(i):
+    print(i, end=' ')
+    if Tree[i][0] != 0:
+        preorder(Tree[i][0])
+    if Tree[i][1] != 0:
+        preorder(Tree[i][1])
+
+
+def inorder(i):
+    if Tree[i][0] != 0:
+        inorder(Tree[i][0])
+    print(i, end=' ')
+    if Tree[i][1] != 0:
+        inorder(Tree[i][1])
+
+
+def postorder(i):
+    if Tree[i][0] != 0:
+        postorder(Tree[i][0])
+    if Tree[i][1] != 0:
+        postorder(Tree[i][1])
+    print(i, end=' ')
+
+
+V = int(input())
+E = list(map(int, input().split()))
+
+Tree = [[0 for i in range(4)] for j in range(V+1)]
+# 0: Left Child     1: Right Child      2: Parent       3: Depth
+for i in range(V-1):
+    parent = E[i*2]
+    child = E[i*2+1]
+    if Tree[parent][0] == 0:
+        Tree[parent][0] = child
+        Tree[child][2] = parent
+        Tree[child][3] = Tree[parent][3] + 1
+    else:
+        Tree[parent][1] = child
+        Tree[child][2] = parent
+        Tree[child][3] = Tree[parent][3] + 1
+for i in range(1, V+1):
+    if Tree[i][2] == 0:
+        preorder(i)
+        print()
+        inorder(i)
+        print()
+        postorder(i)
+        print()
+        break
+
+# 조상 구하기
+i = 13
+while parent != 0:
+    parent = Tree[i][2]
+    if parent != 0:
+        print(parent, end=' ')
+        i = parent
+print()
+
+# 촌수 구하기
+a = 8
+b = 5
+ad = Tree[a][3]
+bd = Tree[b][3]
+al = 0
+bl = 0
+while ad != bd:
+    if ad > bd:
+        a = Tree[a][2]
+        ad -= 1
+        al += 1
+    elif bd > ad:
+        b = Tree[b][2]
+        bd -= 1
+        bl += 1
+while a != b:
+    a = Tree[a][2]
+    b = Tree[b][2]
+    al += 1
+    bl += 1
+print(al + bl)
+
+2. 최소힙
+for T in range(int(input())):
+    N = int(input())
+    node = list(map(int, input().split()))
+    Tree = [1000001 for i in range(N+1)]
+    for i in range(len(node)):
+        Tree[i+1] = node[i]
+        now_tag = i+1
+        parent_tag = (i + 1) // 2
+        while parent_tag != 0:
+            if Tree[parent_tag] > Tree[now_tag]:
+                Tree[parent_tag], Tree[now_tag] = Tree[now_tag], Tree[parent_tag]
+                now_tag = parent_tag
+                parent_tag = now_tag // 2
+            else:
+                break
+    now = N
+    answer = 0
+    while now > 1:
+        now = now // 2
+        answer += Tree[now]
+    print('#{} {}'.format(T+1, answer))
+
+3. 중위 연산
+def inorder(i):
+    if i < N + 1:
+        inorder(i*2)
+        print(Tree[i], end='')
+        inorder(i*2+1)
+
+
+for T in range(1, 11):
+    N = int(input())
+    Tree = [''] * (N+1)
+    for i in range(N):
+        node = input().split()
+        Tree[i+1] = node[1]
+    print('#'+str(T), end=' ')
+    inorder(1)
+    print()
+
+4. 사칙연산
+for T in range(1, 11):
+    can = True
+    N = int(input())
+    if N % 2 == 0:
+        can = False
+    for i in range(N):
+        node = input().split()
+        if not node[1].isdigit() and len(node) < 4:
+            can = False
+        if node[1].isdigit() and len(node) > 2:
+            can = False
+    if can:
+        print('#{} {}'.format(T, 1))
+    else:
+        print('#{} {}'.format(T, 0))

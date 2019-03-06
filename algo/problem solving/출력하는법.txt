@@ -1,0 +1,22 @@
+1. #과 1사이에 여백없이 한 줄에 출력하기
+
+#1
+
+print('#', end = '')
+print(1)
+ 
+2. 리스트를 []없이 출력하기
+
+a = [1, 2, 3, 4, 5]
+for i in range(len(a)):
+    print(a[i], end = ' ')
+ 
+다른 방법
+for x in a:print(x, end = ' ')
+ 
+3. #1 2 처럼 출력하기 (출력할 위치에 {}를 넣고 format()을 사용)
+
+a = 1
+b = 2
+print('#{} {}'.format(a, b))
+ print()는 줄을 바꾸지만 'end =' 를 추가하면 같은 줄에 출력할 수 있습니다. 

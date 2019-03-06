@@ -1,0 +1,166 @@
+1. Tree
+
+def preorder(T):
+    if T:
+        print(T, end=' ')
+        preorder(mymap[T][1])
+        preorder(mymap[T][2])
+
+def postorder(T):
+    if T:
+        postorder(mymap[T][1])
+        postorder(mymap[T][2])
+        print(T, end=' ')
+
+def inorder(T):
+    if T:
+        inorder(mymap[T][1])
+        print(T, end=' ')
+        inorder(mymap[T][2])
+
+V = int(input())
+data = list(map(int,input().split()))
+
+mymap = []
+for rows in range(max(data)+1):
+    row = [0]*6
+    mymap.append(row)
+# mymap[y][1] = left child
+# mymap[y][2] = right child
+# mymap[y][3] = 자녀수
+# mymap[y][4] = 부모
+# mymap[y][5] = level
+
+for i in range(0,len(data),2):
+    parent = data[i]
+    child = data[i+1]
+    if mymap[parent][1] == 0:
+        mymap[parent][1] = child
+    else:
+        mymap[parent][2] = child
+
+    mymap[parent][3] += 1
+    mymap[child][4] = parent
+    mymap[child][5] = mymap[parent][5] +1
+
+
+print('Pre_Order')
+preorder(1)
+print('\nPost_Order')
+postorder(1)
+print('\nIn_Order')
+inorder(1)
+
+node = 13
+while True:
+    if mymap[node][4]==0:
+        break
+    print('\n',mymap[node][4])
+    node = mymap[node][4]
+
+
+
+2. heap 
+
+T = int(input())
+def resultsum(heap,N):
+    tmp=0
+    while True:
+        N=N//2
+        if N<=0:
+            break
+        else:
+            tmp+=heap[N]
+    return tmp
+
+for time in range(T):
+    N = int(input())
+    data = list(map(int,input().split()))
+    heap=[0]
+
+    for idx in range(len(data)):
+        if idx == 0:
+            heap.append(data[idx])
+        else:
+            heap.append(data[idx])
+            i =len(heap)-1
+            while True:
+                if heap[i] < heap[i//2]:
+                    heap[i], heap[i//2] = heap[i//2], heap[i]
+                else:
+                    pass
+                i = i//2
+                if i < 1:
+                    break
+
+    result = resultsum(heap,N)
+    print('#{0} {1}'.format(time+1,result))
+
+
+3. 중위순회
+
+ans =''
+def inorder(T):
+    global ans
+    if T:
+        inorder(mymap[T][1])
+        ans += mymap[T][3]
+        inorder(mymap[T][2])
+
+
+for time in range(10):
+    N = int(input())
+    mymap = [[0]*4 for _ in range(N+1)]
+
+    for nodes in range(N):
+        node = list(input().split())
+        for ele in range(len(node)):
+            if ele ==1:
+                mymap[int(node[0])][3] = node[ele]
+            elif ele==2:
+                mymap[int(node[0])][1] = int(node[ele])
+            elif ele==3:
+                mymap[int(node[0])][2] = int(node[ele])
+            elif ele==0:
+                mymap[int(node[0])][0] = int(node[ele])
+    print(mymap)
+    inorder(1)
+    print('#{0} {1}'.format(time+1, ans))
+    ans=''
+
+
+
+4. 사칙연산 유효성 검사
+
+ans = 1
+def preorder(T):
+    global ans
+    if T:
+        if mymap[T][1] == '+' or mymap[T][1] =='-' or mymap[T][1] =='/' or mymap[T][1] =='*':
+            if int(mymap[T][2])==0 or int(mymap[T][3])==0 :
+                ans = 0
+                return
+        preorder(mymap[T][2])
+        preorder(mymap[T][3])
+
+
+for time in range(10):
+    N = int(input())
+    mymap = [[0]*5 for _ in range(N+1)]
+
+    for nodes in range(N):
+        node = list(input().split())
+        for ele in range(len(node)):
+            mymap[int(node[0])][0] = int(node[0])
+            if ele == 1:
+                mymap[int(node[0])][1] = node[ele]
+            elif ele == 2:
+                mymap[int(node[0])][2] = int(node[2])
+                mymap[int(node[2])][4] =  int(node[0])
+            elif ele == 3:
+                mymap[int(node[0])][3] = int(node[3])
+                mymap[int(node[3])][4] = int(node[0])
+
+    preorder(1)
+    print('#{0} {1}'.format(time+1,ans))
+    ans=1

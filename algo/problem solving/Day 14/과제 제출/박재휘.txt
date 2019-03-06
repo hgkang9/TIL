@@ -1,0 +1,228 @@
+####### 회문1
+import sys
+
+sys.stdin = open('input.txt','r')
+def find(y):
+    global count, flag
+    x=0
+    if y == (num1-1):
+        return False
+
+
+    for x in range(num1):
+        count = 0
+
+        if x + target > num1:
+            continue
+        if data[y][x]==data[y][x+target-1]:
+            for sp in range(tar):
+                if data[y][x+sp]==data[y][x+target-1-sp]:
+                    count +=1
+                    if count==tar:
+                        flag=1
+                        for i in range(x,x+target):
+                            result.append(data[y][i])
+                        print('#{} {}'.format(j+1, "".join(result)))
+                        return
+                elif (x+target-1-sp) != num1:
+                    continue
+                else:
+                    y= y+1
+                    find(y)
+                    return
+
+    else:
+        y = y+1
+        find(y)
+        return
+def find_col(x):
+    global count
+    y=0
+
+    if x == (num1-1):
+        return False
+
+    for y in range(num1):
+        count = 0
+        if y + target > num1:
+            continue
+        if data[y][x]==data[y+target-1][x]:
+            for sp in range(tar):
+                if data[y+sp][x]==data[y+target-1-sp][x]:
+                    count +=1
+                    if count==tar:
+                        for i in range(y,y+target):
+                            result.append(data[i][x])
+                        return
+                elif (y+target-1-sp) != num1:
+                    continue
+                else:
+                    x= x+1
+                    find_col(x)
+                    return
+
+    else:
+        x = x+1
+        find_col(x)
+        return
+num=int(input())
+for j in range(num):
+    num1,target = list(map(int, input().split()))
+    # print(num1,target)
+    data = [str(input())for _ in range(num1)]
+    # print(data[2][2])
+    # print(data)
+    count=0
+    tar= int(target//2)
+    # print(tar)
+    flag=0
+    result=[]
+
+
+    find(0)
+    if flag==0:
+        result=[]
+        find_col(0)
+        print('#{} {}'.format(j + 1, "".join(result)))
+
+
+############### kmp
+import sys
+
+sys.stdin = open('input.txt','r')
+def KMP(r):
+    global i
+    for j in r:
+
+        if data1[i] == data1[j]:
+            pi[j+1] = i+1
+            i +=1
+        elif data1[i] != data1[j]:
+            if data1[0] == data1[j]:
+                pi[j+1] = 1
+                i=1
+                continue
+            pi[j+1] = 0
+
+            i = 0
+        # print(pi)
+def FOR(y):
+    global count, jump, z, flag
+
+    if data1==data2:
+        flag=1
+        return
+    if len(data1)>len(data2) or len(data1)>100 or len(data2)>1000:
+        return
+
+
+    while jump != (len(data2)-len(data1)):
+        count=0
+        jump = jump + abs(count - pi[count])
+        if len(data1) > len(data2[jump:]):
+            return
+        for jmp in range(jump,(len(data2))):
+            if len(data1) > len(data2[jump:]):
+                return
+            if data1[z] != data2[jmp]:
+                z = 0
+            if data1[z] == data2[jmp]:
+                z += 1
+                if z == len(data1):
+                    flag=1
+                    return
+                count += 1
+            else : break
+
+
+
+
+
+num=int(input())
+for j in range(num):
+    data1 = list(str(input()))
+    data2 = list(str(input()))
+    # print(data1, data2)
+    pi = [-1]+[0]+[999]*(len(data1)-2)
+    # print(pi)
+    i=0
+    z=0
+    count=0
+    jump=0
+    r = range(1,len(data1)-1)
+    # print(r)
+    flag=0
+
+    KMP(r)
+    # print(len(data2[2:]), len(data1))
+    FOR(0)
+    if flag ==1:
+        print('#%s 1' %(j+1) )
+    else: print('#%s 0' %(j+1))
+
+################# 이진힙(미완)
+import sys
+sys.stdin = open("input.txt","r")
+
+num= int(input())
+for j in range(num):
+    num1= int(input())
+    data=[0]+list(map(int,input().split()))
+    data.append(999999)
+    print(data)
+    mm = [23,51,23,55]
+
+    my_index=[]
+    for i in range(num1+1):
+        my_index.append(i//2)
+
+    for i in range(1, num1-3):
+
+
+        p=data.index(min(data[i*2],data[i*2+1]))
+        if data[i] > data[i*2] or data[i] > data[i*2+1]:
+
+            data[i], data[p] = data[p], data[i]
+            print(data, data[i], data[p], i)
+
+############ 테이블
+import sys
+
+sys.stdin = open('input.txt','r')
+num=int(input())
+data=list(map(int,input().split()))
+r_data=[]
+y=0
+x=0
+map=[[0]*5 for i in range(num+1)]
+# print(range(num-1))
+for i in range(num-1):
+    y=data[i*2]
+    x=data[i*2+1]
+    r_data.append((y,x))
+    map[r_data[i][1]][3] = r_data[i][0]
+
+    if map[y][1] != 0:
+        map[y][0]=x
+        map[y][0] ,map[y][1] = map[y][1], map[y][0]
+    map[y][1] = x
+
+
+for i in range(len(r_data)):
+    count = 0
+    if map[i][0] != 0:
+        count +=1
+    if map[i][1] !=0 :
+        count +=1
+    map[i][2] = count
+
+for i in range(2,len(map)):
+    map[i][4] = map[map[i][3]][4]+1
+
+for i in range(len(map)):
+    print(i, map[i])
+
+
+
+
+
