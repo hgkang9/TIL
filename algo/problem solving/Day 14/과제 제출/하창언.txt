@@ -1,0 +1,111 @@
+1. 트리구조 생성 및 탐색
+def maketree():
+    nodesize = int(input())
+    caseinput = list(map(int, input().split()))
+    treemap = [[0, 0, 0, 0, 1] for _ in range(nodesize + 1)]
+    for i in range(0,len(caseinput)-1,2):
+        if not treemap[caseinput[i]][0]:
+            treemap[caseinput[i]][0]=caseinput[i+1]
+            treemap[caseinput[i]][2]+=1
+            treemap[caseinput[i+1]][3]=caseinput[i]
+            treemap[caseinput[i+1]][4]=treemap[caseinput[i]][4]+1
+        elif not treemap[caseinput[i]][1]:
+            treemap[caseinput[i]][1] = caseinput[i + 1]
+            treemap[caseinput[i]][2] += 1
+            treemap[caseinput[i + 1]][3] = caseinput[i]
+            treemap[caseinput[i + 1]][4] = treemap[caseinput[i]][4] + 1
+    return treemap
+def preorder(treemap,target):
+    print(target)
+    if treemap[target][0]:
+        preorder(treemap,treemap[target][0])
+    if treemap[target][1]:
+        preorder(treemap, treemap[target][1])
+def Inorder(tremap,target):
+    if treemap[target][0]:
+        Inorder(treemap,treemap[target][0])
+    print(target)
+    if treemap[target][1]:
+        Inorder(treemap, treemap[target][1])
+def postorder(treemap,target):
+    if treemap[target][0]:
+        postorder(treemap,treemap[target][0])
+    if treemap[target][1]:
+        postorder(treemap, treemap[target][1])
+    print(target)
+def levelorder(treemap,target):
+    stack = [target]
+    while True:
+        if not stack:
+            break
+        target=stack[0]
+        print(target)
+        if treemap[target][0]:
+            stack.append(treemap[target][0])
+        if treemap[target][1]:
+            stack.append(treemap[target][1])
+        stack.pop(0)
+treemap=maketree()
+preorder(treemap,1)
+print('-------')
+Inorder(treemap,1)
+print('-------')
+postorder(treemap,1)
+print('-------')
+levelorder(treemap,1)
+
+2.중위순회
+def maketree(inputline,nodemap):
+    nodemap[int(inputline[0])][0]=int(inputline[1]) if inputline[1].isdigit() else inputline[1]
+    for i in range(2,len(inputline)):
+        nodemap[int(inputline[0])][i-1]=int(inputline[i])
+def check(nodemap):
+    for line in nodemap[::-1]:
+        if not str(line[0]).isdigit():
+            if line[1] and line[2]:
+                if str(nodemap[line[1]][0]).isdigit() and str(nodemap[line[2]][0]).isdigit():
+                    line[0]=1
+                    continue
+            return False
+    return True
+for case in range(10):
+    nodesize = int(input())
+    nodemap = [[0, 0, 0] for _ in range(nodesize + 1)]
+    for _ in range(nodesize):
+        inputline = input().split()
+        maketree(inputline,nodemap)
+    print('#',case+1,sep="",end=" ")
+    print('1' if check(nodemap) else '0')
+
+3.이진힙
+casesize = int(input())
+def makeheap(inputlist,nodearray):
+    nodearray[1]=inputlist[0]
+    for i in range(1,len(inputlist)):
+        switch(i+1,inputlist[i],nodearray)
+def switch(idx,targetnum,nodearray):
+    if idx<=0:
+        nodearray[idx]=targetnum
+    else:
+        if nodearray[idx//2]>=targetnum:
+            nodearray[idx]=nodearray[idx//2]
+            switch(idx//2,targetnum,nodearray)
+        else:
+            nodearray[idx]=targetnum
+def result(nodearray,nodenum):
+    tmp=0
+    while True:
+        nodenum = nodenum // 2
+        if nodenum<=0:
+            break
+        else:
+            tmp+=nodearray[nodenum]
+    return tmp
+
+for case in range(casesize):
+    nodenum = int(input())
+    nodearray = [0]*(nodenum+1)
+    inputlist = list(map(int,input().split()))
+    makeheap(inputlist,nodearray)
+    caseresult=result(nodearray,nodenum)
+    print('#{0} {1}'.format(case+1,caseresult))

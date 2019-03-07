@@ -29,10 +29,6 @@ print(ans)
 
 
 
-
-
-
-
 # for i in range(1<<l):
 #     subset = []
 #     for j in range(l):
