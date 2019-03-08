@@ -1,0 +1,31 @@
+import sys
+sys.stdin = open("input.txt")
+ans = 0
+
+minnum = 987654321
+Visited = [0]*100000
+
+def myabs(a,b):
+    if a > b: return a - b
+    else : return b - a
+
+def GetSome(whatfire, distance):
+    global minnum
+    if whatfire==firenum :
+        minnum = min(minnum, distance)
+        return
+    for next in range(pumpnum):
+        if  Visited[next]==0:
+            Visited[next] = True
+            distance +=  myabs(Pump[next],Fire[whatfire])
+            GetSome(whatfire+1, distance)
+            distance -= myabs(Pump[next], Fire[whatfire])
+            Visited[next] = False
+
+
+pumpnum,firenum = map(int, input().split())
+Pump = list(map(int, input().split()))
+Fire = list(map(int, input().split()))
+GetSome(0, 0)
+
+print(minnum)
