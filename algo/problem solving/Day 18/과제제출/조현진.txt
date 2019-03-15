@@ -1,0 +1,16 @@
+# 숫자추가
+T=int(input())
+for t in range(T):
+    Q=[int(x) for x in input().split()]
+    L=[int(x) for x in input().split()]
+    A=[[int(x) for x in input().split()]for y in range(Q[1])]
+    map=[0]*(Q[0]+Q[1])
+    for i in range(len(L)):
+        map[i]=L[i]
+    for i in range(Q[1]):
+        j=Q[0]+i-1
+        while j!=A[i][0]-1:
+            map[j+1]=map[j]
+            j-=1
+        map[A[i][0]]=A[i][1]
+    print('#%d %d'%(t+1,map[Q[2]]))

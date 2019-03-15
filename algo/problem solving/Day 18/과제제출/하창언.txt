@@ -1,0 +1,181 @@
+1. 스도쿠
+def checkCNR(casemap):
+    for col in range(9):
+        ver = [0]*10
+        hor = [0] * 10
+        for row in range(9):
+            # print(casemap[col][row],casemap[row][col],ver,hor)
+            if ver[casemap[col][row]]:
+                return False
+            else:
+                ver[casemap[col][row]]=1
+            if hor[casemap[row][col]]:
+                return False
+            else:
+                hor[casemap[row][col]]=1
+    return True
+def boxcheck(casemap):
+    for col in range(3):
+        for row in range(3):
+            boxs = [0]*10
+            for dc in range(3):
+                for dr in range(3):
+                    # print(boxs,casemap[col*3+dc][row*3+dr])
+                    if boxs[casemap[col*3+dc][row*3+dr]]:
+                        return False
+                    else:
+                        boxs[casemap[col * 3 + dc][row * 3 + dr]]=1
+    return True
+for i in range(int(input())):
+    casemap = [list(map(int,input().split())) for _ in range(9)]
+    print('#',i+1,sep="",end=" ")
+    if checkCNR(casemap) and boxcheck(casemap):
+        print('1')
+    else:
+        print('0')
+
+2. 숫자 더하기
+for case in range(int(input())):
+    caseinfo = list(map(int,input().split()))
+    caselist = list(map(int,input().split()))
+    for i in range(caseinfo[1]):
+        a,b = map(int,input().split())
+        caselist.insert(a,b)
+    print('#{} {}'.format(case+1,caselist[caseinfo[2]]))
+
+3.수열더하기
+class node():
+    def __init__(self,n,link = None,parent = None):
+        self.data = n
+        self.link = link
+        self.parent = parent
+
+def enque(lst):     #내 값, 자식, 부모 정보를 입력
+    head = None
+    p = None
+    for ele in lst:
+        if not p:
+            head = node(ele)
+            p = head
+        else:
+            p.link = node(ele)
+            p.link.parent = p
+            p = p.link
+    return head,p
+
+# def printn(head):     #헤드 기준 출력 해주는 함수
+#     p = head
+#     while p:
+#         print(p.data,end=" ")
+#         p=p.link
+#     print()
+
+
+for case in range(int(input())):
+    n,m = map(int,input().split())
+    result = list(map(int,input().split()))
+    head , tail = enque(result)     #전체 링크의 머리와 끝
+    for _ in range(m-1):
+        lst = list(map(int,input().split()))
+        start,end = enque(lst)      #새로 들어온 링크의 머리와 끝
+        p = head
+        while True:
+            if start.data<head.data:        #젤 앞에 오는 경우
+                end.link = head
+                head.parent = end
+                head = start
+                break
+            elif not p.link:        #젤 뒤
+                tail.link = start
+                start.parent = tail
+                tail = end
+                break
+            elif start.data<p.link.data:        #가운데
+                end.link = p.link
+                p.link.parent = end
+                p.link = start
+                start.parent = p
+                break
+            else:
+                p = p.link
+                
+    p = tail        #뒤에서 부터 10개 출력
+    print('#',case+1,sep="",end=" ")
+    for i in range(10):
+        print(p.data,end=" ")
+        p = p.parent
+    print()
+
+4.암호
+class node():
+    def __init__(self,n):
+        self.data = n
+        self.link = None
+        self.parent = None
+
+def enque(lst):     #내 값, 자식, 부모 정보를 입력
+    head = None
+    p = None
+    for ele in lst:
+        if not p:
+            head = node(ele)
+            p = head
+        else:
+            p.link = node(ele)
+            p.link.parent = p
+            p = p.link
+    p.link = head
+    head.parent = p
+    return head,p
+
+def insert(p):
+    global head,tail
+    newnode = node(p.data + p.link.data)
+    if p.link == head:
+        tail = newnode
+    # elif p.link == tail:
+    #     tail = newnode
+    newnode.link = p.link
+    p.link.parent = newnode
+    p.link = newnode
+    newnode.parent = p
+    return newnode
+
+for case in range(int(input())):
+    n,m,k = map(int,input().split())
+    head,tail = enque(list(map(int,input().split())))
+    start = head
+    for time in range(k):
+        for idx in range(m-1):
+            start = start.link
+        start = insert(start)
+    #     print(start.parent.data,start.data,start.link.data)
+    p = tail
+    print("#",case+1,sep="",end=" ")
+    count = 0
+    while True:
+        if count > 9:
+            break
+        print(p.data,end=" ")
+        p = p.parent
+        if p==tail:
+            break
+        count+=1
+    print()
+
+5.수열 편집
+def solve(order,lst):
+    if order[0]=='I':
+        lst.insert(int(order[1]),int(order[2]))
+    elif order[0]=='D':
+        del lst[int(order[1])]
+    elif order[0]=='C':
+        lst[int(order[1])] = int(order[2])
+for case in range(int(input())):
+    n,m,k = map(int,input().split())
+    lst = list(map(int,input().split()))
+    for i in range(m):
+        order = input().split()
+        solve(order,lst)
+    result = lst[k] if k<len(lst) else -1
+    print('#{} {}'.format(case+1,result))

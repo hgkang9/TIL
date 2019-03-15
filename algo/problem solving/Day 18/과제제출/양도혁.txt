@@ -1,0 +1,299 @@
+1 스도쿠
+def chk(l) :
+    for i in range(1,10) :
+        if not l.count(i) == 1:
+            return 0
+    return 1
+for i in range(int(input())) :
+    m = [] #가로
+    r = [] #네모
+    k = [] #세로
+    cnt = 1
+    for t in range(9):
+        k.append([])
+        r.append([])
+    for j in range(9) :
+        m.append(list(map(int,input().split())))
+        for t in range(9) :
+            k[t].append(m[j][t])
+            r[t//3*3+j//3].append(m[j][t])
+    for j in range(9) :
+        if chk(k[j]) and chk(m[j]) and chk(r[j]) :
+            continue
+        else :
+            cnt = 0
+            break
+    print('#%d %d'%((i+1),(cnt)))
+
+2 숫자추가
+class Node :
+	def __init__(self,data,link=None):
+		self.data = data
+		self.link = link
+def setlist(item) :
+	global head
+	new = Node(item)
+	if not head :
+		head = new
+	else :
+		p = head
+		while p.link :
+			p = p.link
+		p.link = new
+def insert(item,idx) :
+	global head
+	if idx == 0 :
+		head = Node(item,head)
+		return
+	cnt = 0
+	p = head
+	while p :
+		if cnt+1 == idx :
+			p.link = Node(item,p.link)
+		p = p.link
+		cnt += 1
+
+for tc in range(int(input())):
+	n,m,l = map(int,input().split())
+	head = None
+	for i in list(map(int,input().split())) :
+		setlist(i)
+
+	for i in range(m) :
+		idx,item = map(int,input().split())
+		insert(item,idx)
+	p = head
+	cnt = 0
+	p = head
+	while p:
+		if cnt == l:
+			print('#%d %d'%((tc+1),p.data))
+			break
+		cnt += 1
+		p = p.link
+
+3 수열합치기
+class Node :
+	def __init__(self,data,link=None,prelink=None):
+		self.data = data
+		self.prelink = prelink
+		self.link = link
+def setlist(head,idx,item) :        # f
+	for i in item :
+		new = Node(i)
+		if not head :
+			head = new
+			tail[idx]=new
+		else :
+			p = tail[idx]
+			# while p.link :
+			# 	p = p.link
+			p.link = new
+			new.prelink = p
+			tail[idx] = new
+	return head
+
+def insert(head1,head2,idx) :
+	p1 = head1
+	p2 = head2
+	item = p2.data
+	chkitem = p1.data
+	if chkitem >= item :
+		while p2 :
+			# print(p2.data)
+			if p2.link == None :
+				p2.link = p1
+				p1.prelink = p2
+				return head2
+			p2 = p2.link
+		# return
+	while p1 :
+		if p1.data > item :
+			break
+		else :
+			if p1.link == None :
+				p1.link = p2
+				p2.prelink = p1
+				tail[0] = tail[idx]
+				return head1
+			p1 = p1.link
+	pt = p1.prelink
+	pt.link = p2
+	p2.prelink = pt
+	while p2:
+		if p2.link == None :
+			p2.link = p1
+			p1.prelink=p2
+			# tail[0] = tail[idx]
+			return head1
+		p2 = p2.link
+
+
+for tc in range(int(input())):
+	n,m = map(int,input().split())
+	Data = [0]*m
+	tail = [0]*m
+	for i in range(m) :
+		Data[i] = setlist(Data[i],i,list(map(int,input().split())))
+	for i in range(1,m) :
+		Data[0] = insert(Data[0],Data[i],i)
+		# Data[0] = insert(Data[0],Data[2])
+		# Data[0] = insert(Data[0],Data[3])
+	# for i in range(m) :
+	p = tail[0]
+	print('#%d'%(tc+1),end=' ')
+	cnt = 0
+	while p:
+		if cnt > 9 :
+			break
+		print(p.data,end=' ')
+		p = p.prelink
+		cnt+=1
+	print()
+
+4 암호
+class Node :
+	def __init__(self,data,link=None,pre=None):
+		self.data = data
+		self.link = link
+		self.pre = pre
+
+
+def Enqueue(item) :
+	global head
+	newNode = Node(item)
+	if head == None :
+		head = newNode
+	else :
+		p = head
+		while p.link :
+			if p.link == head:
+				break
+			p = p.link
+		newNode.link = head
+		newNode.prelink = p
+		p.link = newNode
+
+for tc in range(int(input())) :
+	n,m,k = map(int,input().split())
+	head = None
+	for i in list(map(int,input().split())) :
+		Enqueue(i)
+	time = 0
+	cnt = 0
+	p = head
+
+	while p :
+		if time == k :
+			break
+		cnt += 1
+		p = p.link
+		if cnt % m == m-1 :
+			new = Node((p.data+p.link.data))
+			new.link = p.link
+			p.link.pre = new
+			new.pre = p
+			p.link = new
+			time += 1
+	p = head
+	cnt = 0
+	print('#%d '%(tc+1),end='')
+	while p :
+		# print(p.data)
+		if p.link == head :
+			cnt = 0
+			while p :
+				if cnt > 9 :
+					break
+				if p == head:
+					print(p.data,end=' ')
+					break
+				print(p.data,end= ' ')
+				p = p.pre
+				cnt+=1
+			break
+		p.link.pre = p
+		p = p.link
+	print()
+
+
+
+5. 수열편집
+class Node :
+	def __init__(self,data,link=None):
+		self.data = data
+		self.link = link
+def setlist(item) :
+	global head
+	new = Node(item)
+	if not head :
+		head = new
+	else :
+		p = head
+		while p.link :
+			p = p.link
+		p.link = new
+def insert(item,idx) :
+	global head
+	if idx == 0 :
+		head = Node(item,head)
+		return
+	cnt = 0
+	p = head
+	while p :
+		if cnt+1 == idx :
+			p.link = Node(item,p.link)
+		p = p.link
+		cnt += 1
+def delete(idx) :
+	global head
+	if idx == 0 :
+		head = head.link
+	cnt = 0
+	p = head
+	while p :
+		if cnt+1 == idx :
+			p.link = p.link.link
+			break
+		p = p.link
+		cnt+=1
+def edit(item,idx) :
+	global head
+	cnt = 0
+	p = head
+	while p :
+		if cnt == idx :
+			p.data = item
+			break
+		p=p.link
+		cnt+=1
+for tc in range(int(input())):
+	n,m,l = map(int,input().split())
+	head = None
+	for i in list(map(int,input().split())) :
+		setlist(i)
+	Data = []
+	for i in range(m) :
+		Data.append(input().split())
+	for i in Data :
+		if i[0] == 'I' :
+			insert(int(i[2]),int(i[1]))
+		elif i[0] == 'D' :
+			delete(int(i[1]))
+		elif i[0] == 'C' :
+			edit(int(i[2]),int(i[1]))
+		p = head
+		# while p:
+		# 	print(p.data)
+		# 	p = p.link
+	cnt = 0
+	p = head
+	result = -1
+	while p:
+		# print(p.data)
+		if cnt == l:
+			result = p.data
+			break
+		cnt += 1
+		p = p.link
+	print('#%d %d'%((tc+1),result))

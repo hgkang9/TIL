@@ -1,0 +1,67 @@
+import sys
+import random
+import time
+import copy
+sys.stdin = open("input.txt")
+def merge_sort2(m):
+    if len(m) <= 1 :
+        return m
+
+    mid = len(m) // 2
+    left = m[:mid]
+    right = m[mid:]
+
+    left = merge_sort(left)
+    right = merge_sort(right)
+
+    result = []
+    while len(left) > 0 and len(right) > 0 :
+        if left[0] <= right[0] :
+            result.append(left.pop(0))
+        else :
+            result.append(right.pop(0))
+    if len(left) > 0 :
+        result.extend(left)
+    if len(right) > 0 :
+        result.extend(right)
+
+    return result
+
+def merge(left, right, data):
+    i = j = k = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            data[k] = left[i]; i += 1;k += 1
+        else:
+            data[k] = right[j]; j += 1;k += 1
+
+    if i == len(left):
+        while j < len(right): data[k] = right[j]; j += 1;k += 1
+
+    elif j == len(right):
+        while i < len(left): data[k] = left[i]; i += 1;k += 1
+    return data
+
+def merge_sort(data):
+    if len(data)<=1 : return data
+    left = merge_sort(data[:len(data)//2])
+    right = merge_sort(data[len(data)//2:])
+    return merge(left, right, data)
+
+data=[random.randint(1,1000) for _ in range(1000000)]
+#data = list(map(int, input().split()))
+data2 = copy.deepcopy(data)
+
+st = time.time()
+print( merge_sort(data)[:10] )
+print(time.time() - st)
+
+st = time.time()
+print( merge_sort2(data2)[:10] )
+print(time.time() - st)
+
+
+
+
+
+

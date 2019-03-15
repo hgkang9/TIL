@@ -1,0 +1,23 @@
+import sys
+sys.stdin = open("input.txt")
+count = 0
+
+visited =[[[0]*100 for _ in range(100)] for j in range(100)]
+count = 0
+def GetSome(a,b,c) :
+    global count
+    if a+b+c>100 : return
+    if a > b or b > c : return
+    if a+b+c ==100 :
+        count+=1;
+        print(a,b,c)
+        return
+    if visited[a+1][b][c]==False :  visited[a+1][b][c]=True; GetSome(a+1,b,c)
+    if visited[a][b+1][c]==False :  visited[a][b+1][c]=True; GetSome(a , b+1, c)
+    if visited[a][b][c+1]==False:  visited[a][b][c+1]=True; GetSome(a, b, c+1)
+
+GetSome(1,1,1)
+print(count)
+
+
+

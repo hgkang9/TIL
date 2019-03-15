@@ -1,0 +1,315 @@
+1. 숫자추가
+class Node:
+    def __init__(self, data, node=None):
+        self.data = data
+        self.link = node
+
+
+class Linked:
+    head = None
+    num = 0
+
+    def addtolist(self, data):
+        node = Node(data)
+        if self.head == None:
+            self.head = node
+            self.num += 1
+        else:
+            p = self.head
+            while p.link != None:
+                p = p.link
+            p.link = node
+
+    def addindex(self, index, data):
+        node = Node(data)
+        p = self.head
+        if index == 0:
+            node.link = self.head
+            self.head = node
+        else:
+            for i in range(index-1):
+                p = p.link
+            node.link = p.link
+            p.link = node
+
+    def searchindex(self, index):
+        p = self.head
+        if index == 0:
+            print(p.data)
+        else:
+            for i in range(index):
+                p = p.link
+            print(p.data)
+
+
+for T in range(int(input())):
+    linked = Linked()
+    N, M, L = map(int, input().split())
+    nums = list(map(int, input().split()))
+    for i in nums:
+        linked.addtolist(i)
+    for i in range(M):
+        idx, d = map(int, input().split())
+        linked.addindex(idx, d)
+    print('#{}'.format(T+1), end=' ')
+    linked.searchindex(L)
+
+2. 수열 합치기
+class Node:
+    def __init__(self, data, node=None):
+        self.data = data
+        self.link = node
+        self.prelink = node
+
+
+class Linked:
+    head = None
+    tail = None
+    num = 0
+
+    def addtolist(self, data):
+        node = Node(data)
+        if self.head == None:
+            self.head = node
+            self.tail = node
+            self.num += 1
+        else:
+            p = self.tail
+            node.prelink = p
+            p.link = node
+            self.tail = node
+
+    def findjoin(self, sub):
+        p = self.head
+        p2 = sub.head
+        while p.data <= p2.data and p.link != None:
+            p = p.link
+        if p.link == None and p.data <= p2.data:
+            p.link = p2
+            p2.prelink = p
+            self.tail = sub.tail
+        else:
+            post = p
+            if post == self.head:
+                self.head = p2
+            else:
+                p = p.prelink
+                p2.prelink = p
+                p.link = p2
+            p2 = sub.tail
+            p2.link = post
+            if post:
+                post.prelink = p2
+
+
+for T in range(int(input())):
+    N, M = map(int, input().split())
+    linked = Linked()
+    numl = list(map(int, input().split()))
+    for i in numl:
+        linked.addtolist(i)
+    for i in range(M-1):
+        sublinked = Linked()
+        numl = list(map(int, input().split()))
+        for j in range(N):
+            sublinked.addtolist(numl[j])
+        linked.findjoin(sublinked)
+    p = linked.tail
+    print('#{}'.format(T+1), end=' ')
+    for i in range(9):
+        print(p.data, end=' ')
+        p = p.prelink
+    print(p.data)
+
+3. 암호
+class Node():
+    def __init__(self, data, node=None):
+        self.data = data
+        self.link = node
+        self.prelink = node
+
+
+class Linked:
+    head = None
+    num = 0
+
+    def addtolist(self, data):
+        node = Node(data)
+        if self.head == None:
+            self.head = node
+            node.link = self.head
+            node.prelink = self.head
+            self.num += 1
+
+        else:
+            did = False
+            now = self.head
+            while now.link != self.head:
+                now = now.link
+            now.link = node
+            self.head.prelink = node
+            node.link = self.head
+            node.prelink = now
+            self.num += 1
+
+    def deletenode(self, node):
+        if node == self.head:
+            self.head = node.link
+        node.prelink.link, node.link.prelink = node.link, node.prelink
+        self.num -= 1
+
+    def printall(self):
+        now = self.head
+        for i in range(self.num):
+            print(now.data)
+            now = now.link
+
+    def addpass(self, m, k):
+        p = self.head
+        for i in range(k):
+            for i in range(m-1):
+                p = p.link
+            node = Node(p.data+p.link.data)
+            node.prelink = p
+            node.link = p.link
+            p.link.prelink = node
+            p.link = node
+            self.num += 1
+            p = node
+
+
+for T in range(int(input())):
+    linked = Linked()
+    N, M, K = map(int, input().split())
+    numl = list(map(int, input().split()))
+    for i in numl:
+        linked.addtolist(i)
+    linked.addpass(M, K)
+    p = linked.head.prelink
+    print('#{}'.format(T+1), end=' ')
+    tag = min(linked.num-1, 9)
+    for i in range(tag):
+        print(p.data, end=' ')
+        p = p.prelink
+    print(p.data)
+
+4. 수열 편집
+class Node:
+    def __init__(self, data, node=None):
+        self.data = data
+        self.link = node
+
+
+class Linked:
+    head = None
+    num = 0
+
+    def addtolist(self, data):
+        node = Node(data)
+        if self.head == None:
+            self.head = node
+            self.num += 1
+        else:
+            p = self.head
+            while p.link != None:
+                p = p.link
+            p.link = node
+            self.num += 1
+
+    def addindex(self, index, data):
+        self.num += 1
+        node = Node(data)
+        p = self.head
+        if index == 0:
+            node.link = self.head
+            self.head = node
+        else:
+            for i in range(index-1):
+                p = p.link
+            node.link = p.link
+            p.link = node
+
+    def deleteindex(self, index):
+        self.num -= 1
+        p = self.head
+        if index == 0:
+            self.head = p.link
+        else:
+            for i in range(index-1):
+                p = p.link
+            p.link = p.link.link
+
+    def changeindex(self, index, data):
+        p = self.head
+        if index == 0:
+            self.head.data = data
+        else:
+            for i in range(index-1):
+                p = p.link
+            p.link.data = data
+
+    def editlist(self, ch, index, data=0):
+        if ch == 'I':
+            self.addindex(index, data)
+        elif ch == 'D':
+            self.deleteindex(index)
+        else:
+            self.changeindex(index, data)
+
+    def searchindex(self, index):
+        p = self.head
+        if index == 0:
+            print(p.data)
+        else:
+            if index > self.num - 1:
+                print(-1)
+            else:
+                for i in range(index):
+                    p = p.link
+                print(p.data)
+
+
+for T in range(int(input())):
+    linked = Linked()
+    N, M, L = map(int, input().split())
+    numl = list(map(int, input().split()))
+    for i in numl:
+        linked.addtolist(i)
+    for i in range(M):
+        dolist = input().split()
+        dolist.append(0)
+        dolist[1] = int(dolist[1])
+        dolist[2] = int(dolist[2])
+        linked.editlist(dolist[0], dolist[1], dolist[2])
+    print('#{}'.format(T+1), end=' ')
+    linked.searchindex(L)
+
+5. 스도쿠
+for i in range(int(input())):
+    r=[]
+    s=[]
+    for j in range(9):
+        r.append(list(map(int,input().split())))
+    for k in range(3):
+        a=3*k
+        for l in range(3):
+            b=3*l
+            t=[]
+            for m in range(3):
+                for n in range(3):
+                    t.append(r[a+m][b+n])
+            s.append(t)
+    c=[]
+    for x in range(9):
+        t=[]
+        for y in range(9):
+            t.append(r[y][x])
+        c.append(t)
+    h=[r,s,c]
+    p=1
+    for z in range(1,10):
+        for q in h:
+            for u in range(9):
+                if q[u].count(z) > 1:
+                    p=0
+    print(f'#{i+1} {p}')
