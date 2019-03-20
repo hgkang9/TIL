@@ -1,0 +1,101 @@
+#include <iostream>
+
+using namespace std;
+
+char itemB[41];
+int nB;
+
+long long check(long long res)
+{
+	int tm[41];
+	int k = 0;
+	long long t = res;
+	while (t > 0)
+	{
+		tm[k] = t%3;
+		k++;
+		t /= 3;
+	}
+	if (k != nB)
+		return 0;
+	int cc = 0;
+	for (int i = 0; i < nB; i++)
+	{
+		k -= 1;
+		if (int(itemB[i]) - 48 == tm[k]) continue;
+		else
+		{
+			if (cc == 0)
+			{
+				cc++;
+				continue;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		
+	}
+	/*for (int i = k - 1; i > -1; i--)
+	{
+		printf("%d", tm[i]);
+	}*/
+	return res;
+}
+int main()
+{
+	int test_case;
+	int T;
+	char itemA[41];
+	char tempA[41];
+	//char itemB[41];
+	itemA[0] = '\0';
+	itemB[0] = '\0';
+	tempA[0] = '\0';
+	cin >> T;
+	for (test_case = 1; test_case <= T; ++test_case)
+	{
+		scanf("%s", itemA);
+		scanf("%s", itemB);
+
+		int nA = 0;
+		nB = 0;
+		while (itemA[nA] != '\0')
+			nA++;
+		while (itemB[nB] != '\0')
+			nB++;
+		long long temp = 0;
+		for (int i = 0; i < nA; i++)
+		{
+			temp = 0;
+			tempA[0] = '\0';
+			for (int j = 0; j < nA; j++)
+			{
+				if (i != j)
+				{
+					if (itemA[j] == '1')
+					{
+						temp += 1 << (nA - 1 - j);
+					}
+				}
+				else
+				{
+					if (itemA[j] == '0')
+					{
+						temp += 1 << (nA - 1 - j);
+					}
+				}
+			}
+			long long chk = check(temp);
+			if (chk)
+			{
+				printf("#%d %lld\n",test_case,chk);
+				break;
+			}
+		}
+		//printf("%s %s", itemA, itemB);
+
+	}
+	return 0;
+}
