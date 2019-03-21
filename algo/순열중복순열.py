@@ -13,7 +13,7 @@ def getsome(depth):
             getsome(depth+1)
             visited[i]=False
 getsome(0)
-
+print()
 def getsome2(depth):
     if depth==len(data):
         print(res)

@@ -9,7 +9,7 @@ def getsome(depth):
         if not visited[i]:
             visited[i] = True
             res[depth] = data[i]
-            if 
+            if
             getsome(depth + 1)
             visited[i] = False
 
