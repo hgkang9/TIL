@@ -13,6 +13,8 @@ def go(y,x):
     global rtime, low, N
     if y==N-1 and x==N-1:
         return
+    # if rtime<low:
+    #     low=rtime
     for dir in range(4):
         newy=y+dy[dir]
         newx=x+dx[dir]
@@ -27,10 +29,6 @@ def go(y,x):
             low=rtime
             rtime-=data[newy][newx]
             visited[newy][newx]=0
-    if rtime<low:
-        low=rtime
-
-
 
 T=int(input())
 for tc in range(1,T+1):
