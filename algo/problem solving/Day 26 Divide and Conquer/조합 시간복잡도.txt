@@ -1,0 +1,45 @@
+import sys
+sys.stdin = open('input.txt', 'r')
+def  Combi2(n, r):
+	if r == n:	return 1
+	elif r == 1:	return n
+	else :
+		return Combi2(n,r-1)*(n-r+1)//r;
+
+
+def Combi1(n, r):
+	if r == n: return 1
+	elif r == 1: return n
+	else :  return Combi1(n - 1, r - 1) + Combi1(n - 1, r)
+
+print(Combi2(20,10))
+print(Combi2(40,20))
+print(Combi2(60,30))
+print(Combi2(80,40))
+print(Combi2(100,40))
+print(Combi2(1000,500))
+print(Combi1(20,10))
+print(Combi1(40,20))
+print(Combi1(60,30))
+print(Combi1(80,40))
+print(Combi1(100,40))
+print(Combi1(1000,500))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

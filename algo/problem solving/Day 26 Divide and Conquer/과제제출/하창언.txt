@@ -1,0 +1,70 @@
+1. º¸±Þ·Î
+#include <stdio.h>
+#include <iostream>
+using namespace std;
+int T,N,casemap[100][100];
+class queue {
+private:
+    int front = -1,rear = -1, arr[10000][2];
+public:
+    void push(int a[2]){
+        front += 1;
+        arr[front][0] = a[0], arr[front][1] = a[1];
+    }
+    int* pop(){
+        rear += 1;
+        return arr[rear];
+    }
+    int len(){
+        return (front - rear);
+    }
+};
+int main() {
+    freopen("../input.txt","r",stdin);
+    scanf("%d",&T);
+    for(int cs=0;cs<T;cs++){
+        scanf("%d",&N);
+        for(int col=0;col<N;col++){
+            for(int row=0;row<N;row++){
+                scanf("%1d",&casemap[col][row]);
+            }
+        }
+        int dpmap[100][100];
+        for(int col=0;col<N;col++){
+            for(int row=0;row<N;row++){
+                dpmap[col][row]=-1;
+            }
+        }
+        dpmap[N-1][N-1]=0;
+        queue queobj = queue();
+        int tmp[2] ={N-1,N-1};
+        queobj.push(tmp);
+        int d[4][2] = {{0,-1},{-1,0},{1,0},{0,1}};
+        while(queobj.len()>0){
+            int* tmp = queobj.pop();
+            for(int i=0;i<4;i++){
+                int nextcol = tmp[0]+d[i][0],nextrow = tmp[1]+d[i][1];
+                if(nextcol<0 || nextrow <0 || nextcol >=N || nextrow >=N){
+                    continue;
+                }
+                int tmpsum = dpmap[tmp[0]][tmp[1]]+casemap[nextcol][nextrow];
+                if(dpmap[nextcol][nextrow]==-1){
+                    dpmap[nextcol][nextrow]=tmpsum;
+                    int tmpa[2] = {nextcol,nextrow};
+                    queobj.push(tmpa);
+                }
+                else{
+                    if(tmpsum<dpmap[nextcol][nextrow]){
+                        int tmpa[2] = {nextcol,nextrow};
+                        queobj.push(tmpa);
+                        dpmap[nextcol][nextrow]=tmpsum;
+                    }
+                }
+
+            }
+        }
+        delete queobj;
+        printf("#%d %d\n",cs+1,dpmap[0][0]);
+    }
+    return 0;
+}

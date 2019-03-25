@@ -1,0 +1,71 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+scode = {211:0, 221:1, 122:2, 411:3, 132:4, 231:5, 114:6, 312:7, 213:8, 112:9}
+
+hcode = {'0':'0000', '1':'0001', '2':'0010', '3':'0011',
+         '4':'0100', '5':'0101', '6':'0110', '7':'0111',
+         '8':'1000', '9':'1001', 'A':'1010', 'B':'1011',
+         'C':'1100', 'D':'1101', 'E':'1110', 'F':'1111'}
+
+
+TC = int(input())
+for tc in range(1, TC+1):
+    N, M = map(int, input().split())
+
+    Tin = [input() for i in range(N)]
+
+    Data = ['']*N
+    for y in range(N):
+        for x in range(M):
+            Data[y] += hcode[Tin[y][x]]
+
+    ans = 0
+
+    for y in range(1, len(Data)):
+        x = M * 4 - 1
+        while x > 56:
+            if Data[y][x] == '1' and Data[y - 1][x] == '0':
+                CRYPT = [0] * 8
+                for now in range(7, -1, -1):
+                    fst1= snd0 = snd1 = 0
+                    while Data[y][x] == '1': snd1 += 1 ; x -= 1
+                    while Data[y][x] == '0': snd0 += 1 ; x -= 1
+                    while Data[y][x] == '1': fst1 += 1 ; x -= 1
+                    while Data[y][x] == '0': x -= 1
+
+                    d = min( fst1,snd0 , snd1)
+
+                    CRYPT[now] = scode[fst1// d * 100 + snd0 // d * 10 + snd1 // d]
+
+                T = (CRYPT[0] + CRYPT[2] + CRYPT[4] + CRYPT[6]) * 3 + CRYPT[1] + CRYPT[3] + CRYPT[5] + CRYPT[7]
+                if T % 10 == 0:   ans += sum(CRYPT)
+                x += 1
+            x-= 1
+
+
+    print('#%d'%tc, ans)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

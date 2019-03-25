@@ -1,0 +1,24 @@
+
+
+def GetSome1(n):
+	if n==1: return 1
+	else: return GetSome1(n-1)+n
+
+
+
+def GetSome2(n):
+	if n==1 : return 1
+	else: return 2*GetSome2 (n//2)+((n+1)//2)*((n+1)//2)
+
+
+
+print(GetSome2(100000000))
+print(GetSome1(100000000))
+
+
+
+
+
+
+
+

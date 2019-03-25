@@ -1,0 +1,2 @@
+for i in range(0, howmany, 20):
+    print(*Switch[i:i+20])

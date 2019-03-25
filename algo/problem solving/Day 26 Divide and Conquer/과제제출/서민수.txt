@@ -1,0 +1,40 @@
+1. 보급로
+import sys
+sys.stdin = open('input.txt', 'r')
+
+# 복구작업
+dy = [1, 0, -1, 0] # 하 우 좌 상
+dx = [0, 1, 0, -1]
+
+def IsSafe(y, x):
+    if 0<=y<N and 0<=x<N and not visited[y][x]:return True
+    else: return False
+
+def GetSome(y, x, t):
+    global Min
+    if y == N-1 and x == N-1:
+        if t < Min: Min = t
+        return
+
+    if t >= Min: return
+
+
+    for dir in range(4):
+        if IsSafe(y+dy[dir], x+dx[dir]):
+            ny = y + dy[dir]
+            nx = x + dx[dir]
+            if dist[ny][nx] and t+myMap[ny][nx] >= dist[ny][nx]: continue
+            visited[ny][nx] = 1
+            dist[ny][nx] = t + myMap[ny][nx]
+            GetSome(ny, nx, t+myMap[ny][nx])
+            visited[ny][nx] = 0
+
+for tc in range(1, int(input())+1):
+    N = int(input())
+    myMap = [[int(x) for x in input()] for _ in range(N)]
+    visited = [[0]*N for _ in range(N)]
+    dist = [[0]*N for _ in range(N)]
+    Min = 987654321
+    cnt = 0
+    GetSome(0, 0, 0)
+    print('#%d %d' %(tc, Min))

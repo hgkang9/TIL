@@ -1,0 +1,39 @@
+1. º¸±Þ·Î
+def safe(y, x):
+    return y >= 0 and x >= 0 and y < N and x < N
+
+
+def dfs(y, x):
+    global mintime, time, dp, cnt
+    cnt += 1
+    if y == N - 1 and x == N - 1:
+        if mintime > time:
+            mintime = time
+            return
+    for i in range(4):
+        newy = y + dirY[i]
+        newx = x + dirX[i]
+        if safe(newy, newx):
+            time += road[newy][newx]
+            if time < mintime:
+                if dp[newy][newx] > time:
+                    dp[newy][newx] = time
+                    dfs(newy, newx)
+            time -= road[newy][newx]
+
+
+for T in range(int(input())):
+    N = int(input())
+    road = []
+    mintime = 0
+    for _ in range(N):
+        road.append([int(i) for i in input()])
+        mintime += sum(road[_])
+    dirY = [0, 1, -1, 0]
+    dirX = [1, 0, 0, -1]
+    time = 0
+    dp = [[0x7fffffff] * N for i in range(N)]
+    cnt = 0
+    dfs(0, 0)
+    print(cnt)
+    print('#{} {}'.format(T+1, mintime))

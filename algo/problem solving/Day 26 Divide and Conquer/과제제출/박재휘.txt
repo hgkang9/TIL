@@ -1,0 +1,62 @@
+## 보급로 미완
+
+import sys
+sys.stdin=open("input.txt","r")
+# sys.setrecursionlimit(10000)
+
+
+
+def issafe(y,x):
+    global num1
+    if 0 <= y < num1 and 0 <= x < num1:
+        return True
+    else: return False
+
+
+def gogo(y,x,dis):
+    global num1, result, endy, endx
+    if y==num1-1 and x==num1-1:
+    #
+    #     if joo[y][x]<result:
+    #         result=joo[y][x]
+        return
+
+
+    for dir in range(4):
+
+        newy=y+dy[dir]
+        newx=x+dx[dir]
+        if issafe(newy,newx):
+            if newx==0 and newy==0: #스타트로왓다면 컨티뉴?
+                continue
+            if newx==num1-1 and newy==num1-1: # 종점에왓는데
+                if joo[num1-1][num1-1]>joo[y][x]: #종점값이 현재값보다 크다면
+                    joo[num1-1][num1-1]=joo[y][x] #현재값을 종점값에 입력하고 리턴
+                    return
+                else: return
+
+            if joo[y][x]+data[newy][newx] <= joo[newy][newx]: #현재값과 데이터의 이동할 곳의 값의 합이/ 적혀잇는 값보다 작거나 같으면
+                joo[newy][newx]=joo[y][x]+data[newy][newx] # 그값에 현재값 + 데이터값의 합 입력 후 컨티뉴.
+                continue
+            if joo[newy][newx] != 0 and joo[y][x]+data[newy][newx] > joo[newy][newx]: # 간적이없고 현재값+ 이동할곳의 데이터합이 적혀잇는값보다 크다면 갈필요가없으므로 리턴
+                return
+            elif joo[newy][newx]==0: # 가려는곳이 가본적이 없다면
+                joo[newy][newx]=joo[y][x]+data[newy][newx] #갈곳에 값 입력 후 재귀소환
+                gogo(newy,newx,dis)
+
+
+num=int(input())
+for j in range(num):
+    num1=int(input())
+    data=[list(map(int,input())) for _ in range(num1)]
+    dy=[0,1,0,-1]
+    dx=[1,0,-1,0]
+
+    endy,endx = num1-1, num1-1
+    visited=[[0]*num1 for _ in range(num1)]
+    joo=[[0]*num1 for _ in range(num1)]
+    joo[num1-1][num1-1]=99999
+    result=9999
+
+    gogo(0,0,0)
+    print("#{} {} {}".format(j+1,joo[num1-1][num1-1],joo))
