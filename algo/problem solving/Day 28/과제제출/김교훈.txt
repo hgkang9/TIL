@@ -1,0 +1,226 @@
+[머지 소트] (문제 이상)
+data = list(map(int,input().split()))
+
+def sort_insert():
+    global data
+    for i in range(1,len(data)):
+        for j in range(i,0,-1):
+           if data[j-1] > data[j]:
+               data[j-1], data[j] = data[j], data[j-1]
+
+
+
+def merge(now_left,now_right):
+    result=[0]*(len(now_left)+len(now_right))
+    i=0
+    j=0
+    k=0
+    while i <len(now_left) and j<len(now_right) :
+        if now_left[i]<=now_right[j]:
+            result[k]=now_left[i]
+            i=i+1
+            k=k+1
+        else:
+            result[k] = now_right[j]
+            j=j+1
+            k=k+1
+    if i != len(now_left): ##왼쪽에 뭐가 남아있음
+        while(i!=len(now_left)):
+            result[k]=now_left[i]
+            i=i+1
+            k=k+1
+    else:
+        while (j != len(now_right)):
+            result[k] = now_right[j]
+            j = j + 1
+            k = k + 1
+    return result
+
+
+def merge_sort(data):
+    if len(data)<=1:
+        return data
+
+    left = merge_sort(data[:len(data)//2])
+    right = merge_sort(data[len(data)//2:])
+    return merge(left,right)
+
+
+
+print(data)
+data=merge_sort(data)
+print(data)
+
+[퀵]
+TC=int(input())
+for tc in range(1,TC+1):
+    def quick(A,L,R):
+        if L>=R:
+            return
+        p=A[L]
+        i=L
+        j=R
+
+        while i<j:
+            while A[i] <= p:
+                i=i+1
+                if i>=R:
+                    break
+            while A[j] >= p:
+                j=j-1
+                if j<=L:
+                    break
+            if i<=j :
+                A[i], A[j] = A[j], A[i]
+
+        A[L], A[j] = A[j], A[L]
+        quick(A,L,j-1)
+        quick(A,j+1,R)
+        return j
+    N=int(input())
+    A=list(map(int,input().split()))
+    print("#{} ".format(tc),end="")
+    quick(A,0,len(A)-1)
+    print(A[N//2])
+
+[이진 탐색]
+# import sys
+# sys.stdin=open("input.txt","r")
+
+TC = int(input())
+for tc in range(1, TC + 1):
+    NM = list(map(int, input().split()))
+    N = NM[0]
+    M = NM[1]
+    A = list(map(int, input().split()))
+    A.sort()
+    B = list(map(int, input().split()))
+
+    def Binary_search(data, Left, Right,dir):
+        global ans
+        if Left > Right:
+            return False
+
+        mid = (Left + Right) // 2
+        if A[mid] == data:
+            ans = 0
+            return
+
+        if A[mid] < data: ## 오른쪽
+            if dir == 1:
+                return False
+            else:
+                return Binary_search(data, mid + 1, Right,1)
+
+        if A[mid] > data:## 왼쪽
+            if dir == -1:
+                return False
+            else:
+                return Binary_search(data, Left, mid - 1,-1)
+    ans_count = 0
+    for b in B:
+        ans = -1
+        Binary_search(b, 0, len(A) - 1,0)
+        if ans != -1:
+            ans_count = ans_count + 1
+    print("#{} ".format(tc),end='')
+    print(ans_count)
+
+[전기버스2]
+import sys
+sys.stdin=open("input.txt","r")
+
+TC=int(input())
+for tc in range(1,TC+1):
+    data = list(map(int,input().split()))
+
+    LOAD = [0]*len(data)
+    N=data[0]-1
+    data.pop(0)
+    BUS_STATION=data
+    NOW=0
+    charger_use=0
+    ans=0
+    while(1):
+        if NOW>=N:
+            break
+        temp=[]
+        for i in range(NOW,NOW+BUS_STATION[NOW]+1):
+            if i==N:
+                ans=1
+                charger_use=charger_use+1
+                break
+            temp.append([i,BUS_STATION[i]])
+        if ans==1:
+            break
+        max_next=0
+        next_index=0
+        for i in range(0,len(temp)):
+            this_next =temp[i][0]+temp[i][1]
+            if this_next > max_next:
+                max_next=this_next
+                next_index=temp[i][0]
+
+        NOW=next_index
+        charger_use=charger_use+1
+    print("#{} ".format(tc),end='')
+    print(charger_use-1)
+
+[최소 생산 비용]
+
+TC=int(input())
+for tc in range(1,TC+1):
+    plant_list = []
+
+    N=int(input())
+    for i in range(0,N):
+        line = list(map(int,input().split()))
+        plant_list.append(line)
+
+    index_fuel={}
+    for i in range(0,N):
+        index_fuel.update({i:1})
+
+    min_cost=9876554
+    def Go(now_index,this_cost):
+        global min_cost
+
+        if this_cost>=min_cost:
+            return
+
+        if now_index==N:
+            min_cost = this_cost
+            return
+
+        for i in index_fuel.keys():
+            if index_fuel[i]>0:
+                index_fuel[i]=0
+                Go(now_index+1,this_cost+plant_list[now_index][i])
+                index_fuel[i] = 1
+
+    Go(0,0)
+    print("#{} ".format(tc),end='')
+    print(min_cost)
+
+[입국 심사]
+data=list(map(int,input().split()))
+K=data[0]
+N=data[1]
+T=[]
+for i in range(0,K):
+    d=int(input())
+    T.append(d)
+LEFT=1
+RIGHT = max(T)*N
+MID=(LEFT+RIGHT)//2
+while(LEFT<=RIGHT):
+    this_cover_N=0
+    for i in range(0,len(T)):
+        this_cover_N=this_cover_N+MID//T[i]
+    if this_cover_N>=N:
+        RIGHT=MID-1
+        MID = (LEFT + RIGHT) // 2
+    elif this_cover_N < N:
+        LEFT = MID + 1
+        MID = (LEFT + RIGHT) // 2
+print(LEFT)

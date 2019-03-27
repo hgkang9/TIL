@@ -1,0 +1,89 @@
+#퀵 정렬
+
+import sys
+sys.stdin =open("quick_data.txt", "r")
+
+T = int(input())
+
+
+def quick_divide(f, t, data):
+    i = f
+    j = f+1
+    while j <= t:
+        if data[j] <= data[f]:
+            i += 1
+            data[j], data[i] = data[i], data[j]
+        j += 1
+    data[i], data[f] = data[f], data[i]
+    return i
+
+
+def quick_sort(f, t, data):
+    if f >= t:
+        return
+    m = quick_divide(f, t, data)
+    quick_sort(f, m-1, data)
+    quick_sort(m+1, t, data)
+
+for test_case in range(1, T+1):
+    N = int(input())
+    A = list(map(int, input().split()))
+    quick_sort(0, len(A) - 1, A)
+
+    print("#%d %d" % (test_case, A[N//2]))
+
+#최소생산비용
+
+import sys
+sys.stdin = open("cost.txt", "r")
+
+T = int(input())
+
+
+def search(level):
+    global cost_sum
+    global min_sum
+    if cost_sum >= min_sum:
+        return
+    if level == N:
+        if cost_sum < min_sum:
+            min_sum = cost_sum
+            return
+    for c in range(N):
+        if not visited[c]:
+            visited[c] = 1
+            cost_sum += info[level][c]
+            search(level + 1)
+            visited[c] = 0
+            cost_sum -= info[level][c]
+
+
+for test_case in range(1, T+1):
+    cost_sum = 0
+    min_sum = 999
+    N = int(input())
+    visited = [0] * (N+1)
+    info = [[0] for i in range(N)]
+    for j in range(N):
+        info[j] = list(map(int, input().split()))
+    search(0)
+    print("#%d %d" %(test_case, min_sum))
+
+#랜선 자르기
+
+N = 11
+port = [802, 743, 457, 539]
+def cutting(f, t, p_list):
+    while f <= t:
+        port_sum = 0
+        mid = (f+t)//2
+        for i in range(len(p_list)):
+            port_sum += p_list[i] // mid
+        if port_sum <N:
+            t = mid - 1
+        else:
+            f = mid + 1
+    return (f + t) // 2
+
+
+print(cutting(1, max(port), port))

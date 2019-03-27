@@ -1,0 +1,208 @@
+#1 병합정렬
+import sys
+sys.stdin = open('병합정렬.txt','r')
+def merge_sort(m):
+    global cnt
+    if len(m) == 1 :
+        return m
+    #divide
+    mid = len(m)// 2
+    left = merge_sort(m[:mid])
+    right = merge_sort(m[mid:])
+
+    #conquer
+    return merge(left,right)
+
+def merge(left,right) :
+    global cnt
+
+    l = len(left)
+    r = len(right)
+    re = [-1]*(l+r)
+
+    i = j = k = 0
+    while i < l and j < r:
+        if left[i] < right[j] :
+            re[k] = left[i]
+            i+=1
+            k+=1
+        else :
+            re[k] = right[j]
+            j += 1
+            k += 1
+    t = k
+    while i < l :
+        re[k] = left[i]
+        chk = 1
+        i+=1
+        k+=1
+    while j < r :
+        re[k] = right[j]
+        # chk = 1
+        j+=1
+        k+=1
+    if left[l-1] > right[r-1] :
+        cnt += 1
+    return re
+
+for tc in range(int(input())) :
+    n = int(input())
+    cnt = 0
+    item = list(map(int,input().split()))
+    mdata = [0]*n
+    item = merge_sort(item)
+    # print(item)
+    print("#%d %d %d"%(tc+1,item[n//2],cnt))
+
+#2 입국심사
+
+n,k = map(int,input().split())
+item = []
+m = 0
+for i in range(n):
+    item.append(int(input()))
+    if m < item[i] :
+        m = item[i]
+
+st = 1
+ed = m*k
+result = 789654321
+while st <= ed :
+    mid = (st+ed)//2
+    total = 0
+    for i in item :
+        total += mid // i
+    if total < k :
+        st = mid + 1
+    else :
+        ed = mid - 1
+        # if result > mid :
+        #     result = mid
+print(ed+1)
+
+#3 이진탐색
+import sys
+sys.stdin = open('이진탐색.txt','r')
+def binarysearch(item) :
+    switch = -1
+    l = 0
+    r = n-1
+
+    while l <= r :
+        m = (l + r) // 2
+        if a[m] == item :
+            return 1
+        elif a[m] < item :
+            l = m + 1
+            if switch == 1 or switch == -1:
+                switch = 0
+            else :
+                return 0
+        elif a[m] > item :
+            r = m - 1
+            if switch == 0 or switch == -1:
+                switch = 1
+            else :
+                return 0
+    return 0
+for tc in range(int(input())):
+    n,m = map(int,input().split())
+    a = list(map(int,input().split()))
+    a = sorted(a)
+    b = list(map(int,input().split()))
+    cnt = 0
+    for i in b :
+        cnt += binarysearch(i)
+
+    print("#%d %d"%(tc+1,cnt))
+
+#4 전기버스2
+import sys
+sys.stdin = open('전기버스.txt','r')
+for tc in range(int(input())):
+    item = list(map(int,input().split()))
+
+    start = 1
+    end = item[0]
+    cnt = 0
+    while True :
+        cango = 0
+        if start >= end :
+            if start == end :
+                cnt-=1
+            break
+        thisgo = start + item[start]
+        if start > 1 :
+            cnt+=1
+        if thisgo >= end :
+            break
+        for i in range(start+1,thisgo+1) :
+            if i+item[i] > cango :
+                cango = i+item[i]
+                cani = i
+        if cango > thisgo :
+            start = cani
+        else :
+            start = thisgo # cnt+=1
+
+
+    print("#%d %d"%(tc+1,cnt))
+
+#5 최소생산비용
+import sys
+sys.stdin = open('최소생산비용.txt','r')
+def dfs(pos,item) :
+    global my_min
+    # print(item,my_min)
+    if item >= my_min :
+        return
+    if pos >= n :
+        if item < my_min :
+            my_min = item
+            # print(my_min)
+        return
+    for i in range(n) :
+        if data[i] == 0 :
+            data[i] = 1
+            dfs(pos+1,item+ma[i][pos])
+            data[i] = 0
+for tc in range(int(input())) :
+    n = int(input())
+    ma = []
+    for i in range(n) :
+        ma.append(list(map(int,input().split())))
+    data = [0]*n
+    my_min = 987654321
+    dfs(0,1)
+    print("#%d %d" % (tc + 1, my_min-1))
+
+
+#6 트리순회
+import collections
+
+def check(istart,iend,pstart,pend) :
+    stack = collections.deque([[istart,iend,pstart,pend]])
+
+    if istart > iend or pstart > pend:
+        return
+    while stack :
+        ist,ied,pst,ped = stack.pop()
+        root = check2[ped]
+        print(root, end=' ')
+        pos = item[root]
+        left = pos-ist
+        if pos+1 <= ied and pst+left <= ped-1 :
+            stack.append([pos+1, ied,pst+left,ped-1])
+        if ist <= pos-1 and pst <= pst+left-1 :
+            stack.append([ist,pos-1,pst,pst+left-1])
+
+
+n = int(input())
+check1 = list(map(int,input().split()))
+check2 = list(map(int,input().split()))
+# print(check2[n-1])
+
+item = [0]*100001
+for i in range(n) :
+    item[check1[i]] = i
+check(0,n-1,0,n-1)

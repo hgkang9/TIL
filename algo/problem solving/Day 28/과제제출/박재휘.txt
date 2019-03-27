@@ -1,0 +1,129 @@
+########## 병합정렬
+import sys
+sys.stdin=open("input.txt","r")
+
+def merge(left,right):
+    result=[]
+
+    while len(left)>0 and len(right)>0:
+
+        if left[0] <= right[0]:
+            result.append(left.pop(0))
+        else:
+            result.append(right.pop(0))
+
+    if len(left)>0: #왼쪽 남은 경우
+        result.extend(left)
+    if len(right) >0:
+        result.extend(right)
+    if len(result)==len(data):
+        print("#{} {} {}".format(j+1,result[len(result)//2],count))
+    return result
+
+def merge_sort(m): #m = data[]
+    global count
+    if len(m) <=1:
+        return m
+    mid = len(m)//2
+    left = m[:mid]
+    right = m[mid:]
+
+    left=merge_sort(left)
+    right = merge_sort(right)
+
+    if left[-1] > right[-1]:
+        count+=1
+
+    return merge(left,right)
+
+num=int(input())
+for j in range(num):
+    num1=int(input())
+    data=list(map(int,input().split()))
+    count = 0
+    merge_sort(data)
+
+#########이진탐색(미완)
+import sys
+sys.stdin=open("input.txt","r")
+
+
+
+def leejin(l_start,r_end,mid,target,a):
+    global count,flag,l,r
+
+    # s = 0 / end = n / mid= 1
+    if l-r >2 or r-l >2:
+        return
+    if a[mid] == target:
+        count +=1
+        return count
+    if l_start == mid or r_end == mid:
+        return
+    if target < a[mid]:
+        temp=a[l_start:mid+1]
+        l +=1
+        l_start=l_start
+        mid=(l_start + len(temp))//2
+        r_end=mid-1
+        leejin(l_start,r_end,mid,target,temp)
+        return
+    elif target > a[mid]:
+        r+=1
+
+        temp=a[mid:]
+        l_start=0
+        r_end = len(temp)
+        mid=(l_start +len(temp)) //2
+        leejin(l_start,r_end,mid,target,temp)
+        return
+
+    return
+num=int(input())
+for j in range(num):
+    n,m=list(map(int,input().split()))
+    data= list(map(int,input().split()))
+    b= list(map(int,input().split()))
+    a=sorted(data)
+    flag=0
+    print(a)
+    count=0
+
+    for i in range(len(b)):
+        r = 0
+        l = 0
+        if len(a) %2==0:
+            leejin(0,n,(0+n)//2-1,b[i],a)
+        else:
+            leejin(0, n, (0 + n) // 2 , b[i],a)
+    print("#{} {}".format(j+1,count))
+
+#### 입국심사(미완)
+import sys
+sys.stdin=open("input.txt","r")
+
+worker, m = list(map(int,input().split()))
+
+time=[int(input()) for i in range(worker)]
+
+b=[]
+
+if worker<2:
+    print(m*time[0])
+elif m ==1:
+    print(min(time))
+elif m== 2 and worker==1:
+    print(time[0]*m)
+i=0
+for i in range(worker):
+    # if len(b) == m - 1 + worker:
+    #     break
+
+    for j in range(1,m+1):
+        b.append(time[i]*j)
+        if len(b)==m-1+worker:
+            break
+
+b=sorted(b)
+# print(b)
+print(b[m-1])
