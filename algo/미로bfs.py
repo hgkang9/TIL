@@ -16,7 +16,6 @@ def bfs(y, x):
     que.append((y, x))
     visited[y][x] = 1
     global ans
-
     while que:
         (y, x) = que.pop(0)
         if data[y][x] == 3:

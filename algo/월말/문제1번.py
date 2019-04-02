@@ -3,7 +3,6 @@ import sys
 sys.stdin=open('문제1.txt','r')
 
 def isposs(y,x):
-    global N
     if y>=0 and y<N and x>=0 and x<N:
         if not visited[y][x]:
             return True
@@ -17,7 +16,7 @@ dx=[-2,2,3,3,2,-2,-3,-3]
 #     cost_map.append(line)
 #
 def go(starty,startx,endy,endx):
-    global low, cnt, N
+    global low, cnt
     if starty==endy and startx==endx:
         if cnt<low:
             low=cnt

@@ -53,7 +53,6 @@ def getsome(start):
         if not visited[i]:
             visited[i] = True
             prod_sum+=data[start][i]
-            #res[depth]=data[i]
             getsome(start+1)
             visited[i] = False
             prod_sum-=data[start][i]
@@ -68,137 +67,137 @@ for tc in range(1, T + 1):
 
     getsome(0)
     print(low)
-
-def charge(start):
-    global change,low
-    if start>=battery[0]:
-        if low>change:
-            low=change
-        return
-    if change>low:
-        return
-    for i in range(battery[start],0,-1):
-        change+=1
-        charge(start+i)
-        change-=1
-
-T=int(input())
-for tc in range(T):
-battery=list(map(int,input().split()))
-change=0
-low=100000
-charge(1)
-print("#%d %d"%(tc+1,low-1))
-
-
-def prim():
-while Q:
-if not 0 in visited:
-return
-low=10000000
-for i in range(len(Q)):
-if low>Q[i][0] and not visited[Q[i][1]]:
-low=Q[i][0]
-low_index=i
-
-score,start=Q.pop(low_index)
-visited[start]=1
-result[start]=score
-
-for i in range(V+1):
-if not visited[i] and mymap[i][start]:
-Q.append([mymap[i][start],i])
-
-T=int(input())
-for tc in range(T):
-V,E=map(int,input().split())
-mymap=[[0]*(V+1) for _ in range(V+1)]
-for e in range(E):
-A,B,C=map(int,input().split())
-mymap[A][B]=C
-mymap[B][A]=C
-
-Q=[]
-for i in range(V+1):
-if mymap[i][0]:
-Q.append([mymap[i][0],i])
-
-visited=[0]*(V+1)
-visited[0]=1
-result=[0]*(V+1)
-prim()
-print("#%d %d"%(tc+1,sum(result)))
-
-def findset(x):
-    if x==p[x]:
-        return x
-    else:
-        return findset(p[x])
-def union(x,y):
-    p[findset(y)]=findset(x)
-
-T=int(input())
-for tc in range(1,T+1):
-    N,M=map(int,input().split())
-    data1=list(map(int,input().split()))
-    data=[0]*M
-    p=[0]*(N+1)
-    for i in range(M):
-        if data1[i*2]>data1[i*2+1]:
-            data[i]=(data1[i*2+1],data1[i*2])
-        else:
-            data[i]=(data1[i*2],data1[i*2+1])
-
-    for i in range(N+1):
-        p[i]=i
-
-    for i in range(len(data)):
-        union(data[i][0],data[i][1])
-
-    for i in range(1, N + 1):
-        p[i]=findset(p[i])
-
-    cnt=0
-    checker=[0]*(N+1)
-    for i in range(1,N+1):
-        if checker[p[i]]!=1:
-            checker[p[i]]=1
-            cnt+=1
-
-    print('#%d %d' %(tc, cnt))def findset(x):
-    if x==p[x]:
-        return x
-    else:
-        return findset(p[x])
-def union(x,y):
-    p[findset(y)]=findset(x)
-
-T=int(input())
-for tc in range(1,T+1):
-    N,M=map(int,input().split())
-    data1=list(map(int,input().split()))
-    data=[0]*M
-    p=[0]*(N+1)
-    for i in range(M):
-        if data1[i*2]>data1[i*2+1]:
-            data[i]=(data1[i*2+1],data1[i*2])
-        else:
-            data[i]=(data1[i*2],data1[i*2+1])
-
-    for i in range(N+1):
-        p[i]=i
-
-    for i in range(len(data)):
-        union(data[i][0],data[i][1])
-
-    for i in range(1, N + 1):
-        p[i]=findset(p[i])
-
-    cnt=0
-    checker=[0]*(N+1)
-    for i in range(1,N+1):
-        if checker[p[i]]!=1:
-            checker[p[i]]=1
-            cnt+=1
-
-    print('#%d %d' %(tc, cnt))
+#
+# def charge(start):
+#     global change,low
+#     if start>=battery[0]:
+#         if low>change:
+#             low=change
+#         return
+#     if change>low:
+#         return
+#     for i in range(battery[start],0,-1):
+#         change+=1
+#         charge(start+i)
+#         change-=1
+#
+# T=int(input())
+# for tc in range(T):
+# battery=list(map(int,input().split()))
+# change=0
+# low=100000
+# charge(1)
+# print("#%d %d"%(tc+1,low-1))
+#
+#
+# def prim():
+# while Q:
+# if not 0 in visited:
+# return
+# low=10000000
+# for i in range(len(Q)):
+# if low>Q[i][0] and not visited[Q[i][1]]:
+# low=Q[i][0]
+# low_index=i
+#
+# score,start=Q.pop(low_index)
+# visited[start]=1
+# result[start]=score
+#
+# for i in range(V+1):
+# if not visited[i] and mymap[i][start]:
+# Q.append([mymap[i][start],i])
+#
+# T=int(input())
+# for tc in range(T):
+# V,E=map(int,input().split())
+# mymap=[[0]*(V+1) for _ in range(V+1)]
+# for e in range(E):
+# A,B,C=map(int,input().split())
+# mymap[A][B]=C
+# mymap[B][A]=C
+#
+# Q=[]
+# for i in range(V+1):
+# if mymap[i][0]:
+# Q.append([mymap[i][0],i])
+#
+# visited=[0]*(V+1)
+# visited[0]=1
+# result=[0]*(V+1)
+# prim()
+# print("#%d %d"%(tc+1,sum(result)))
+#
+# def findset(x):
+#     if x==p[x]:
+#         return x
+#     else:
+#         return findset(p[x])
+# def union(x,y):
+#     p[findset(y)]=findset(x)
+#
+# T=int(input())
+# for tc in range(1,T+1):
+#     N,M=map(int,input().split())
+#     data1=list(map(int,input().split()))
+#     data=[0]*M
+#     p=[0]*(N+1)
+#     for i in range(M):
+#         if data1[i*2]>data1[i*2+1]:
+#             data[i]=(data1[i*2+1],data1[i*2])
+#         else:
+#             data[i]=(data1[i*2],data1[i*2+1])
+#
+#     for i in range(N+1):
+#         p[i]=i
+#
+#     for i in range(len(data)):
+#         union(data[i][0],data[i][1])
+#
+#     for i in range(1, N + 1):
+#         p[i]=findset(p[i])
+#
+#     cnt=0
+#     checker=[0]*(N+1)
+#     for i in range(1,N+1):
+#         if checker[p[i]]!=1:
+#             checker[p[i]]=1
+#             cnt+=1
+#
+#     print('#%d %d' %(tc, cnt))def findset(x):
+#     if x==p[x]:
+#         return x
+#     else:
+#         return findset(p[x])
+# def union(x,y):
+#     p[findset(y)]=findset(x)
+#
+# T=int(input())
+# for tc in range(1,T+1):
+#     N,M=map(int,input().split())
+#     data1=list(map(int,input().split()))
+#     data=[0]*M
+#     p=[0]*(N+1)
+#     for i in range(M):
+#         if data1[i*2]>data1[i*2+1]:
+#             data[i]=(data1[i*2+1],data1[i*2])
+#         else:
+#             data[i]=(data1[i*2],data1[i*2+1])
+#
+#     for i in range(N+1):
+#         p[i]=i
+#
+#     for i in range(len(data)):
+#         union(data[i][0],data[i][1])
+#
+#     for i in range(1, N + 1):
+#         p[i]=findset(p[i])
+#
+#     cnt=0
+#     checker=[0]*(N+1)
+#     for i in range(1,N+1):
+#         if checker[p[i]]!=1:
+#             checker[p[i]]=1
+#             cnt+=1
+#
+#     print('#%d %d' %(tc, cnt))

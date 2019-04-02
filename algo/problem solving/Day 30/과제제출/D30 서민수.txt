@@ -1,0 +1,222 @@
+1. 연산
+import sys
+sys.stdin = open('input.txt', 'r')
+from collections import deque
+
+# BFS
+# 1~백만 범위를 조건으로 줘야함
+
+def bfs(now, cnt):
+	global Min
+	Q.append(now)
+	visited[now] = 0
+	while len(Q):
+		now = Q.popleft()
+		if now == M:
+			Min = visited[now]
+			break
+
+		if now*2<=1000000 and visited[now*2]==-1:
+			visited[now*2] = visited[now]+1
+			Q.append(now*2)
+		if now+1<1000000 and visited[now+1]==-1:
+			visited[now+1] = visited[now]+1
+			Q.append(now+1)
+		if now-1 >= 0 and visited[now-1]==-1:
+			visited[now -1] = visited[now]+1
+			Q.append(now -1)
+		if now-10 >= 0 and visited[now-10]==-1:
+			visited[now-10] = visited[now]+1
+			Q.append(now-10)
+
+for tc in range(1, int(input())+1):
+	N, M = map(int, input().split())
+	visited = [-1]*1000001
+	Min = 987654321
+	Q = deque()
+	bfs(N, 0)
+	print('#%d %d'%(tc, Min))
+
+
+2. 그룹나누기
+import sys
+sys.stdin = open('input.txt', 'r')
+
+def find_set(x):
+	if P[x] == x:
+		return x
+	else: return find_set(P[x])
+
+def union_set(x, y):
+	P[find_set(y)] = find_set(x)
+
+for tc in range(1, int(input())+1):
+	N, M = map(int ,input().split())
+	Data = list(map(int, input().split()))
+	P = [int(i) for i in range(N+1)]
+	for j in range(M):
+		s = Data[j*2]
+		e = Data[(j*2)+1]
+		union_set(s, e)
+	for k in range(1, N+1):
+		P[k] = find_set(k)
+	res = set()
+	for l in range(1, N+1):
+		res.add(P[l])
+	print('#%d %d'%(tc, len(res)))
+
+
+3. 최소신장트리
+import sys
+sys.stdin = open('input.txt', 'r')
+
+def find_set(x):
+	if P[x] == x:
+		return x
+	else: return find_set(P[x])
+
+def union(y, x):
+	P[find_set(y)] = find_set(x)
+
+for tc in range(1, int(input())+1):
+	V, E = map(int, input().split())
+	Map = [[0]*(V+1) for _ in range(V+1)]
+	A = [] # 선택한집합
+	G = [0]*(E) # 간선 집합
+	P = [int(j) for j in range(V + 1)]  # 그래프 정점 집합
+	for i in range(E):
+		s, e, w = map(int, input().split())
+		G[i] = [s,e,w]
+		Map[s][e] = w
+	G.sort(key = lambda x: x[2]) # 정렬 끝
+
+	for E in G:
+		if find_set(E[0]) != find_set(E[1]):
+			A.append((E[0], E[1]))
+			union(E[0], E[1])
+	res = 0
+	for v in A:
+		res += Map[v[0]][v[1]]
+	print('#%d %d' %(tc, res))
+
+4. 최소비용
+
+import sys
+sys.stdin = open('input.txt','r')
+# 높이 차이에 따라 연료 소비량이 달라진다.
+# 최적경로로 이동이 연료 소비 최저
+# (0,0) -> (N-1, N-1)
+# 기본이동 1 , 높이 차 만큼 추가
+# 이동+높이차
+# BFS로 모든 좌표의 비용 계산해서 최소값 찾기
+from collections import deque
+
+dy = [1, 0, -1, 0] # 하우상좌
+dx = [0, 1, 0, -1]
+def bfs(y, x):
+	global Min
+	Q.append((y, x))
+	while len(Q):
+		t = Q.popleft()
+		y = t[0]; x = t[1]
+		if y == N-1 and x == N-1:
+			if dist[y][x] < Min:
+				Min = dist[y][x]
+		if dist[y][x] >= Min: continue
+		for dir in range(4):
+			ny = y + dy[dir]
+			nx = x + dx[dir]
+			if 0<=ny<N and 0<=nx<N:
+				add = 0
+				if Map[ny][nx] > Map[y][x]: # 더 높은 곳으로 가는 경우 높이 차 만큼 연료 추가
+					add = Map[ny][nx] - Map[y][x]
+				if not dist[ny][nx]: # 이동 한적 없는 곳이면 누적 연료 저장
+					dist[ny][nx] = dist[y][x] + add + 1
+					Q.append((ny, nx))
+				else:
+					if dist[ny][nx] > dist[y][x] + add + 1: # 현재 누적연료 + 높이 이동하는 연로 + 기본이동연료
+						dist[ny][nx] = dist[y][x] + add + 1
+						Q.append((ny, nx))
+
+for tc in range(1, int(input())+1):
+	N = int(input())
+	Map = [list(map(int, input().split())) for _ in range(N)]
+	dist = [[0]*N for _ in range(N)]
+	Q = deque()
+	Min = 987654321
+	bfs(0, 0)
+	print('#%d %d'%(tc, Min))
+
+5. 최소이동거리
+import sys
+sys.stdin = open('input.txt','r')
+# 다익스트라로 모든 경로의 최단거리 계산
+for tc in range(1, int(input())+1):
+	N, E = map(int, input().split())
+	Map = [[987654321]*(N+1) for _ in range(N+1)]
+
+	T = [int(i) for i in range(N+1)]
+	for i in range(E):
+		s, e, w = map(int, input().split())
+		Map[s][e] = w
+
+	dist = Map[0]
+	T.remove(0)
+	while len(T):
+		Min = 987654321
+		for v in T:
+			if dist[v] < Min:
+				Min = dist[v]
+				p = v
+		T.remove(p)
+
+		for k in T:
+			dist[k] = min(dist[k], dist[p] + Map[p][k])
+	print('#%d %d' %(tc, dist[N]))
+
+6. 상원이의 생일파티
+import sys
+sys.stdin = open('input.txt', 'r')
+
+from collections import deque
+
+def bfs(now):
+	visited[now] = 0
+	Q.append(now)
+	while len(Q):
+		now = Q.popleft()
+		for next in range(N+1):
+			if visited[next] == -1 and (F[now][next] or F[next][now]):
+				visited[next] = visited[now] + 1
+				Q.append(next)
+
+for tc in range(1, int(input())+1):
+	N, M = map(int, input().split())
+	F = [[0]*(N+1) for _ in range(N+1)]
+	for i in range(M):
+		s, e = map(int, input().split())
+		F[s][e] = F[e][s] = 1
+	Q = deque()
+	visited = [-1]*(N+1)
+	bfs(1)
+	cnt = 0
+	for j in range(1, N+1):
+		if 1<=visited[j] <=2:
+			cnt+=1
+	print('#%d %d'%(tc,cnt))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,109 @@
+1. 리모컨
+import sys
+sys.stdin = open('리모컨.txt', 'r')
+
+N = int(input())
+M = int(input())
+if M: button = list(map(int, input().split()))
+B = [0]*10
+if M:
+	for i in button:
+		B[i] = 1
+
+def IsPossible(channel):
+	if channel==0:
+		return 0 if B[0] else 1
+	else:
+		len = 0
+		while channel>0:
+			if B[channel%10]: return 0
+			len += 1
+			channel//=10
+	return len
+
+target = N
+ans = target-100
+if ans < 0 : ans = -ans
+for now in range(1000001):
+	channel = now
+	len = IsPossible(channel)
+	if len > 0:
+		press = channel - target
+		if press < 0:
+			press = -press
+		if ans > len+press:
+			ans = len+press
+print(ans)
+
+2. 탈주범검거
+import sys
+sys.stdin = open('탈주범검거.txt', 'r')
+
+from collections import deque
+# 탈주범이 있을 수 있는 위치의 개수 계산
+# 탈주범은 시간당 1의 거리를 움직일 수 있다.
+# 터널이 없는 장소(숫자0)에는 탈주범이 없다
+dy = [-1, 1, 0, 0]
+dx = [0, 0, -1, 1]
+ty = [0, [-1, 1, 0, 0], [-1, 1], [0, 0], [-1, 0], [1, 0], [1, 0], [-1, 0]]
+tx = [0, [0, 0, -1, 1], [0, 0], [-1, 1], [0, 1], [0, 1], [0, -1], [0, -1]]
+
+def IsPossible(y, x, pre_dy, pre_dx):
+	if 0<=y<N and 0<=x<M and Map[y][x] != 0:
+		n = Map[y][x]
+		for dir in range(len(ty[n])):
+			if -1*ty[n][dir] == pre_dy and -1*tx[n][dir] == pre_dx:
+				return True
+		return False
+	else: return False
+def bfs(y, x, t):
+	visited[y][x] = 1
+	Q.append((y, x))
+	while len(Q):
+		t = Q.popleft()
+		y = t[0]; x = t[1]
+		if visited[y][x] == L:
+			break
+		n = Map[y][x]
+		for dir in range(len(ty[n])):
+			ny = y + ty[n][dir]
+			nx = x + tx[n][dir]
+			if IsPossible(ny, nx, ty[n][dir], tx[n][dir]):
+				if visited[ny][nx] > visited[y][x] + 1:
+					visited[ny][nx] = visited[y][x] + 1
+					Q.append((ny, nx))
+
+for tc in range(1, int(input())+1):
+	N, M, R, C, L = map(int, input().split())
+	Map = [list(map(int, input().split())) for _ in range(N)]
+	visited = [[987654] * M for _ in range(N)]
+	Q = deque()
+	bfs(R, C, L)
+	cnt = 0
+	for y in range(N):
+		for x in range(M):
+			if visited[y][x] != 987654:
+				cnt += 1
+	print('#%d %d'%(tc, cnt))
+
+3. 장난감 조립
+def GetSome(part, num):
+	for p in toy:
+		if Data[part][p[1]] and part == p[0]:
+			GetSome(p[1], num * p[2])
+	d[part] += num
+	return 1
+
+N = int(input())
+M = int(input())
+visited =[0]*(N+1)
+toy  = [list(map(int, input().split())) for _ in range(M)]
+Data = [[0]*(N+1) for _ in range(N+1)]
+for i in range(M):
+	Data[toy[i][0]][toy[i][1]] = toy[i][2]
+	visited[toy[i][0]] = 1
+d = [0]*(N+1)
+GetSome(N, 1)
+for j in range(1, N+1):
+	if not visited[j]:
+		print(j, d[j])

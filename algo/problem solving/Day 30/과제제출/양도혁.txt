@@ -1,0 +1,146 @@
+#1 생일파티
+def checkmin():
+    item =MAXVALUE
+    idx = -1
+    for i in range(len(distance)) :
+        if distance[i] < item and not i in idx_list:
+            item = distance[i]
+            idx = i
+    return idx
+
+for tc in range(int(input())):
+    n,e = map(int,input().split())
+    MAXVALUE = 987654321
+    my_map = [[MAXVALUE]*(n) for i in range(n)]
+    for i in range(e) :
+        to,fr, = map(int,input().split())
+        my_map[to-1][fr-1] = 1
+        my_map[fr - 1][to - 1] = 1
+    idx_list = [0]
+    distance = my_map[0][:]
+    while len(idx_list) < len(distance) :
+        t = checkmin()
+        idx_list.append(t)
+        for i in range(len(distance)) :
+            if not i in idx_list :
+                # distance[i] = min(distance[i] , my_map[t][i] + distance[t])
+                if my_map[t][i] + distance[t] < distance[i] :
+                    # parent[i] = t
+                    distance[i] = my_map[t][i] + distance[t]
+    cnt = 0
+    # print(distance)
+    # for i in distance :
+    #     if i <= 2 :
+    #         cnt += 1
+    print("#%d %d"%(tc+1,distance.count(1)+distance.count(2)))
+
+#2 최소비용
+def issafe(x,y) :
+	return x >= 0 and x < n and y >= 0 and y < n
+
+for tc in range(int(input())):
+    n = int(input())
+    m = []
+    min_v = 987654321
+    c = [[min_v] * n for i in range(n)]
+    for i in range(n) :
+        m.append(list(map(int,input().split())))
+
+    dx = [0,-1,0,1]
+    dy = [-1,0,1,0]
+    Q = [(0,0)]
+    c[0][0] = 0
+    while Q :
+        x,y = Q.pop(0)
+        for i in range(4) :
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if issafe(nx,ny) :
+                temp = 0
+                if m[ny][nx]-m[y][x] >= 0 :
+                    temp = m[ny][nx] - m[y][x]
+                if (c[ny][nx] > c[y][x] + temp + 1) :
+                    Q.append((nx,ny))
+                    c[ny][nx] = c[y][x] + temp + 1
+
+    print("#%d %d"%(tc+1,c[n-1][n-1]))
+
+#3 최소신장
+def find(x) :
+    if dis[x] != x:
+        dis[x] = find(dis[x])
+    return dis[x]
+def union(x,y) :
+    dis[find(y)] = find(x)
+for tc in range(int(input())) :
+    v,e = map(int,input().split())
+    data = []
+    for i in range(e) :
+        f,t,l = map(int,input().split())
+        data.append([l,f,t])
+    data.sort()
+    item = [0]*(v+1)
+    res = 0
+    dis = [i for i in range(v+1)]
+    cnt = 0
+    for i in data :
+        l,f,t = i
+        if find(f) != find(t) :
+            res += l
+            union(t,f)
+            item[f] += 1
+            item[t] += 1
+            cnt+=1
+        if cnt == v :
+            break
+    print("#%d %d"%(tc+1,res))
+
+#4 그룹
+def find(x) :
+    if dis[x] != x:
+        dis[x] = find(dis[x])
+    return dis[x]
+def union(x,y) :
+    dis[find(y-1)] = find(x-1)
+for tc in range(int(input())) :
+    n,m = map(int,input().split())
+    dis = [i for i in range(n)]
+    vote = list(map(int,input().split()))
+    for i in range(m) :
+        union(vote[i*2],vote[i*2+1])
+    res = []
+    for i in dis :
+        t = find(i)
+        if not t in res :
+            res.append(t)
+    print("#%d %d"%(tc+1,len(res)))
+
+#5 연산
+import collections
+def bfs() :
+    Q = collections.deque([n])
+    item = [MAXVALUE]*1000001
+    item[n] = 0
+    while Q:
+        t = Q.popleft()
+        for i in range(4) :
+            q = 0
+            if i == 0 :
+                q = t*2
+            else :
+                q = t+d[i]
+            if 0 < q < 1000001 and item[q] == MAXVALUE:
+                item[q] = item[t]+1
+                if q == m :
+                    return item[m]
+                Q.append(q)
+
+
+for tc in range(int(input())) :
+    n,m = map(int,input().split())
+    chk = 0
+    d = [2,1,-1,-10]
+    MAXVALUE = 987654321
+
+
+    print("#%d %d"%(tc+1,bfs()))

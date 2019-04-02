@@ -3,40 +3,28 @@ sys.stdin=open('보급로.txt','r')
 
 dy=[1,0,-1,0]
 dx=[0,1,0,-1]
-def ispossible(y, x):
-    global N
-    if y >= 0 and y < N and x >= 0 and x < N:
-        if not visited[y][x]:
-            return True
 
+def ispossible(y, x): return True if 0<=y<N and 0<=x< N else False
 def go(y,x):
-    global rtime, low, N
-    if y==N-1 and x==N-1:
-        return
-    # if rtime<low:
-    #     low=rtime
-    for dir in range(4):
-        newy=y+dy[dir]
-        newx=x+dx[dir]
-        if ispossible(newy,newx):
-            visited[newy][newx]=1
-            rtime+=data[newy][newx]
-            if rtime>low:
-                rtime-=data[newy][newx]
-                visited[newy][newx]=0
-                return
-            go(newy,newx)
-            low=rtime
-            rtime-=data[newy][newx]
-            visited[newy][newx]=0
+    que.append((y,x))
+    visited[y][x] = 1
+    while que:
+        y,x=que.pop(0)
+        for i in range(4):
+            newy=y+dy[i]
+            newx=x+dx[i]
+            if ispossible(newy,newx) and not visited[newy][newx]:
+                visited[newy][newx] = visited[y][x]+data[newy][newx]
+                que.append((newy,newx))
+            elif ispossible(newy,newx) and visited[newy][newx] > visited[y][x]+data[newy][newx]:
+                visited[newy][newx] = visited[y][x]+data[newy][newx]
+                que.append((newy, newx))
 
 T=int(input())
 for tc in range(1,T+1):
     N=int(input())
     data=[list(map(int,input())) for _ in range(N)]
-    rtime=data[0][0]
     visited=[[0]*N for _ in range(N)]
-    visited[0][0]=1
-    low=99999999999
+    que=[]
     go(0,0)
-    print(low)
+    print(visited[-1][-1]-1)

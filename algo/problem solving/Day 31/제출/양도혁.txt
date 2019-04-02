@@ -1,0 +1,86 @@
+#1 리모컨
+def per(item) :
+    if item in m :
+        return False
+    while item > 0 :
+        if item%10 in m :
+            return False
+        item //= 10
+    return True
+
+m_ch = 100
+c_ch = input()
+n = int(input())
+k = int(c_ch)
+if n > 0 :
+    m = list(map(int,input().split()))
+    my_min = 987654321
+    min_item = 0
+    chk = len(c_ch)
+    if chk < abs(k-100) :
+        sitem = int(c_ch)
+        for i in range(1000001) :
+            t = abs(k - i)
+            if t < my_min :
+                if per(i) :
+                    my_min = t
+                    min_item = i
+    # print(my_min,min_item)
+    print(min(len(str(min_item))+my_min,abs(k-100)))
+else :
+    print(min(len(c_ch), abs(k - 100)))
+
+
+#2 장난감
+def dfs(x,item):
+    if len(k[x-1]) == 0:
+        res[x-1] += item
+        return
+    for i in k[x-1] :
+        dfs(i[0],item*i[1])
+n = int(input())
+m = int(input())
+k = [[] for i in range(n)]
+res = [0]*n
+for i in range(m) :
+    x,y,t = map(int,input().split())
+    k[x-1].append((y,t))
+dfs(n,1)
+for i in range(n) :
+    if res[i] > 0 :
+        print("%d %d"%(i+1,res[i]))
+
+
+#3 탈주범
+def dfs(pos,now_x,now_y) :
+    global n,m,x,y,status,allmap
+    if pos > time :
+        return
+    item = allmap[now_y][now_x]
+    side_item = [0,0,0,0]
+    if now_y - 1 >= 0 :
+        side_item[0] = (now_y-1,now_x)
+    if now_x + 1 < m :
+        side_item[1] = (now_y,now_x+1)
+    if now_y + 1 < n :
+        side_item[2] = (now_y+1,now_x)
+    if now_x -1 >= 0:
+        side_item[3] = (now_y,now_x-1)
+    if not (now_x,now_y) in status :
+        status.append((now_x,now_y))
+    allowlist = [0,[0,1,2,3],[0,2],[1,3],[0,1],[1,2],[2,3],[0,3]]
+    gotolist = [[1,2,5,6],[1,3,6,7],[1,2,4,7],[1,3,4,5]]
+    for i in allowlist[item] :
+        if side_item[i] :
+            if allmap[side_item[i][0]][side_item[i][1]] in gotolist[i] :
+                allmap[now_y][now_x] = 0
+                x1 = side_item[i][1]
+                y1 = side_item[i][0]
+                dfs(pos+1,x1,y1)
+                allmap[now_y][now_x] = item
+for a in range(int(input())) :
+    n,m,y,x,time = list(map(int,input().split()))
+    allmap = [list(map(int,input().split())) for i in range(n)]
+    status = []
+    dfs(1,x,y)
+    print('#{a+1} {len(status)}')

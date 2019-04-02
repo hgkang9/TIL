@@ -1,0 +1,234 @@
+[리모컨]
+# import sys
+# sys.stdin=open("input.txt","r")
+
+
+
+N=int(input())
+M=int(input())
+
+normal_list = []
+if M!=0:
+    broke_list = list(map(int,input().split()))
+    for i in range(0,10):
+        if i not in broke_list:
+            normal_list.append(i)
+
+
+
+min_ans=abs(N-100)
+this=0
+
+if 10>M>0:
+
+    while(this<=1000001):
+
+        flag=0
+        ans_conut = 0
+        temp = this
+        # print(this, min_ans, ans_conut, abs(this - N))
+        if temp==0:
+            if temp not in normal_list:
+                flag = 1
+            else:
+                ans_conut = ans_conut + 1
+
+        while(temp!=0):
+            if temp%10 not in normal_list:
+                flag=1
+                break
+            temp=temp//10
+            ans_conut = ans_conut + 1
+
+        if flag==1:
+            this=this+1
+            continue
+        this_ans = ans_conut + abs(this - N)
+
+        if this_ans<min_ans:
+            min_ans=this_ans
+        this = this + 1
+
+elif M==0:
+    min_ans = min(abs(N-100),len(str(N)))
+elif M==10:
+    min_ans=abs(N-100)
+print(min_ans)
+
+
+
+[탈주범]
+from collections import deque
+
+TC=int(input())
+for tc in range(1,TC+1):
+    prison_breaker_data = list(map(int,input().split())) ## N,M,start_Y,start_X,T
+    N=prison_breaker_data[0]
+    M=prison_breaker_data[1]
+    start_Y=prison_breaker_data[2]
+    start_X=prison_breaker_data[3]
+    T=prison_breaker_data[4]
+
+    map_pipe=[]
+    for i in range(0,N):
+        line = list(map(int,input().split()))
+        map_pipe.append(line)
+
+    map_visited=[]
+    for i in range(0,N):
+        line = [0]*M
+        map_visited.append(line)
+
+    map_time=[]
+    for i in range(0,N):
+        line = [0]*M
+        map_time.append(line)
+
+    def is_safe(Y,X):
+        if -1<Y<N and -1<X<M:
+            return True
+        else:
+            return False
+
+    QUEUE=deque()
+    QUEUE.append((start_Y,start_X,map_pipe[start_Y][start_X]))
+    map_visited[start_Y][start_X]=1
+    ## 큐 내부 정보 (Y,X,파이프 모양)
+
+    dy=[-1,0,1,0]
+    dx=[0,1,0,-1]
+
+    while(len(QUEUE)!=0):
+        # print(QUEUE)
+        now=QUEUE.popleft()
+        # print(now)
+
+        now_y=now[0]
+        now_x=now[1]
+        now_type=now[2]
+
+        if now_type==1:
+            if is_safe(now_y + dy[0], now_x + dx[0]):
+                if map_visited[now_y + dy[0]][now_x + dx[0]] == 0:
+                    if map_pipe[now_y+dy[0]][now_x+dx[0]]==2 or map_pipe[now_y+dy[0]][now_x+dx[0]]==5 or map_pipe[now_y+dy[0]][now_x+dx[0]]==6 or map_pipe[now_y+dy[0]][now_x+dx[0]]==1:
+                        map_visited[now_y+dy[0]][now_x+dx[0]]=map_visited[now_y][now_x]+1
+                        QUEUE.append((now_y + dy[0],now_x + dx[0], map_pipe[now_y+dy[0]][now_x+dx[0]]))
+
+            if is_safe(now_y + dy[1], now_x + dx[1]):
+                if map_visited[now_y + dy[1]][now_x + dx[1]] == 0:
+                    if map_pipe[now_y+dy[1]][now_x+dx[1]]==3 or map_pipe[now_y+dy[1]][now_x+dx[1]]==6 or map_pipe[now_y+dy[1]][now_x+dx[1]]==1 or map_pipe[now_y+dy[1]][now_x+dx[1]]==7:
+                        map_visited[now_y+dy[1]][now_x+dx[1]]=map_visited[now_y][now_x]+1
+                        QUEUE.append((now_y + dy[1],now_x + dx[1], map_pipe[now_y+dy[1]][now_x+dx[1]]))
+
+            if is_safe(now_y + dy[2], now_x + dx[2]):
+                if map_visited[now_y + dy[2]][now_x + dx[2]] == 0:
+                    if map_pipe[now_y+dy[2]][now_x+dx[2]]==2 or map_pipe[now_y+dy[2]][now_x+dx[2]]==4 or map_pipe[now_y+dy[2]][now_x+dx[2]]==7 or map_pipe[now_y+dy[2]][now_x+dx[2]]==1:
+                        map_visited[now_y+dy[2]][now_x+dx[2]]=map_visited[now_y][now_x]+1
+                        QUEUE.append((now_y + dy[2],now_x + dx[2], map_pipe[now_y+dy[2]][now_x+dx[2]]))
+
+            if is_safe(now_y + dy[3], now_x + dx[3]):
+                if map_visited[now_y + dy[3]][now_x + dx[3]] == 0:
+                    if map_pipe[now_y+dy[3]][now_x+dx[3]]==3 or map_pipe[now_y+dy[3]][now_x+dx[3]]==4 or map_pipe[now_y+dy[3]][now_x+dx[3]]==5 or map_pipe[now_y+dy[3]][now_x+dx[3]]==1:
+                        map_visited[now_y+dy[3]][now_x+dx[3]]=map_visited[now_y][now_x]+1
+                        QUEUE.append((now_y + dy[3],now_x + dx[3], map_pipe[now_y+dy[3]][now_x+dx[3]]))
+
+        if now_type == 2:
+            if is_safe(now_y + dy[0], now_x + dx[0]):
+                if map_visited[now_y + dy[0]][now_x + dx[0]] == 0:
+                    if map_pipe[now_y + dy[0]][now_x + dx[0]] == 2 or map_pipe[now_y + dy[0]][now_x + dx[0]] == 5 or \
+                            map_pipe[now_y + dy[0]][now_x + dx[0]] == 6 or map_pipe[now_y + dy[0]][now_x + dx[0]] == 1:
+                        map_visited[now_y + dy[0]][now_x + dx[0]] = map_visited[now_y][now_x]+1
+                        QUEUE.append((now_y + dy[0], now_x + dx[0], map_pipe[now_y + dy[0]][now_x + dx[0]]))
+
+            if is_safe(now_y + dy[2], now_x + dx[2]):
+                if map_visited[now_y + dy[2]][now_x + dx[2]] == 0:
+                    if map_pipe[now_y + dy[2]][now_x + dx[2]] == 2 or map_pipe[now_y + dy[2]][now_x + dx[2]] == 4 or \
+                            map_pipe[now_y + dy[2]][now_x + dx[2]] == 7 or map_pipe[now_y + dy[2]][now_x + dx[2]] == 1:
+                        map_visited[now_y + dy[2]][now_x + dx[2]] = map_visited[now_y][now_x] + 1
+                        QUEUE.append((now_y + dy[2], now_x + dx[2], map_pipe[now_y + dy[2]][now_x + dx[2]]))
+
+        if now_type == 3:
+            if is_safe(now_y + dy[1], now_x + dx[1]):
+                if map_visited[now_y + dy[1]][now_x + dx[1]] == 0:
+                    if map_pipe[now_y + dy[1]][now_x + dx[1]] == 3 or map_pipe[now_y + dy[1]][now_x + dx[1]] == 6 or \
+                            map_pipe[now_y + dy[1]][now_x + dx[1]] == 1 or map_pipe[now_y + dy[1]][now_x + dx[1]] == 7:
+                        map_visited[now_y + dy[1]][now_x + dx[1]] = map_visited[now_y][now_x] + 1
+                        QUEUE.append((now_y + dy[1], now_x + dx[1], map_pipe[now_y + dy[1]][now_x + dx[1]]))
+
+            if is_safe(now_y + dy[3], now_x + dx[3]):
+                if map_visited[now_y + dy[3]][now_x + dx[3]] == 0:
+                    if map_pipe[now_y + dy[3]][now_x + dx[3]] == 3 or map_pipe[now_y + dy[3]][now_x + dx[3]] == 4 or \
+                            map_pipe[now_y + dy[3]][now_x + dx[3]] == 5 or map_pipe[now_y + dy[3]][now_x + dx[3]] == 1:
+                        map_visited[now_y + dy[3]][now_x + dx[3]] = map_visited[now_y][now_x] + 1
+                        QUEUE.append((now_y + dy[3], now_x + dx[3], map_pipe[now_y + dy[3]][now_x + dx[3]]))
+
+        if now_type == 4:
+            if is_safe(now_y + dy[0], now_x + dx[0]):
+                if map_visited[now_y + dy[0]][now_x + dx[0]] == 0:
+                    if map_pipe[now_y + dy[0]][now_x + dx[0]] == 2 or map_pipe[now_y + dy[0]][now_x + dx[0]] == 5 or \
+                            map_pipe[now_y + dy[0]][now_x + dx[0]] == 6 or map_pipe[now_y + dy[0]][now_x + dx[0]] == 1:
+                        map_visited[now_y + dy[0]][now_x + dx[0]] = map_visited[now_y][now_x]+1
+                        QUEUE.append((now_y + dy[0], now_x + dx[0], map_pipe[now_y + dy[0]][now_x + dx[0]]))
+            if is_safe(now_y + dy[1], now_x + dx[1]):
+                if is_safe(now_y + dy[1], now_x + dx[1]):
+                    if map_visited[now_y + dy[1]][now_x + dx[1]] == 0:
+                        if map_pipe[now_y + dy[1]][now_x + dx[1]] == 3 or map_pipe[now_y + dy[1]][now_x + dx[1]] == 6 or \
+                                map_pipe[now_y + dy[1]][now_x + dx[1]] == 1 or map_pipe[now_y + dy[1]][now_x + dx[1]] == 7:
+                            map_visited[now_y + dy[1]][now_x + dx[1]] = map_visited[now_y][now_x] + 1
+                            QUEUE.append((now_y + dy[1], now_x + dx[1], map_pipe[now_y + dy[1]][now_x + dx[1]]))
+
+        if now_type == 5:
+            if is_safe(now_y + dy[1], now_x + dx[1]):
+                if map_visited[now_y + dy[1]][now_x + dx[1]] == 0:
+                    if map_pipe[now_y + dy[1]][now_x + dx[1]] == 3 or map_pipe[now_y + dy[1]][now_x + dx[1]] == 6 or \
+                            map_pipe[now_y + dy[1]][now_x + dx[1]] == 1 or map_pipe[now_y + dy[1]][now_x + dx[1]] == 7:
+                        map_visited[now_y + dy[1]][now_x + dx[1]] = map_visited[now_y][now_x] + 1
+                        QUEUE.append((now_y + dy[1], now_x + dx[1], map_pipe[now_y + dy[1]][now_x + dx[1]]))
+
+
+            if is_safe(now_y + dy[2], now_x + dx[2]):
+                if map_visited[now_y + dy[2]][now_x + dx[2]] == 0:
+                    if map_pipe[now_y + dy[2]][now_x + dx[2]] == 2 or map_pipe[now_y + dy[2]][now_x + dx[2]] == 4 or \
+                            map_pipe[now_y + dy[2]][now_x + dx[2]] == 7 or map_pipe[now_y + dy[2]][now_x + dx[2]] == 1:
+                        map_visited[now_y + dy[2]][now_x + dx[2]] = map_visited[now_y][now_x]+1
+                        QUEUE.append((now_y + dy[2], now_x + dx[2], map_pipe[now_y + dy[2]][now_x + dx[2]]))
+        if now_type == 6:
+            if is_safe(now_y + dy[2], now_x + dx[2]):
+                if map_visited[now_y + dy[2]][now_x + dx[2]] == 0:
+                    if map_pipe[now_y + dy[2]][now_x + dx[2]] == 2 or map_pipe[now_y + dy[2]][now_x + dx[2]] == 4 or \
+                            map_pipe[now_y + dy[2]][now_x + dx[2]] == 7 or map_pipe[now_y + dy[2]][now_x + dx[2]] == 1:
+                        map_visited[now_y + dy[2]][now_x + dx[2]] = map_visited[now_y][now_x]+1
+                        QUEUE.append((now_y + dy[2], now_x + dx[2], map_pipe[now_y + dy[2]][now_x + dx[2]]))
+            if is_safe(now_y + dy[3], now_x + dx[3]):
+                if map_visited[now_y + dy[3]][now_x + dx[3]] == 0:
+                    if map_pipe[now_y + dy[3]][now_x + dx[3]] == 3 or map_pipe[now_y + dy[3]][now_x + dx[3]] == 4 or \
+                            map_pipe[now_y + dy[3]][now_x + dx[3]] == 5 or map_pipe[now_y + dy[3]][now_x + dx[3]] == 1:
+                        map_visited[now_y + dy[3]][now_x + dx[3]] = map_visited[now_y][now_x] + 1
+                        QUEUE.append((now_y + dy[3], now_x + dx[3], map_pipe[now_y + dy[3]][now_x + dx[3]]))
+        if now_type == 7:
+            if is_safe(now_y + dy[0], now_x + dx[0]):
+                if map_visited[now_y + dy[0]][now_x + dx[0]] == 0:
+                    if map_pipe[now_y + dy[0]][now_x + dx[0]] == 2 or map_pipe[now_y + dy[0]][now_x + dx[0]] == 5 or \
+                            map_pipe[now_y + dy[0]][now_x + dx[0]] == 6 or map_pipe[now_y + dy[0]][now_x + dx[0]] == 1:
+                        map_visited[now_y + dy[0]][now_x + dx[0]] = map_visited[now_y][now_x]+1
+                        QUEUE.append((now_y + dy[0], now_x + dx[0], map_pipe[now_y + dy[0]][now_x + dx[0]]))
+
+            if is_safe(now_y + dy[3], now_x + dx[3]):
+                if map_visited[now_y + dy[3]][now_x + dx[3]] == 0:
+                    if map_pipe[now_y + dy[3]][now_x + dx[3]] == 3 or map_pipe[now_y + dy[3]][now_x + dx[3]] == 4 or \
+                            map_pipe[now_y + dy[3]][now_x + dx[3]] == 5 or map_pipe[now_y + dy[3]][now_x + dx[3]] == 1:
+                        map_visited[now_y + dy[3]][now_x + dx[3]] = map_visited[now_y][now_x] + 1
+                        QUEUE.append((now_y + dy[3], now_x + dx[3], map_pipe[now_y + dy[3]][now_x + dx[3]]))
+
+
+
+    # for x in map_visited:
+    #     print(x)
+
+    ans_count=0
+    for y in range(0,N):
+        for x in range(0,M):
+            if 0<map_visited[y][x]<=T:
+                ans_count=ans_count+1
+    print("#{} ".format(tc),end='')
+    print(ans_count)

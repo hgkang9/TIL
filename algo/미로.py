@@ -14,7 +14,6 @@ def ispossible(y, x):
         if (data[y][x] == 0 or data[y][x] == 3):
             return True
 
-
 def go(y, x):
     global ans
     if data[y][x] == 3:
@@ -27,7 +26,6 @@ def go(y, x):
         if ispossible(newy, newx):
             data[y][x] = 5  # 지나왔던 길을 알려주기 위해서
             go(newy, newx)
-
 
 for tc in range(1, TC + 1):
     start_x = 0

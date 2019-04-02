@@ -1,0 +1,185 @@
+1. 연산
+from collections import deque
+
+
+for T in range(int(input())):
+    data = [0x7fffffff] * 1000001
+    N, M = map(int, input().split())
+    data[N] = 0
+    queuelist = deque([N])
+    nowdist = 1
+    while queuelist:
+        print(data)
+        for i in range(len(queuelist)):
+            now = queuelist.popleft()
+            can = (now-1, now+1, now*2, now-10)
+            for j in can:
+                if j == M:
+                    data[M] = nowdist
+                    break
+                if 1 <= j <= 1000000:
+                    if data[j] > nowdist:
+                        data[j] = nowdist
+                        queuelist.append(j)
+        if data[M] < 0x7fffffff:
+            break
+        nowdist += 1
+    print('#{} {}'.format(T+1, data[M]))
+
+2. 그룹 나누기
+def findset(x):
+    while x != p[x]:
+        x = p[x]
+    return x
+
+
+def union(x, y):
+    x = findset(x)
+    y = findset(y)
+    if r[x] >= r[y]:
+        p[y] = x
+        if r[x] == r[y]:
+            r[x] += 1
+    else:
+        p[x] = y
+
+
+for T in range(int(input())):
+    N, M = map(int, input().split())
+    ls = list(map(int, input().split()))
+    p = [i for i in range(N+1)]
+    r = [0] * (N+1)
+    for i in range(M):
+        union(ls[i*2], ls[i*2+1])
+    answer = []
+    for i in range(1, N+1):
+        a = findset(i)
+        if a not in answer:
+            answer.append(a)
+    print('#{} {}'.format(T+1, len(answer)))
+
+3. 최소비용
+for T in range(int(input())):
+    N = int(input())
+    maps = [list(map(int, input().split())) for _ in range(N)]
+    dist = [0x7fffffff] * (N ** 2)
+    dist[0] = 0
+    dist[1] = maps[0][1] - maps[0][0] + 1 if maps[0][1] > maps[0][0] else 1
+    dist[N*1] = maps[1][0] - maps[0][0] + 1 if maps[1][0] > maps[0][0] else 1
+    V = [i for i in range(1, N ** 2)]
+    dirY = [-1, 1, 0, 0]
+    dirX = [0, 0, -1, 1]
+    while V:
+        minv = 0x7fffffff
+        v = 0
+        for i in range(len(V)):
+            if minv > dist[V[i]]:
+                minv = dist[V[i]]
+                v = i
+        u = V[v]
+        y = V[v] // N
+        x = V[v] % N
+        del V[v]
+        for i in range(4):
+            new_y = y + dirY[i]
+            new_x = x + dirX[i]
+            if new_y >= 0 and new_y < N and new_x >= 0 and new_x < N:
+                thisv = new_y * N + new_x
+                tag = 0
+                if maps[y][x] < maps[new_y][new_x]:
+                    tag = maps[new_y][new_x] - maps[y][x]
+                if dist[thisv] > dist[u] + 1 + tag:
+                    dist[thisv] = dist[u] + 1 + tag
+    print('#{} {}'.format(T+1, dist[N**2-1]))
+
+4. 최소신장트리
+def findset(x):
+    while x != p[x]:
+        x = p[x]
+    return x
+
+
+def union(x, y):
+    if r[x] >= r[y]:
+        p[y] = x
+        c[x] += c[y]
+        if r[x] == r[y]:
+            r[x] += 1
+        return c[x]
+    else:
+        p[x] = y
+        c[y] += c[x]
+        return c[y]
+
+
+for T in range(int(input())):
+    V, E = map(int, input().split())
+    graph = []
+    for _ in range(E):
+        graph.append(tuple(map(int, input().split())))
+    graph.sort(key=lambda x: x[2])
+    p = [_ for _ in range(V+1)]
+    r = [0] * (V+1)
+    c = [1] * (V+1)
+    wsum = 0
+    for i in graph:
+        x, y, w = i
+        x = findset(x)
+        y = findset(y)
+        if x != y:
+            z = union(x, y)
+            wsum += w
+            if z == V + 1:
+                break
+    print('#{} {}'.format(T+1, wsum))
+
+5. 최소이동거리
+from collections import deque
+
+
+for tc in range(int(input())):
+    N, E = map(int, input().split())
+    graph = [[0x7fffffff] * (N+1) for _ in range(N+1)]
+    for _ in range(E):
+        s, e, w = map(int, input().split())
+        graph[s][e] = w
+    dist = graph[0][:]
+    T = [i for i in range(1, N+1)]
+    while T:
+        mindist = 0x7fffffff
+        u = 0
+        v = 0
+        for t in range(len(T)):
+            if dist[T[t]] <= mindist:
+                mindist = dist[T[t]]
+                u = T[t]
+                v = t
+        del T[v]
+        for i in range(len(T)):
+            if dist[T[i]] > dist[u] + graph[u][T[i]]:
+                dist[T[i]] = dist[u] + graph[u][T[i]]
+    print('#{} {}'.format(tc+1, dist[N]))
+
+6. 상원이 생일
+for T in range(int(input())):
+    N, M = map(int, input().split())
+    graph = [[0x7fffffff] * (N + 1) for _ in range(N+1)]
+    graph[1][1] = 0
+    for _ in range(M):
+        a, b = map(int, input().split())
+        graph[a][b] = graph[b][a] = 1
+    dist = graph[1]
+    V = [i for i in range(2, N+1)]
+    while V:
+        minv = 0x7fffffff
+        v = 0
+        for j in V:
+            if dist[j] <= minv:
+                minv = dist[j]
+                v = j
+        t = V.index(v)
+        del V[t]
+        for i in range(len(V)):
+            if dist[V[i]] > dist[v] + graph[v][V[i]]:
+                dist[V[i]] = dist[v] + graph[v][V[i]]
+    print('#{} {}'.format(T+1, dist.count(1) + dist.count(2)))

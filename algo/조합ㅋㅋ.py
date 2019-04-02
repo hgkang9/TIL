@@ -1,17 +1,18 @@
-nn = 5
-rr = 3
-IsUsed= [0]*(rr+1)
-def GetSome(n , r):
-    if r > rr :
-        for i in range(1, rr+1):
-              print(IsUsed[i], end=' ')
+def GetSome(now, r):
+    if r == 3:
+        for i in range(n) :
+            if Visited[i] : print(Data[i], end=' ')
         print()
         return
-    if n > nn : return
-    IsUsed[r] = n
-    GetSome(n+1, r+1)
-    GetSome(n + 1, r)
+
+    if now >= n: return
+    Visited[now] = True
+    GetSome(now + 1, r + 1)
+    Visited[now] = False
+    GetSome(now + 1, r)
 
 
+n = 5; r = 3
+Visited = [0]*n
+GetSome(0,0)
 
-print(GetSome(1,1))

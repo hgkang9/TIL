@@ -1,0 +1,180 @@
+#리모컨
+
+import sys
+sys.stdin = open("remocon.txt", "r")
+
+T = 4
+
+def ispossible(got):
+    if got == 0:
+        if not con_pan:
+            return
+        else:
+            return 0 if con_pan[0] else 1
+    else:
+        min_dif = 0
+    while got > 0:
+        if got % 10 not in con_pan:
+            return
+        min_dif += 1
+        got //= 10
+    return min_dif
+
+for test_case in range(1, T+1):
+    con_pan = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    ans = 0
+    min_dif = 5000000
+    N = input()
+    n_num = list(N)
+    t_num = int(N)
+    broken = int(input())
+    b_num = list(map(int, input().split()))
+    if abs(t_num - 100) < 3:
+        ans = abs(t_num - 100)
+        print(ans)
+    else:
+        for b in b_num:
+            if int(b) in con_pan:
+                con_pan.remove(int(b))
+        for i in con_pan:
+            ans += n_num.count(str(i))
+        if ans != len(n_num):
+            ans = abs(t_num - 100)
+            for now in range(1000001):
+                min_dif = ispossible(now)
+                if min_dif:
+                    if min_dif > 0:
+                        press = abs(now - t_num)
+                    if ans > min_dif + press:
+                        ans = min_dif + press
+        print(ans)
+
+#그룹나누기 (복습)
+
+import sys
+sys.stdin = open("grouping.txt", "r")
+
+T = int(input())
+
+
+def find(x):
+    global parent
+    if x == parent[x]:
+        return x
+    else:
+        return find(parent[x])
+
+
+def join(a, b):
+    global parent
+    pb = find(b)
+    if parent.count(find(a)) > 1:
+        if parent.count(find(b)) == 1:
+            parent[find(b)] = find(a)
+        else:
+            for p1 in range(len(parent)):
+                if parent[p1] == pb:
+                    parent[p1] = find(a)
+            parent[pb] = find(a)
+    else:
+        if parent.count(find(b)) > 1:
+            parent[find(a)] = find(b)
+
+        else:
+            parent[find(b)] = find(a)
+
+
+for test_case in range(1, T+1):
+    N, M = map(int, input().split())
+    parent = [i for i in range(N+1)]
+    groups = list(map(int, input().split()))
+    ans = 0
+
+    for m in range(0, M * 2, 2):
+        join(groups[m], groups[m+1])
+
+    for j in range(1, len(parent)):
+        if j in parent:
+            ans += 1
+
+    print("#%d %d" %(test_case, ans))
+
+#Forth (복습)
+
+import sys
+sys.stdin = open("forth.txt", "r")
+
+T = int(input())
+
+for test_case in range(1, T+1):
+    cal_list = list(input().split())
+    symbol = ['+', '-', '/', '*']
+    result = []
+    for i in range(len(cal_list)):
+        if cal_list[i] == '+' and len(result) >= 2:
+            result.append(result[len(result)-1] + result[len(result)-2])
+            result.pop(len(result)-2)
+            result.pop(len(result)-2)
+        elif cal_list[i] == '-' and len(result) >= 2:
+            result.append(result[len(result) - 2] - result[len(result) - 1])
+            result.pop(len(result)-2)
+            result.pop(len(result)-2)
+        elif cal_list[i] == '/' and len(result) >= 2:
+            result.append(result[len(result) - 2] // result[len(result) - 1])
+            result.pop(len(result)-2)
+            result.pop(len(result)-2)
+        elif cal_list[i] == '*' and len(result) >= 2:
+            result.append(result[len(result) - 1] * result[len(result) - 2])
+            result.pop(len(result)-2)
+            result.pop(len(result)-2)
+        elif cal_list[i] == '.':
+            break
+        elif cal_list[i] not in symbol:
+            result.append(int(cal_list[i]))
+        else:
+            result =[]
+            break
+    if len(result) == 1:
+        print("#%d %s" %(test_case, result[0]))
+    else:
+        print("#%d error" %test_case)
+
+#노드의 거리 (복습) (X)
+
+import sys
+sys.stdin = open("node.txt", "r")
+
+T = int(input())
+
+def bfs(start, goal):
+    global distance
+    que = []
+    que.append(start)
+
+    visited[start] = 1
+    while que:
+        here = que.pop()
+        for next in range(1, V+1):
+            if node_list[here][next] and not visited[next]:
+                distance += 1
+                visited[next] = 1
+                que.append(next)
+            else:
+                distance = -1
+
+for test_case in range(1, T+1):
+    V, E = map(int, input().split())
+    distance = 0
+    node_list = [[0]*(V+1) for i in range(V+1)]
+    visited = [0]*(V+1)
+    for node in range(E):
+        from_node, to_node = map(int, input().split())
+        node_list[from_node][to_node] = 1
+        node_list[to_node][from_node] = 1
+
+    S, G = map(int, input().split())
+
+    bfs(S, G)
+
+    print("#%d %d" % (test_case, distance))
+
