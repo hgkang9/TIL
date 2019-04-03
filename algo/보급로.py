@@ -3,7 +3,6 @@ sys.stdin=open('보급로.txt','r')
 
 dy=[1,0,-1,0]
 dx=[0,1,0,-1]
-
 def ispossible(y, x): return True if 0<=y<N and 0<=x< N else False
 def go(y,x):
     que.append((y,x))
