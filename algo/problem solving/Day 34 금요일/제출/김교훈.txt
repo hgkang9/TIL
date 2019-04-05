@@ -1,0 +1,202 @@
+
+[공통조상]
+TC=int(input())
+for tc in range(1,TC+1):
+    data = list(map(int,input().split()))
+    V=data[0]
+    E=data[1]
+    first=data[2]
+    second=data[3]
+    E_info = list(map(int,input().split()))
+
+    parent=[-1]*999999
+    L_child=[-1]*99999
+    R_child=[-1]*999999
+    for i in range(0,len(E_info),2):
+
+        if L_child[E_info[i]] == -1:
+            L_child[E_info[i]]=E_info[i+1]
+            parent[E_info[i+1]] = E_info[i]
+        else:
+            R_child[E_info[i]] = E_info[i + 1]
+            parent[E_info[i + 1]] = E_info[i]
+
+
+    first_parent_list=[-1]*999999
+    second_parent_list=[-1]*99999
+
+    i=0
+    while(1):
+        first_parent_list[i]=(parent[first])
+        first=parent[first]
+
+        if parent[first]==-1:
+            break
+        i = i + 1
+
+
+    j=0
+    while(1):
+        second_parent_list[j]=(parent[second])
+        second=parent[second]
+        if parent[second]==-1:
+            break
+        j = j + 1
+
+
+    while(1):
+        if first_parent_list[i]!=second_parent_list[j]:
+            ans=first_parent_list[i+1]
+            break
+        i=i-1
+        j=j-1
+
+    head=ans
+    sub_size=0
+    def find_sub_size(HEAD):
+        global sub_size
+        sub_size=sub_size+1
+
+        if L_child[HEAD]!=-1:
+            find_sub_size(L_child[HEAD])
+        if R_child[HEAD] != -1:
+            find_sub_size(R_child[HEAD])
+
+    find_sub_size(ans)
+    print("#{} ".format(tc),end='')
+    print(ans,end=' ')
+    print(sub_size)
+
+[숫자 만들기]
+
+
+TC=int(input())
+for tc in range(1,TC+1):
+    N=int(input())
+    cal_list = list(map(int,input().split()))
+    num_list = list(map(int,input().split()))
+
+    M=len(num_list)
+
+    len_cal = len(cal_list)
+    min_ans=9898989
+    max_ans=-9879897
+
+    def go(now_index,this_result):
+        global min_ans, max_ans, M,len_cal
+
+        if now_index==M:
+            if min_ans>this_result:
+                min_ans=this_result
+            if max_ans<this_result:
+                max_ans=this_result
+            return
+
+        for i in range(0,len_cal):
+            if cal_list[i]>0:
+                if i ==0:
+                    cal_list[i]=cal_list[i]-1
+                    go(now_index+1,this_result+num_list[now_index])
+                    cal_list[i] = cal_list[i] + 1
+                if i ==1:
+                    cal_list[i]=cal_list[i]-1
+                    go(now_index+1,this_result-num_list[now_index])
+                    cal_list[i] = cal_list[i] + 1
+                if i ==2:
+                    cal_list[i]=cal_list[i]-1
+                    go(now_index+1,this_result*num_list[now_index])
+                    cal_list[i] = cal_list[i] + 1
+                if i ==3:
+                    cal_list[i]=cal_list[i]-1
+                    go(now_index+1,int(this_result/num_list[now_index]))
+                    cal_list[i] = cal_list[i] + 1
+
+    go(1,num_list[0])
+    print("#{} ".format(tc),end='')
+    print(max_ans-min_ans)
+
+
+[2048]
+TC=int(input())
+for tc in range(1,TC+1):
+    NCommand=list(input().split())
+    N=int(NCommand[0])
+    Command=NCommand[1]
+
+    my_map=[]
+    for i in range(0,N):
+        line=list(map(int,input().split()))
+        my_map.append(line)
+    def rotate(): ## 시계방향으로 90도 회전
+        global N
+        temp_map = []
+        for i in range(0,N):
+            line=[0]*N
+            temp_map.append(line)
+
+        for y in range(0,N):
+            for x in range(0,N):
+                temp_map[y][x] = my_map[N-1-x][y]
+        return temp_map
+
+    def left_merge_and_push():
+        for y in range(0,N):
+            x=0
+            temp_x=1
+            while(1):
+                if x>=N-1:
+                    break
+
+                if my_map[y][temp_x]==my_map[y][x]:
+                    my_map[y][x]=2*my_map[y][x]
+                    my_map[y][temp_x]=0
+                    x=temp_x+1
+                    temp_x=x+1
+                elif my_map[y][temp_x]==0:
+                    temp_x=temp_x+1
+                    if temp_x>=N:
+                        break
+                    continue
+                elif my_map[y][temp_x]!=my_map[y][x]:
+                    x=temp_x
+                    temp_x=x+1
+
+        for y in range(0,N):
+            x=0
+            while(1):
+                if my_map[y][x]==0:
+                    my_map[y].pop(x)
+                    my_map[y].append(-1)
+                if my_map[y][x]!=0:
+                    x=x+1
+                if x==N:
+                    break
+        for y in range(0,N):
+            for x in range(0,N):
+                if my_map[y][x]==-1:
+                    my_map[y][x]=0
+    #
+    if Command=="left":
+        left_merge_and_push()
+    if Command=="down":
+        my_map=rotate()
+        left_merge_and_push()
+        my_map=rotate()
+        my_map=rotate()
+        my_map=rotate()
+    if Command=="right":
+        my_map=rotate()
+        my_map=rotate()
+        left_merge_and_push()
+        my_map=rotate()
+        my_map=rotate()
+    if Command=="up":
+        my_map=rotate()
+        my_map=rotate()
+        my_map=rotate()
+        left_merge_and_push()
+        my_map=rotate()
+
+    print("#{}".format(tc))
+    for x in my_map:
+        print(*x)

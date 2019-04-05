@@ -1,0 +1,150 @@
+######### 상원이 생일
+import sys
+sys.stdin=open("input.txt","r")
+
+num=int(input())
+for j in range(num):
+    n,m=list(map(int,input().split()))
+    data=[list(map(int,input().split()))for _ in range(m)]
+
+    visited=([0]*(n+5))
+    visited[1]=-1
+    for i in range(len(data)):
+        if data[i][0]>data[i][1]:
+            data[i][0], data[i][1] = data[i][1],data[i][0]
+
+    flag=0
+    count=0
+    q=[]
+    data=sorted(data)
+    # print(data)
+
+    if data[0][0] !=1 or (data[0][0]==1 and data[0][1]==1):
+        flag=1
+    for x in range(len(data)):
+        if 1 in data[x]:
+            visited[data[x][1]]=1
+
+    for i in range(len(visited)):
+        if visited[i]==1:
+            q.append(i)
+            count+=1
+
+    for i in range(len(q)):
+        for x in range(len(data)):
+            if q[i] == data[x][0] or q[i]==data[x][1]:
+                if q[i]==data[x][0] and visited[data[x][1]]==0:
+                    visited[data[x][1]]=2
+                    count+=1
+                elif q[i]==data[x][1] and visited[data[x][0]]==0:
+                    visited[data[x][0]]=2
+                    count+=1
+
+    if flag==1:
+        print("#{} 0".format(j + 1))
+    if flag==0:
+        print("#{} {}".format(j+1,count))
+
+##### 양팔(실패)
+
+import sys, itertools
+from itertools import permutations
+sys.stdin=open("input.txt","r")
+
+def posi(x,x1):
+    if temp-x1 >0:
+        temp_r.append()
+    else:
+        temp_l.append(r_data[i][x])
+
+
+
+def dfs(a,b,c):
+    global num1
+    if c==len(num1):
+        return
+    for i in range(len(r_data)):
+        temp=r_data[i][0]
+        for x in range(1,len(r_data[0])):
+            for dir in range(2):
+                # r_data[i][x], r_data[i][x-1]
+                posi(temp,r_data[i][x])
+
+num=int(input())
+for j in range(num):
+    num1= int(input())
+    data= list(map(int,input().split()))
+    count=1
+    print(data)
+    r_data=list(permutations(data,num1))
+    print(r_data)
+    print(r_data[0])
+    temp=0
+    temp_l=[]
+    temp_r=[]
+    dx=[1,-1]
+    result1=0
+    result2=0
+
+
+##올림픽
+
+import sys
+sys.stdin=open("input.txt","r")
+
+num=int(input())
+for j in range(num):
+    n,m = list(map(int,input().split()))
+    cost=list(map(int,input().split()))
+    vote=list(map(int,input().split()))
+
+    visited=[0]*1002
+    visited[0]=-1
+    for i in range(len(vote)):
+        count=0
+        for x in range(len(cost)):
+            if cost[x]<=vote[i]:
+                visited[cost.index(cost[x])+1]+=1
+                break
+
+    print("#{} {}".format(j+1, visited.index(max(visited))))
+
+
+##### 격자판(하는중)
+import sys
+sys.stdin=open("input.txt","r")
+
+def wrisafe(newy,newx,temp):
+    if 0<=newy<4 and 0<=newx<4 and not visited[newy][newx]:
+        return True
+    else:
+        return False
+
+def dfs(y,x,temp,c):
+    global result
+    if c==7:
+        temp = result[:]
+        result=[]
+        return temp
+    for dir in range(4):
+        newy=y+dy[dir]
+        newx=x+dx[dir]
+        if wrisafe(newy,newx,temp):
+            result.append(str(data[newy][newx]))
+
+num=int(input())
+for j in range(num):
+    data=[list(map(int,input().split()))for _ in range(4)]
+    for i in range(len(data)):
+        print(data[i])
+    temp=[]
+    result=[]
+    visited=[[0]*4]*4
+    c=0 #우 하 좌 상
+    dy=[0,1,0,-1]
+    dx=[1,0,-1,0]
+    for y in range(4):
+        for x in range(4):
+            dfs(y,x,temp,0)
+    print(temp)
+

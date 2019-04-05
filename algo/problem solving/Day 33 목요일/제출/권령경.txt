@@ -1,0 +1,80 @@
+# 최소 생산 비용
+
+import sys
+sys.stdin = open("min_cost.txt", "r")
+
+T = int(input())
+
+def cal(level, csum):
+    global min_cost
+    if csum < min_cost and done_w[N - 1]:
+        min_cost = csum
+    if csum > min_cost:
+        return
+    if level >= N:
+        return
+    for i in range(N):
+        if not done_p[i]:
+            if not done_w[level]:
+                done_p[i] = 1
+                done_w[level] = 1
+
+                cal(level+1, csum + plan[i][level])
+                done_p[i] = 0
+                done_w[level] = 0
+
+
+for test_case in range(1, T+1):
+    N = int(input())
+    plan = [[0]*N for n in range(N)]
+    min_cost = 99999999999999
+    done_p = [0] * N
+    done_w = [0] * N
+    for v in range(N):
+        plan[v] = list(map(int, input().split()))
+    cal(0,0)
+    print("#%d %d" %(test_case, min_cost))
+
+# 최대 상금 (X)
+
+import sys
+sys.stdin = open("max_prize.txt", "r")
+
+T = int(input())
+
+
+def change(n):
+    global mx
+
+    if n < 0:
+        return
+    if n != 0:
+        for a in range(len(n_list)):
+            for b in range(a + 1, len(n_list)):
+                if n_list[a] < n_list[b] and not visited[a][b]:
+                    n_list[a], n_list[b] = n_list[b], n_list[a]
+
+                    visited[a][b] = 1
+                    change(n - 1)
+                    n_list[a], n_list[b] = n_list[b], n_list[a]
+
+                    visited[a][b] = 0
+    if n == 0:
+        if mx < int(''.join(n_list)):
+            mx = int(''.join(n_list))
+
+for test_case in range(1, T+1):
+    mx = -1
+    number, cnt = map(int, input().split())
+    n_list = []
+    while number != 0:
+        n_list.append(str(number%10))
+        number //= 10
+    visited = [[0] * len(n_list) for q in range(len(n_list))]
+    n_list.reverse()
+
+    change(cnt)
+    if mx == -1:
+        mx = int(''.join(n_list))
+
+    print("#%d %d" %(test_case, mx))

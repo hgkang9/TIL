@@ -1,0 +1,119 @@
+##########격자판
+import sys
+sys.stdin=open("input.txt","r")
+
+def wrisafe(y,x): return True if 0<=y<4 and 0<=x<4 else False
+
+def dfs(y,x,temp,c):
+    global result
+    temp.append(str(data[y][x]))
+    if c==6:
+        result.add(tuple(temp))
+        return
+    for dir in range(4):
+        newy=y+dy[dir]
+        newx=x+dx[dir]
+        if wrisafe(newy,newx):
+            dfs(newy,newx,temp,c+1)
+            del temp[-1]
+
+num=int(input())
+for j in range(num):
+    data=[list(map(int,input().split()))for _ in range(4)]
+    result=set()
+    #우 하 좌 상
+    dy=[0,1,0,-1]
+    dx=[1,0,-1,0]
+    for y in range(4):
+        for x in range(4):
+            dfs(y,x,[],0)
+    print("#{} {}".format(j+1,len(result)))
+
+
+##### 정사각형
+
+import sys
+sys.stdin=open("input.txt","r")
+
+def ismove(newy,newx,y,x):
+    global n
+    return True if 0<=newy<n and 0<=newx<n and not visited[newy][newx] and data[newy][newx]==data[y][x]+1 else False
+
+
+def dfs(y,x,c):
+    global result
+    for dir in range(4):
+        newy=y+dy[dir]
+        newx=x+dx[dir]
+        if ismove(newy,newx,y,x):
+            visited[newy][newx]=True
+            c+=1
+            dfs(newy,newx,c)
+            visited[newy][newx]=False
+            c-=1
+    if result<c:
+        result=c
+    return result
+num=int(input())
+for j in range(num):
+    n=int(input())
+    data=[list(map(int,input().split())) for _ in range(n)]
+    visited=[[0]*n for _ in range(n)]
+    dy=[-1,0,1,0]
+    dx=[0,1,0,-1]
+    temp=[]
+    for y in range(n):
+        for x in range(n):
+            result=-1
+            dfs(y,x,0)
+            temp.append((result,data[y][x]))
+    mm=-1
+    prin=0
+    temp=sorted(temp)
+    for i in range(len(temp)):
+        if mm < temp[i][0]:
+            mm=temp[i][0]
+            prin=temp[i][1]
+    print("#{} {} {}".format(j+1,prin,mm+1))
+
+############최대상금 실패
+from itertools import combinations, permutations
+import sys
+sys.stdin=open("input.txt","r")
+
+num=int(input())
+for j in range(num):
+    data, tar = list(input().split())
+    tar=int(tar)
+    a=(list(reversed(sorted(data))))
+    b=[]
+    for i in range(len(a)):
+        b.append(int(a[i]))
+
+    r_data=[]
+    for i in range(len(data)):
+        r_data.append(int(data[i]))
+    # print(r_data,"r_data")
+    x=-1
+
+    for i in range(tar):
+        if r_data==b and tar %2==0:
+            break
+        if tar%2==1 and r_data==b:
+            r_data[-2],r_data[-1]=r_data[-1],r_data[-2]
+            break
+        while True:
+            x +=1
+            if r_data[x] != b[x]:
+                for k in range(len(r_data)-1,-1,-1):
+                    if r_data[k]==b[x]:
+                        a=k
+                        break
+                r_data[x], r_data[a]=r_data[a],r_data[x]
+                break
+
+
+    for i in range(len(r_data)):
+        print(r_data[i],end='')
+
+    print(r_data,j+1)

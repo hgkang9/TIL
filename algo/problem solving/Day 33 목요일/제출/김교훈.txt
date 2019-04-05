@@ -1,0 +1,166 @@
+[정사각형]
+from collections import deque
+ 
+TC=int(input())
+for tc in range(1,TC+1):
+    N=int(input())
+ 
+    my_map=[]
+    for i in range(0,N):
+        line=list(map(int,input().split()))
+        my_map.append(line)
+ 
+    dist_visited=[0]*999999
+    QUEUE= deque()
+    for y in range(0,N):
+        for x in range(0,N):
+            QUEUE.append( (my_map[y][x],y,x,1) )
+ 
+ 
+    dy=[-1,0,1,0]
+    dx=[0,1,0,-1]
+ 
+    def is_safe(Y,X):
+        if -1<Y<N and -1<X<N:
+            return True
+        else:
+            return False
+ 
+    max_dist=0
+    max_dist_min_num=999999
+    while(QUEUE):
+        now=QUEUE.popleft()
+        start_this=now[0]
+        now_y=now[1]
+        now_x=now[2]
+        now_dist=now[3]
+ 
+        for dir in range(0,4):
+            if is_safe(now_y+dy[dir],now_x+dx[dir]):
+                if my_map[now_y+dy[dir]][now_x+dx[dir]] == my_map[now_y][now_x]+1:
+                    QUEUE.append(  (start_this,now_y+dy[dir],now_x+dx[dir],now_dist+1)  )
+ 
+                    if now_dist+1>=max_dist:
+                        max_dist=now_dist+1
+                        if dist_visited[max_dist]==0:
+                            dist_visited[max_dist] = 1
+                            max_dist_min_num = start_this
+                        else:
+                            if max_dist_min_num>start_this:
+                                max_dist_min_num=start_this
+                             
+ 
+    print("#{} ".format(tc),end='')
+    print(max_dist_min_num,end=' ')
+    print(max_dist)
+
+
+
+[카운슬러]
+TC = int(input())
+for tc in range(1, TC + 1):
+    N = int(input())
+ 
+    A = [0]*N
+    jilungE_pos = []
+    for i in range(0, N):
+        line = tuple(map(int, input().split()))
+        jilungE_pos.append(line)
+    index_fuel = [1] * N
+ 
+    min_vector = 99990000000
+ 
+ 
+    def go(now_index):
+        global min_vector
+ 
+        if now_index == N//2:
+            this_vector=[0]*2
+            for i in range(0,N):
+                if index_fuel[i]==0:
+                    this_vector[0]=this_vector[0] + jilungE_pos[i][0]
+                    this_vector[1] = this_vector[1] + jilungE_pos[i][1]
+                if index_fuel[i]==1:
+                    this_vector[0]=this_vector[0] - jilungE_pos[i][0]
+                    this_vector[1] = this_vector[1] - jilungE_pos[i][1]
+ 
+            if this_vector[0] ** 2 + this_vector[1] ** 2 < min_vector:
+                min_vector = this_vector[0] ** 2 + this_vector[1] ** 2
+            return
+ 
+        for i in range(0, N):
+            if index_fuel[i] > 0:
+                if now_index>0:
+                    if A[now_index-1] >= i:
+                        continue
+                index_fuel[i] = 0
+                A[now_index] = i
+                go(now_index + 1)
+                index_fuel[i] = 1
+ 
+ 
+    go(0)
+    print("#{} ".format(tc), end='')
+    print(min_vector)
+
+[최대 상금]
+TC=int(input())
+for tc in range(1,TC+1):
+    data = list(input().split())
+    data[1]=int(data[1])
+    numbers = list(data[0])
+ 
+    best = list(map(int,numbers))
+    best.sort(reverse=True)
+    best = ''.join(list(map(str,best)))
+    best = int(best)
+ 
+    # print(best)
+    max_value=0
+    def change(i,j):
+        numbers[i], numbers[j] = numbers[j],numbers[i]
+        return
+ 
+    fin_flag=0
+    def go(now_index):
+        global max_value,fin_flag
+        # print(max_value)
+        if fin_flag==1:
+            return
+        if best == int(''.join(numbers)) and (now_index-data[1])%2 == 1 and now_index>=len(numbers):
+            change(len(numbers)-1,len(numbers)-2)
+            max_value=int(''.join(numbers))
+            # print("2")
+            fin_flag=1
+            return
+        elif best == int(''.join(numbers)) and (now_index-data[1])%2 == 0 and now_index>=len(numbers):
+            max_value = best
+            fin_flag = 1
+            # print("1")
+            return
+ 
+        if now_index==data[1]:
+            this_value = int(''.join(numbers))
+            if this_value>max_value:
+                max_value=this_value
+            return numbers
+        for i in range(0,len(numbers)-1):
+            for j in range(i+1,len(numbers)):
+                    change(i,j)
+                    go(now_index+1)
+ 
+                    change(i, j)
+        return
+ 
+    #
+    # find_max=0
+    # for i in range(0, len(numbers)):
+    #     if int(numbers[i]) >= find_max:
+    #         find_max = int(numbers[i])
+    #         find_max_index = i
+    # change(0,find_max_index)
+    # data[1]=data[1]-1
+ 
+    go(0)
+    print("#{} ".format(tc),end='')
+    print(max_value)

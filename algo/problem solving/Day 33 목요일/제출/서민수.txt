@@ -1,0 +1,83 @@
+1. 정사각형방
+import sys
+sys.stdin = open('정사각형.txt','r')
+
+dy = [-1,1,0,0]
+dx = [0,0,-1,1]
+def dfs(y, x):
+	global num, Max
+	if visited[y][x] > num:
+		return
+
+	for dir in range(4):
+		ny = y+dy[dir]
+		nx = x+dx[dir]
+		if 0<=ny<N and 0<=nx<N and Data[ny][nx] == Data[y][x]+1:
+			num += 1
+			visited[ny][nx] = visited[y][x]+1
+			dfs(ny, nx)
+
+for tc in range(1, int(input())+1):
+	N = int(input())
+	Data=[list(map(int, input().split())) for _ in range(N)]
+	visited = [[1]*N for _ in range(N)]
+	Max = -1
+	res = []
+	for y in range(N):
+		for x in range(N):
+			num = 1
+			dfs(y, x)
+
+			if num > Max:
+				Max = num
+				res = [(Data[y][x], Max)]
+			elif num == Max:
+				if Data[y][x] < res[0][0]:
+					res=[(Data[y][x], Max)]
+	print('#%d %d %d'%(tc, res[0][0], res[0][1]))
+
+
+2. 사랑의 카운슬러
+import sys
+sys.stdin = open('사랑의카운슬러.txt', 'r')
+
+def combi(c, idx):
+	global Min
+	if c == N//2:
+		warm1_y = 0
+		warm1_x = 0
+		warm2_y = 0
+		warm2_x = 0
+		for j in range(N):
+			if visited[j]:
+				warm1_y += Data[j][0]
+				warm1_x += Data[j][1]
+			else:
+				warm2_y += Data[j][0]
+				warm2_x += Data[j][1]
+
+		res_y = warm1_y - warm2_y
+		res_x = warm1_x - warm2_x
+		V = res_y**2 + res_x**2
+		if V < Min or Min == -1: Min = V
+		return
+
+	for i in range(idx, N):
+		if not visited[i]:
+			visited[i] = 1
+			combi(c+1, i+1)
+			visited[i] = 0
+
+for tc in range(1, int(input())+1):
+	N = int(input())
+	Data = [list(map(int, input().split())) for _ in range(N)]
+	visited = [0]*N
+	Min = -1
+	visited[0] = 1
+	combi(1, 1)
+	print('#%d %d'%(tc, Min))
+
+
+
+
+

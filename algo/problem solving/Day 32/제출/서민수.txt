@@ -1,0 +1,64 @@
+1. 격자판의 숫자 이어 붙이기
+import sys
+sys.stdin = open('격자판.txt','r')
+
+dy = [0, 0, -1, 1]
+dx = [1,-1, 0, 0]
+
+def IsSafe(y, x):
+	if 0<=y<4 and 0<=x<4: return True
+	else: return False
+
+def num(number):
+	n = 0
+	for i in range(7):
+		n += int(number[i])*10**(6-i)
+	return n
+
+def dfs(y, x):
+	global cnt
+	number.append(Data[y][x])
+
+	if len(number) ==  7:
+		n = num(number)
+		if n not in res:
+			res.append(n)
+		return
+	for dir in range(4):
+		ny = y + dy[dir]
+		nx = x + dx[dir]
+		if IsSafe(ny, nx):
+			dfs(ny, nx)
+			number.pop()
+
+for tc in range(1, int(input())+1):
+	Data = [list(map(str,input().split())) for _ in range(4)]
+	#print(Data)
+	cnt = 0
+	res = []
+	for y in range(4):
+		for x in range(4):
+			number = []
+			dfs(y, x)
+	print('#%d %d'%(tc, len(res)))
+
+2. 올림픽
+for tc in range(1, int(input())+1):
+	N, M = map(int, input().split())
+	A = list(map(int, input().split()))
+	B = list(map(int, input().split()))
+	C = [0]*N
+
+	for j in range(M):
+		for i in range(N):
+			if A[i] <= B[j]:
+				C[i] += 1
+				break
+
+	Max = -1
+	max_idx = -1
+	for k in range(N):
+		if C[k] > Max:
+			Max = C[k]
+			max_idx = k
+	print('#%d %d'%(tc, max_idx+1))

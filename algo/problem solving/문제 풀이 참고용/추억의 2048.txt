@@ -1,0 +1,72 @@
+import sys
+sys.stdin = open('input.txt', 'r')
+
+def GetSome(OnAir):
+    if len(OnAir) < 2 : return OnAir
+    thejamsi = []
+    while len(OnAir):
+        if len(OnAir) >= 2 and OnAir[0]==OnAir[1] :
+            thejamsi.append(OnAir.pop(0) + OnAir.pop(0) )
+        else :
+            thejamsi.append(OnAir.pop(0))
+    return thejamsi
+
+def Update():
+   OnAir = []
+   if S == 'left':
+      for y in range(N):
+          for x in range(N):
+              if Data[y][x]!=0:
+                 OnAir.append(Data[y][x])
+              Data[y][x] =0
+
+          OnAir = GetSome(OnAir)
+
+          for x in range(len(OnAir)):
+            Data[y][x] = OnAir.pop(0)
+   if S == 'up':
+       for x in range(N):
+          for y in range(N):
+               if Data[y][x]!=0:
+                   OnAir.append(Data[y][x])
+               Data[y][x] = 0
+
+          OnAir = GetSome(OnAir)
+          for y in range(len(OnAir)):
+               Data[y][x]= OnAir.pop(0)
+   if S == 'down' :
+        for x in range(N):
+            for y in range(N-1, -1, -1):
+                if Data[y][x] != 0:
+                    OnAir.append(Data[y][x])
+                Data[y][x] = 0
+
+            OnAir = GetSome(OnAir)
+            for y in range(len(OnAir)):
+                Data[N - y - 1][x] = OnAir.pop(0)
+
+   if S == 'right':
+        for y in range(N):
+            for x in range(N-1, -1, -1):
+                if Data[y][x] != 0:
+                    OnAir.append(Data[y][x])
+                Data[y][x] = 0
+
+            OnAir = GetSome(OnAir)
+
+            for x in range(len(OnAir)):
+                Data[y][N-x-1] = OnAir.pop(0)
+
+
+
+TC= int(input())
+for tc in range(1, TC+1):
+   N, S = input().split()
+   N = int(N)
+
+   Data = [list(map(int, input().split())) for _ in range(N)]
+   Update()
+   print('#%d' %tc)
+   for now in range(N):
+       for x in Data[now] : print(x, end=' ')
+       print()

@@ -1,0 +1,183 @@
+1. 공통조상
+import sys
+sys.stdin = open('공통조상.txt', 'r')
+
+def find(x):
+	if P[x] == x:
+		return x
+	else:
+		trace.append(P[x])
+		return find(P[x])
+
+def find_ancestor(x):
+	global ancestor
+	if x == ancestor:
+		return x
+	elif P[x] == x:
+		return x
+	else:
+		return find_ancestor(P[x])
+
+def union(x, y):
+	P[find_ancestor(y)] = find_ancestor()
+
+def get_ancestor():
+	for i in range(len(v1_ancestor)):
+		for j in range(len(v2_ancestor)):
+			if v1_ancestor[i] == v2_ancestor[j]:
+				return v1_ancestor[i]
+
+for tc in range(1, int(input())+1):
+	V, E, v1, v2 = map(int, input().split())
+	Data = list(map(int, input().split()))
+	edge = []
+	P = [x for x in range(max(Data)+1)]
+	C = []
+	for i in range(len(Data)//2):
+		parent, child = Data[i*2], Data[(i*2)+1]
+		C.append(child)
+		P[child] = parent
+
+	trace = []
+	find(v1)
+	v1_ancestor = trace[:]
+	trace = []
+	find(v2)
+	v2_ancestor = trace[:]
+	ancestor = get_ancestor()
+	if ancestor not in C:
+		C.append(ancestor)
+	res = 0
+	for i in C:
+		if ancestor == find_ancestor(i):
+			res += 1
+	print('#%d %d %d' %(tc, ancestor, res))
+
+
+2. 숫자만들기
+def calc(_plus, _minus, _mul, _div, num, idx):
+	global Max, Min
+	if _plus == _minus == _mul == _div == 0:
+		if num > Max: Max = num
+		if num < Min: Min = num
+		return
+
+	if _plus > 0:
+		calc(_plus-1, _minus, _mul, _div, num+number[idx], idx+1)
+	if _minus > 0:
+		calc(_plus, _minus - 1, _mul, _div, num - number[idx], idx+1)
+	if _mul > 0 :
+		calc(_plus, _minus , _mul - 1, _div, num * number[idx], idx+1)
+	if _div > 0:
+		calc(_plus, _minus, _mul, _div - 1, int(num / number[idx]), idx+1)
+
+for tc in range(1, int(input())+1):
+	N = int(input())
+	plus, minus, mul, div = map(int, input().split())
+	number = list(map(int, input().split()))
+	Max = -100000001
+	Min = 100000001
+	calc(plus, minus, mul, div, number[0], 1)
+	print('#%d %d'%(tc, Max-Min))
+
+3. 추억의2048게임
+import sys
+sys.stdin = open('추억의2048.txt')
+
+dy = [-1, 0, 1, 0] # up, right, down, left
+dx = [0, -1, 0, 1]
+
+def Turn():
+	temp = [[0]*N for _ in range(N)]
+	for y in range(N):
+		for x in range(N):
+			temp[x][N-y-1] = Data[y][x]
+	for i in range(N):
+		Data[i] = temp[i][:]
+
+def GetSome(dir):
+	for i in range(dir):
+		Turn()
+
+	for y in range(1,N):
+		for x in range(N):
+			if Data[y][x] == 0: continue
+			ny = y - 1
+			nx = x
+			now_y = y; now_x = x
+			while 0<=ny<N and 0<=nx<N:
+				if Data[ny][nx] == Data[now_y][now_x] and not visited[ny][nx]:
+					Data[ny][nx] *= 2
+					visited[ny][nx] = 1
+					Data[now_y][now_x] = 0
+					break
+				elif Data[ny][nx] == 0:
+					Data[ny][nx] = Data[now_y][now_x]
+					Data[now_y][now_x] = 0
+				else:
+					break
+				now_y = ny; now_x = nx
+				ny = now_y - 1
+				nx = now_x
+
+for tc in range(1, int(input())+1):
+	N, d = input().split()
+	N = int(N)
+	
+	Data = [list(map(int, input().split())) for _ in range(N)]
+	visited = [[0]*N for _ in range(N)]
+	if d == 'up':
+		dir = 0
+	elif d == 'left':
+		dir = 1
+	elif d == 'down':
+		dir = 2
+	else: dir = 3
+	GetSome(dir)
+	for i in range((4-dir)%4):
+		Turn()
+	print('#%d' %(tc))
+	for y in range(N):
+		for x in range(N):
+			print(Data[y][x], end=" ")
+		print()
+
+4. 최대상금
+def ToNum(data):
+	Num = 0
+	for i in range(L):
+		Num += data[i]*10**(L-i-1)
+	return Num
+
+def GetSome(data, c):
+	global Max
+	for j in range(L-1):
+		for k in range(j+1, L):
+			temp = data[:]
+			temp[j], temp[k] = temp[k], temp[j]
+			dec_num = ToNum(temp)
+			if visited[dec_num][c]:
+				continue
+			else:
+				visited[dec_num][c] = 1
+			a = temp[:]
+			if c < cnt:
+				GetSome(temp, c+1)
+				temp[:] = a[:]
+			else:
+				if dec_num >Max: Max = dec_num
+
+visited = [[0]*(11) for _ in range(1000000)]
+
+for tc in range(1, int(input())+1):
+	for i in range(1000000):
+		for j in range(11):
+			visited[i][j] = 0
+	num, cnt = map(str, input().split())
+	cnt = int(cnt)
+	number = [int(x) for x in num]
+
+	L = len(number)
+	Max = -1
+	GetSome(number, 1)
+	print('#%d %d'%(tc, Max))

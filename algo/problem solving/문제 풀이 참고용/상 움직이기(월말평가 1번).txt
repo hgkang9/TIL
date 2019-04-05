@@ -1,0 +1,32 @@
+import sys
+sys.stdin = open('input.txt', 'r')
+
+
+def GetSome(k, y, x):
+    global ans
+    if k > ans:         return
+    if x == XX and y == YY and ans > k:
+        ans = k
+        return
+    for i in range(8):
+        newY = y + dy[i]
+        newX = x + dx[i]
+        if 0 <= newY < N and 0 <= newX < N and not visited[newY][newX]:
+            visited[y][x] = 1
+            GetSome(k + 1, newY, newX)
+            visited[y][x] = 0
+
+TC = int(input())
+for tc in range(1, TC + 1):
+    N = int(input())
+    
+    X, Y, XX, YY = list(map(int, input().split()))
+    visited = [[0] * N for i in range(N)]
+
+    dx = [2, 3, 3, 2, -2, -3, -3, -2]
+    dy = [3, 2, -2, -3, -3, -2, 2, 3]
+
+    ans = 987654321
+    GetSome(0, Y, X)
+
+    print('#%d' % tc, ans)

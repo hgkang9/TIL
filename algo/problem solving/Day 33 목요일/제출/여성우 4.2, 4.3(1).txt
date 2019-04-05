@@ -1,0 +1,149 @@
+1. 격자판 숫자
+for T in range(int(input())):
+    board = [list(map(int, input().split())) for _ in range(4)]
+    queuelist = []
+    dirY = [-1, 1, 0, 0]
+    dirX = [0, 0, -1, 1]
+    dp = []
+    for i in range(4):
+        for j in range(4):
+            queuelist.append((i, j, 0, board[i][j] * 10 ** 6))
+    cnt = 0
+    while queuelist:
+        for i in range(len(queuelist)):
+            y, x, idx, now = queuelist.pop(0)
+            idx += 1
+            for j in range(4):
+                ny = y + dirY[j]
+                nx = x + dirX[j]
+                if 0 <= ny < 4 and 0 <= nx < 4:
+                    now += board[ny][nx] * 10 ** (6 - idx)
+                    if idx == 6:
+                        if now not in dp:
+                            dp.append(now)
+                            cnt += 1
+                    elif idx < 6:
+                        queuelist.append([ny, nx, idx, now])
+                    now -= board[ny][nx] * 10 ** (6 - idx)
+    print('#{} {}'.format(T+1, cnt))
+
+2. 양팔저울
+import collections
+
+
+def dfs(idx, dp):
+    global visited, cnt
+    if idx == N:
+        cnt += len(dp)
+        return
+    for i in range(N):
+        if idx == 0:
+            visited[i] = 1
+            temp = [W[i]]
+            dfs(idx+1, temp)
+            visited[i] = 0
+        else:
+            if visited[i] == 0:
+                visited[i] = 1
+                queuelist = collections.deque([])
+                for j in dp:
+                    queuelist.append(j)
+                for now in range(len(queuelist)):
+                    j = queuelist.popleft()
+                    if j >= W[i]:
+                        queuelist.append(j-W[i])
+                        queuelist.append(j+W[i])
+                    else:
+                        queuelist.append(j+W[i])
+                dfs(idx+1, queuelist)
+                visited[i] = 0
+
+
+for T in range(int(input())):
+    N = int(input())
+    W = list(map(int, input().split()))
+    visited = [0] * N
+    cnt = 0
+    dfs(0, [])
+    print('#{} {}'.format(T+1, cnt))
+
+3. 올림픽 종목
+for T in range(int(input())):
+    N, M = map(int, input().split())
+    A = list(map(int, input().split()))
+    B = list(map(int, input().split()))
+    dp = [0] * N
+    maxtag = 0
+    maxnum = 0
+    for i in range(M):
+        for j in range(N):
+            if A[j] <= B[i]:
+                dp[j] += 1
+                if dp[j] > maxnum:
+                    maxnum = dp[j]
+                    maxtag = j
+                break
+    print('#{} {}'.format(T+1, maxtag+1))
+
+4. 최대 상금
+def dfs(idx):
+    global subset, this, visited, dp, thisdp
+    if idx == n:
+        nowsum = 0
+        for i in range(n):
+            nowsum += this[i] * 10 ** (n - 1 - i)
+        subset.append([nowsum, len(subset)])
+        dp.append(thisdp[:])
+        return
+    for i in range(n):
+        if visited[i] == 0:
+            visited[i] = 1
+            this.append(nums[i])
+            thisdp.append(i)
+            dfs(idx+1)
+            this.pop()
+            thisdp.pop()
+            visited[i] = 0
+
+
+for T in range(int(input())):
+    N, M = input().split()
+    M = int(M)
+    nums = [int(x) for x in N]
+    n = len(nums)
+    nnums = [0] * 10
+    can = False
+    for i in nums:
+        nnums[i] += 1
+        if nnums[i] > 1:
+            can = True
+    visited = [0] * n
+    subset = []
+    this = []
+    dp = []
+    thisdp = []
+    dfs(0)
+    maxnum = 0
+    subset.sort(reverse=True)
+    for k in range(len(subset)):
+        num = subset[k][0]
+        t = subset[k][1]
+        check = [0] * n
+        cnt = 0
+        for i in range(n):
+            if check[i] == 0:
+                check[i] = 1
+                tag = i
+                while dp[t][tag] != i:
+                    tag = dp[t][tag]
+                    cnt += 1
+                    check[tag] = 1
+        if M - cnt >= 0:
+            if can:
+                maxnum = num
+                break
+            else:
+                if (M - cnt) % 2 == 0:
+                    maxnum = num
+                    break
+    print('#{} {}'.format(T+1, maxnum))

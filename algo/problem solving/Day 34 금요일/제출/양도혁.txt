@@ -1,0 +1,285 @@
+#1 공통조상
+for tc in range(int(input())):
+    vn,en,ax,ay = map(int,input().split())
+    data = list(map(int,input().split()))
+    tree = {1:[0,[]]}
+    for i in range(len(data)) :
+        if not i & 1 :
+            if tree.get(data[i]) :
+                tree[data[i]][1].append(data[i+1])
+            else :
+                tree[data[i]] = [0,[data[i+1]]]
+            if tree.get(data[i+1]) :
+                tree[data[i+1]][0] = data[i]
+            else :
+                tree[data[i+1]] = [data[i],[]]
+    rea = []
+    a = tree[ax][0]
+    while a > 0 :
+        rea.append(a)
+        a = tree[a][0]
+    reb = []
+    b = tree[ay][0]
+    while b > 0:
+        reb.append(b)
+        b = tree[b][0]
+    for res_idx in rea :
+        if res_idx in reb :
+            break
+    cnt = 0
+    Q = [res_idx]
+    while Q :
+        cnt += 1
+        item = Q.pop(0)
+        for i in tree[item][1] :
+            Q.append(i)
+    print("#%d %d %d"%(tc+1,res_idx,cnt))
+
+
+#2 계산기
+def makehash(pos,item) :
+    # print(item)
+    global res
+    if item == X :
+        res = pos
+    if item > X :
+        return
+    if pos > res :
+        return
+    if item > 0 :
+        if X % item == 0 :
+            c[item] = pos
+    for i in range(len(enable)) :
+        makehash(pos + 1, item * 10 + enable[i])
+def dfs(pos,item,k) :
+    # print(pos, item)
+    global res
+    if pos >= res :
+        return
+    if item > X :
+        return
+    if item == X :
+        if res > pos :
+            res = pos
+        return
+    for k1,v1 in c.items():
+        if k1 != 1 :
+            dfs(pos+v1+1,item*k1,k1)
+
+
+for tc in range(int(input())) :
+    data = list(map(int,input().split()))
+    enable = []
+    res = 987654321
+    arr_x = []
+    c = {}
+    for i in range(10):
+        if data[i] :
+            enable.append(i)
+    X = int(input())
+    for i in range(len(enable)) :
+        if enable[i] :
+            makehash(1,enable[i])
+
+    for k,v in c.items():
+        # print(k)
+        dfs(v,k,k)
+    res = -1 if res == 987654321 else res + 1
+    print("#%d %d"%(tc+1,res))
+
+#3 시험점수
+for tc in range(int(input())) :
+    n = int(input())
+    data = list(map(int,input().split()))
+    res = []
+    t = sum(data)+1
+    c = [0]*(sum(data)+1)
+    c[0] = 1
+    for j in range(n) :
+        for i in range(t-1,-1,-1) :
+            if c[i] :
+                c[data[j]+i] = 1
+    print("#%d %d"%(tc+1,sum(c)))
+
+#4 숫자만들기
+def dfs(time, result, pre_operand):
+    global num
+    global my_max
+    global my_min
+    global pos
+
+    if time >= len(num):
+        my_max = max(my_max, result)
+        my_min = min(my_min, result)
+        return
+    pos += 1
+    my_operand = list(pre_operand)
+    # print(pos,my_operand,time,result)
+    for i in range(len(my_operand)):
+        if my_operand[i] > 0:
+            my_operand[i] -= 1
+            if i == 0:
+                result1 = result + num[time]
+            elif i == 1:
+                # my_operand[i] -= 1
+                result1 = result - num[time]
+            elif i == 2:
+                # my_operand[i] -= 1
+                result1 = result * num[time]
+            elif i == 3:
+                # my_operand[i] -= 1
+                result1 = int(result / num[time])
+            dfs(time + 1, result1, my_operand)
+            my_operand[i] += 1
+
+
+for a in range(int(input())):  # 총 테스트 케이스의 개수 T
+    n = int(input())
+    pre_operand = list(map(int, input().split()))
+    num = list(map(int, input().split()))
+    my_max = -9999
+    my_min = 9999
+    # result = 0
+    pos = 0
+    dfs(1, num[0], pre_operand)
+    print('#{a+1} {my_max-my_min}')
+
+#5 무인도
+def dfs(pos,dir,x,y,visit) :
+    key = visit*1000+pos*10+dir
+    k = c.get(key)
+    if k :
+        return k
+    k = 0
+
+    for i in range(1,n+1):
+        if visit & (1<<(i-1)) : continue
+        s = visit | (1<<(i-1))
+        for j in range(3) :
+            x1,y1,z1 = data[i][j]
+            if x >= x1 and y >= y1 :
+                k = max(k,z1+dfs(i,j,x1,y1,s))
+    c[key] = k
+    return k
+
+for tc in range(int(input())) :
+    n = int(input())
+    data = [[] for i in range(n+1)]
+    data[0].append([1000000,1000000,0])
+    data[0].append([1000000, 1000000, 0])
+    data[0].append([1000000, 1000000, 0])
+    c = {}
+    for i in range(n) :
+        k = list(map(int,input().split()))
+        for p in range(3):
+            for j in range(p + 1, 3):
+                if k[p] > k[j]:
+                    k[p], k[j] = k[j], k[p]
+        data[i+1].append([k[0],k[1],k[2]])
+        data[i+1].append([k[0], k[2], k[1]])
+        data[i+1].append([k[1], k[2], k[0]])
+    # print(data)
+    res = -1
+    print("#%d %d"%(tc+1,dfs(0,0,1000000,1000000,0)))
+    # for k,v in c.items() :
+    #     print(k,v)
+
+
+#6 추억2048
+def go() :
+    if s == "up" or s == "down" :
+        if s== "up" :
+            for i in v:
+                temp = []
+                for j in range(n):
+                    item = i.pop(0)
+                    if item > 0 :
+                        if len(temp) == 0:
+                            temp.append(item)
+                            flag = False
+                        else :
+                            if temp[len(temp)-1] == item and not flag:
+                                temp[len(temp)-1] *= 2
+                                flag = True
+                            else :
+                                temp.append(item)
+                                flag = False
+                for j in range(n-len(temp)) :
+                    temp.append(0)
+                i.extend(temp)
+        if s == "down" :
+            for i in v:
+                temp = []
+                for j in range(n):
+                    item = i.pop()
+                    if item > 0 :
+                        if len(temp) == 0:
+                            temp.insert(0,item)
+                            flag = False
+                        else :
+                            if temp[0] == item and not flag:
+                                temp[0] *= 2
+                                flag = True
+                            else :
+                                temp.insert(0,item)
+                                flag = False
+                for j in range(n-len(temp)) :
+                    temp.insert(0,0)
+                i.extend(temp)
+        for i in range(n) :
+            for j in range(n) :
+                print(v[j][i],end=' ')
+            print()
+    elif s == 'right' or s =='left' :
+        if s== "left" :
+            for i in h:
+                temp = []
+                for j in range(n):
+                    item = i.pop(0)
+                    if item > 0 :
+                        if len(temp) == 0:
+                            temp.append(item)
+                            flag = False
+                        else :
+                            if temp[len(temp)-1] == item and not flag:
+                                temp[len(temp)-1] *= 2
+                                flag = True
+                            else :
+                                temp.append(item)
+                                flag = False
+                for j in range(n-len(temp)) :
+                    temp.append(0)
+                i.extend(temp)
+        if s == "right" :
+            for i in h:
+                temp = []
+                for j in range(n):
+                    item = i.pop()
+                    if item > 0 :
+                        if len(temp) == 0:
+                            temp.insert(0,item)
+                            flag = False
+                        else :
+                            if temp[0] == item and not flag:
+                                temp[0] *= 2
+                                flag = True
+                            else :
+                                temp.insert(0,item)
+                                flag = False
+                for j in range(n-len(temp)) :
+                    temp.insert(0,0)
+                i.extend(temp)
+        for i in range(n):
+            print(' '.join(list(map(str,h[i]))))
+
+for tc in range(int(input())) :
+    n,s = input().split()
+    n = int(n)
+    v = [[] for i in range(n)]
+    h = []
+    for i in range(n) :
+        h.append(list(map(int,input().split())))
+        for j in range(n):
+            v[j].append(h[i][j])
+    print('#%d'%(tc+1))
+    go()

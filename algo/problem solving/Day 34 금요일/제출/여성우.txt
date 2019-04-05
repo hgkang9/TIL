@@ -1,0 +1,171 @@
+1. 사랑의 카운슬러
+def dfs(idx, s, dx, dy):
+    global minv, visited, plus, minus
+    if minv == 0:
+        return
+    if idx == N:
+        thisv = dx ** 2 + dy ** 2
+        if minv > thisv or minv == -1:
+            minv = thisv
+        return
+    if plus < N // 2:
+        plus += 1
+        dfs(idx+1, s+1, dx+earthworm[s][0], dy+earthworm[s][1])
+        plus -= 1
+    if minus < N // 2:
+        minus += 1
+        dfs(idx + 1, s+1, dx-earthworm[s][0], dy-earthworm[s][1])
+        minus -= 1
+
+
+for T in range(int(input())):
+    N = int(input())
+    earthworm = [list(map(int, input().split())) for _ in range(N)]
+    visited = [0] * N
+    minv = -1
+    plus = 0
+    minus = 0
+    dfs(0, 0, 0, 0)
+    print('#{} {}'.format(T+1, minv))
+
+2. 정사각형 방
+def dfs(y, x):
+    global dp
+    for i in range(4):
+        ny = y + dirY[i]
+        nx = x + dirX[i]
+        if 0 <= ny < N and 0 <= nx < N:
+            if rooms[ny][nx] == rooms[y][x] + 1:
+                dp[ny][nx] = [dp[y][x][0] + 1, dp[y][x][1]]
+                dfs(ny, nx)
+
+
+for T in range(int(input())):
+    N = int(input())
+    rooms = [list(map(int, input().split())) for _ in range(N)]
+    dp = [[[0, 0] for _ in range(N)] for _ in range(N)]
+    dirY = [-1, 1, 0, 0]
+    dirX = [0, 0, -1, 1]
+    pos = [[0, 0] for i in range(N ** 2 + 1)]
+    for i in range(N):
+        for j in range(N):
+            pos[rooms[i][j]] = [i, j]
+    for i in range(1, N ** 2 + 1):
+        y, x = pos[i]
+        if dp[y][x][0] == 0:
+            dp[y][x] = [1, i]
+            dfs(y, x)
+    maxlen = 1
+    maxtag = 1
+    for i in range(1, N ** 2 + 1):
+        y, x = pos[i]
+        if dp[y][x][0] > maxlen:
+            maxlen = dp[y][x][0]
+            maxtag = dp[y][x][1]
+        elif dp[y][x][0] == maxlen:
+            if maxtag > dp[y][x][1]:
+                maxtag = dp[y][x][1]
+    print('#%d %d %d' % (T + 1, maxtag, maxlen))
+
+3. 가능한 시험점수
+for T in range(int(input())):
+    N = int(input())
+    score = list(map(int, input().split()))
+    dp = [0] * (sum(score) + 1)
+    dp[0] = 1
+    for i in range(N):
+        tag = []
+        for j in range(len(dp)):
+            if dp[j] == 1:
+                if dp[j+score[i]] == 0:
+                    tag.append(j+score[i])
+        for j in tag:
+            dp[j] = 1
+    print('#{} {}'.format(T+1, dp.count(1)))
+
+4. 지희의 고장난 계산기
+def dfs(idx, s, n):
+    global dp, visited, nums
+    if idx == len(primes):
+        return
+    for i in range(s+1, len(primes)):
+        n *= primes[i]
+        if dp[n] == 0:
+            t = n
+            flag = True
+            p = 0
+            while t != 0:
+                if stat[t%10] == 0:
+                    flag = False
+                    break
+                t //= 10
+                p += 1
+            if flag:
+                dp[n] = p
+                nums.append(n)
+            dfs(idx+1, i, n)
+        n //= primes[i]
+
+
+def rcomb(n, s):
+    global dp
+    if n > X:
+        return
+    for i in range(s, len(nums)):
+        _dp = dp[n] + dp[nums[i]] + 1
+        n *= nums[i]
+        if n > X:
+            n //= nums[i]
+            continue
+        if dp[n] == 0:
+            dp[n] = _dp
+        if dp[n] > _dp:
+            dp[n] = _dp
+        rcomb(n, i)
+        n //= nums[i]
+
+
+for T in range(int(input())):
+    stat = list(map(int, input().split()))
+    _X = input()
+    X = int(_X)
+    xs = [int(_) for _ in _X]
+    answer = -1
+    can = True
+    for i in xs:
+        if not stat[i]:
+            can = False
+            break
+    if can:
+        answer = len(xs) + 1
+    else:
+        primes = []
+        while X != 1:
+            for i in range(2, X+1):
+                if X % i == 0:
+                    primes.append(i)
+                    X //= i
+                    break
+        X = int(_X)
+        visited = [0] * (X + 1)
+        dp = [0] * (X + 1)
+        nums = []
+        dfs(0, -1, 1)
+        nums.sort(reverse=True)
+        for i in range(len(nums)):
+            rcomb(nums[i], i)
+        sq = 1
+        trynum = -1
+        while sq ** 2 < X:
+            sq += 1
+        for i in range(1, sq):
+            if dp[i]:
+                pair = X // i
+                if dp[pair]:
+                    thistry = dp[i] + dp[pair] + 2
+                    if trynum < 0:
+                        trynum = thistry
+                    elif thistry < trynum:
+                        trynum = thistry
+        answer = trynum
+    print('#{} {}'.format(T+1, answer))

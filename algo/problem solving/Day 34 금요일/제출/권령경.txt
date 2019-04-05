@@ -1,0 +1,132 @@
+# 2048
+
+import sys
+sys.stdin =open("2048.txt", "r")
+
+T = int(input())
+
+def getsum(s):
+    result = []
+    if len(s) < 2:
+        return s
+    while s:
+        if len(s) >= 2 and s[0] == s[1]:
+            result.append(s.pop(0)+s.pop(0))
+        else:
+            result.append(s.pop(0))
+    return result
+
+def move():
+    if S =='up':
+        for x1 in range(N):
+            sample = []
+            for y1 in range(N):
+                if pan[y1][x1]:
+                    sample.append(pan[y1][x1])
+                    pan[y1][x1] = 0
+            sample = getsum(sample)
+
+            for y_1 in range(N):
+                if sample:
+                    s_1 = 0
+                    pan[y_1][x1] = sample.pop(s_1)
+    if S == 'down':
+        for x2 in range(N):
+            sample = []
+            for y2 in range(N-1, -1, -1):
+                if pan[y2][x2]:
+                    sample.append(pan[y2][x2])
+                    pan[y2][x2] = 0
+            sample = getsum(sample)
+
+            for y_2 in range(N-1, -1, -1):
+                if sample:
+                    s_2 = 0
+                    pan[y_2][x2] = sample.pop(s_2)
+    if S == 'right':
+        for y3 in range(N):
+            sample = []
+            for x3 in range(N-1, -1, -1):
+                if pan[y3][x3]:
+                    sample.append(pan[y3][x3])
+                    pan[y3][x3] = 0
+            sample = getsum(sample)
+
+            for x_3 in range(N-1, -1, -1):
+                if sample:
+                    s_3 = 0
+                    pan[y3][x_3] = sample.pop(s_3)
+
+    if S == 'left':
+        for y4 in range(N):
+            sample = []
+            for x4 in range(N):
+                if pan[y4][x4]:
+                    sample.append(pan[y4][x4])
+                    pan[y4][x4] = 0
+            sample = getsum(sample)
+
+            for x_4 in range(N):
+                if sample:
+                    s_4 = 0
+                    pan[y4][x_4] = sample.pop(s_4)
+
+
+for test_case in range(1, T+1):
+    N, S = input().split()
+    N = int(N)
+    pan = [[0]*N for i in range(N)]
+    for n in range(N):
+        pan[n] = list(map(int, input().split()))
+
+    move()
+
+    print("#%d" % test_case)
+    for a in range(N):
+        for b in range(N):
+            print(pan[a][b],end=' ')
+        print()
+
+# 최대 상금
+
+import sys
+sys.stdin = open("max_prize.txt", "r")
+
+T = int(input())
+
+
+def change(n):
+    global mx
+    num = int(''.join(n_list))
+    if visited[num][n]:
+        return
+    visited[num][n] = 1
+    if n == 0:
+        if mx < num:
+            mx = num
+    if n < 0:
+        return
+    if n != 0:
+
+        for a in range(len(n_list)):
+            for b in range(a + 1, len(n_list)):
+                    n_list[a], n_list[b] = n_list[b], n_list[a]
+                    change(n - 1)
+                    n_list[a], n_list[b] = n_list[b], n_list[a]
+
+
+visited = [[0] * 99 for q in range(999999)]
+
+for test_case in range(1, T+1):
+    mx = -1
+    number, cnt = map(int, input().split())
+    n_list = []
+    while number != 0:
+        n_list.append(str(number%10))
+        number //= 10
+
+    n_list.reverse()
+
+    change(cnt)
+
+    print("#%d %d" %(test_case, mx))

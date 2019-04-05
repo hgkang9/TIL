@@ -1,0 +1,48 @@
+import sys
+sys.stdin = open("input.txt", "r")
+
+
+def IsSafe(y, x):
+    if 0 <= y < N and 0 <= x < N and board[y][x] : return True
+    else : return False
+
+def updateboard(y, x, dol):
+    global board
+    board[y][x] = dol
+    for i in range(8):
+        newX, newY = x + dx[i], y + dy[i]
+        while IsSafe(newY, newX) and board[newY][newX] != dol :
+             newX, newY = newX + dx[i], newY + dy[i]
+
+        if IsSafe(newY, newX)  and board[newY][newX] == dol:
+            changeX, changeY = x + dx[i], y + dy[i]
+            while IsSafe(changeY, changeX) and board[changeY][changeX] != dol:
+                board[changeY][changeX] = dol
+                changeX, changeY = changeX + dx[i], changeY + dy[i]
+
+dx = [ 0,  1, 1, 1, 0, -1, -1, -1]
+dy = [-1, -1, 0, 1, 1,  1,  0, -1]
+
+TC = int(input())
+for tc in range(1, TC + 1):
+    N, roundcnt = list(map(int, input().split()))
+
+    #board = makeboard(N)
+
+    board = [[0] * N for _ in range(N)]
+    half = N // 2
+    board[half - 1][half - 1] = 2
+    board[half][half] = 2
+    board[half - 1][half] = 1
+    board[half][half - 1] = 1
+    for i in range(roundcnt):
+        y, x, dol = list(map(int, input().split()))
+        updateboard(y - 1,x - 1, dol)
+
+    cnt1 = cnt2 = 0
+    for y in range(N):
+        for x in range(N):
+            if board[y][x] == 1 : cnt1 += 1
+            if board[y][x] == 2 : cnt2 += 1
+
+    print("#%d"%tc, cnt1, cnt2)

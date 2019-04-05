@@ -1,0 +1,127 @@
+# 월말평가 3번
+
+import sys
+sys.stdin = open("test3.txt", "r")
+
+T = int(input())
+
+
+def cal(level, d_sum):
+    global min_d
+    if min_d > d_sum and eaten.count(0) == N:
+        min_d = d_sum
+        return
+    if min_d < d_sum:
+        return
+    if level >= N:
+        return
+    for this in range(N):
+        if eaten[this]:
+            eaten[this] = 0      
+            cal(level+1, d_sum + result_list[level][this])
+            eaten[this] = 1
+            
+
+for test_case in range(1, T+1):
+    N = int(input())
+    cookies = list(map(int, input().split()))
+    robots = list(map(int, input(). split()))
+    c_list = []
+    r_list = []
+    eaten = [1] * N
+    min_d = 999999
+    sum_list = []
+    result_list = [[0]*N for j in range(N)]
+
+    for n in range(0, 2 * N, 2):
+        c_list.append((cookies[n], cookies[n+1]))
+        r_list.append((robots[n], robots[n+1]))
+    for r in range(len(r_list)):
+        for c in range(len(c_list)):
+            sum_list.append(abs(c_list[c][0] - r_list[r][0]) + abs(c_list[c][1] - r_list[r][1]))
+
+    i = 0
+    for a in range(N):
+        for a1 in range(N):
+            result_list[a][a1] = sum_list[i]
+            i += 1
+
+    cal(0, 0)
+
+    print("#%d %d" %(test_case, min_d))
+
+# 컨테이너 운반(X)
+
+import sys
+sys.stdin = open("container.txt", "r")
+
+T = int(input())
+
+
+for test_case in range(1, T+1):
+    N, M = map(int, input().split())
+    w_list = list(map(int, input().split()))
+    t_list = list(map(int, input().split()))
+    loaded_dif = [[-1]*N for i in range(M)]
+    lt = [0]*M
+
+
+    for m in range(M):
+        for n in range(N):
+            if w_list[n] <= t_list[m]:
+                loaded_dif[m][n] = t_list[m] - w_list[n]
+    for a in range(M):
+        done = False
+        min_dif = 0
+        for b in range(N):
+            if not done:
+                min_dif = loaded_dif[b][a]
+                lt[a] = w_list[b]
+                done = True
+            if done and loaded_dif[a][b] != -1:
+                if loaded_dif[a][b] < min_dif:
+                    min_dif = loaded_dif[a][b]
+                    lt[a] = w_list[b]
+
+    print("#%d %s" %(test_case, lt))
+
+# 노드의 거리(X)
+
+import sys
+sys.stdin = open("node.txt", "r")
+
+T = int(input())
+
+def bfs(start, goal):
+    global ans
+    global distance
+    que = []
+    que.append(start)
+    distance[start] = 0
+    while que:
+        here = que.pop(0)
+        for next in range(1, V+1):
+            if node_list[here][next] and distance[next] == -1:
+                distance[next] = distance[here] + 1
+                if next == goal:
+                    if distance[next] < ans:
+                        ans = distance[next]
+                que.append(next)
+
+for test_case in range(1, T+1):
+    V, E = map(int, input().split())
+    ans = 9999999999999
+    distance = [-1] * (V+1)
+    node_list = [[0]*(V+1) for i in range(V+1)]
+    for node in range(E):
+        from_node, to_node = map(int, input().split())
+        node_list[from_node][to_node] = 1
+        node_list[to_node][from_node] = 1
+    S, G = map(int, input().split())
+    bfs(S, G)
+    print("#%d" % test_case, end =' ')
+    if ans != 9999999999999:
+        print(ans)
+    else:
+        print("None")
+
