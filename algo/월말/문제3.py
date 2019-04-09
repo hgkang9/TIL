@@ -8,17 +8,19 @@ def calc(ry,rx,sy,sx):
     cs=abs(ry-sy)+abs(rx-sx)
     return cs
 
-def per(depth):
-    if depth==N:
-        #()
-        print(res)
+def go(rob,res):
+    global low
+    if rob==N:
+        if res<low:
+            low=res
         return
-    for i in range(N):
-        if not visited:
-            visited[i]=True
-            res[i]=data[depth]
-            per(depth+1)
-            visited[i]=False
+    if res>low:
+        return
+    for sna in range(N):
+        if not visited[sna]:
+            visited[sna]=True
+            go(rob+1, res+distance[rob][sna])
+            visited[sna]=False
 
 T=int(input())
 for tc in range(1,T+1):
@@ -26,9 +28,19 @@ for tc in range(1,T+1):
     snack=list(map(int,input().split()))
     robot=list(map(int,input().split()))
     cs=0
+    sn=[0]*N
+    ro=[0]*N
+    for i in range(N):
+        sn[i] = [snack[i*2], snack[i*2+1]]
+        ro[i] = [robot[i*2], robot[i*2+1]]
+
+    distance=[[0]*N for i in range(N)]
+    for r in range(N):
+        for s in range(N):
+            distance[r][s] = calc(ro[r][0], ro[r][1], sn[s][0],sn[s][1])
+
     visited=[0]*N
-    res=[0]*N
-    data=[0]*N
-    for i in range(1,N+1):
-        data[i-1]=i
-    per(0)
+    low=9999999999
+
+    go(0,0)
+    print('#%d %d' %(tc,low))

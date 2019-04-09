@@ -23,8 +23,8 @@ for tc in range(1,T+1):
     data=[list(map(int,input().split())) for _ in range(N)]
     res,ans,cs=0,0,0
     for y in range(1,N):
-        for x1 in range(1,M-2):
-            for x2 in range(2,M-1):
+        for x1 in range(1,M-1):
+            for x2 in range(x1+1,M):
                 sum1 = psum(0, y, 0, x1)
                 sum2 = psum(0, y, x1, x2)
                 sum3 = psum(0, y, x2, M)
