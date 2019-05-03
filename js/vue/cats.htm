@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>행가리</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        img {
+            width: 700px;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button v-on:click="getcatimage">야옹이</button>
+        <div>
+            <img v-bind:src="imageURL" alt="cat image"> <!--v-bind : 속성에 인스턴스 값 사용하기 위해-->
+        </div>
+    </div>
+
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                imageURL: '',
+            },
+            methods: {
+                getcatimage: function(){
+                    axios.get('https://api.thecatapi.com/v1/images/search')
+                        .then((response)=>{
+                            this.imageURL=response.data[0].url
+                        })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ message }} - {{ count }}
+        <p v-if="checked">이건 보임</p>
+        <li v-for="post in posts">
+            {{ post }}
+        </li>
+        <li v-for="info in student">
+            {{ info }}
+        </li>
+        <li v-for="info in Object.keys(student)">
+            key : {{ info }} - value : {{ student[info]}}
+        </li>
+    </div>
+
+    <script>
+        const app = new Vue({ // vue라는 인스턴스 생성
+            el: '#app', // vue 인스턴스가 어떤 element와 동기화할건지 정함 // 어디에
+            data: { // 무엇을
+                message: 'hello, vue!',
+                count: 0,
+                checked: true,
+                posts: ['첫 게시물', '두번째 게시물', '세번째!'],
+                student: {
+                    name: 'hg',
+                    univ: 'KNU'
+                }
+            }, // 개발자 도구 -> app.$data / app.message / app.$data.message
+            methods: { // 어떻게(el, data, methods 모두 vue의 속성들)
+                //this.message (this는 자기자신을 뜻함)
+                plus: function(){
+                    this.count++
+                } // plus라는 함수 정의 -> 개발자 도구에서 vue에서 app.plus()
+            }
+        })
+    </script>
+</body>
+</html>
