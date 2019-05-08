@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+    <script>
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+        var config = {
+            apiKey: "AIzaSyA-r3ygBywQzqqN-Fwi2_LQBpXK2C8Dz84",
+            authDomain: "vue-chat-5ae26.firebaseapp.com",
+            databaseURL: "https://vue-chat-5ae26.firebaseio.com",
+            projectId: "vue-chat-5ae26",
+        };
+        firebase.initializeApp(config);
+    </script>
+</head>
+<body>
+    <div id="app">
+        <div v-if="currentuser.uid">
+            <div>
+                <span>Hi, {{currentuser.name}}</span>
+                <button @click="logout">로그아웃</button>
+            </div>
+            <ul>
+                <li v-for="message in messages" :key="message['.key']">
+                    <b>{{message.username}} : </b>{{ message.content }}
+                </li>
+            </ul>
+            <input type="text" v-model.trim="newmessage" v-on:keyup.enter="addmessage">
+            <button v-on:click="addmessage">></button>
+        </div>
+        <div v-else>
+                <div id="firebaseui-auth-container"></div>
+        </div>
+    </div>
+
+    <script>
+        const database = firebase.database()
+        const auth = firebase.auth()
+        const ui = new firebaseui.auth.AuthUI(auth)
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                newmessage: '',
+                currentuser: {
+                    uid: '',
+                    email: '',
+                    name: '',
+                }
+            },
+            firebase:{
+                messages: database.ref('messages'),
+            },
+            methods: {
+                addmessage: function(){
+                    if (this.newmessage) {
+                        this.$firebaseRefs.messages.push({
+                            username: this.currentuser.name,
+                            content: this.newmessage,
+                        })
+                        this.newmessage = ''
+                    }
+                },
+                initui: function(){
+                    ui.start('#firebaseui-auth-container', {
+                        signInOptions: [
+                            firebase.auth.EmailAuthProvider.PROVIDER_ID
+                        ],
+                        callbacks: {
+                            signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+                                this.currentuser.uid=authResult.user.uid
+                                this.currentuser.email=authResult.user.email
+                                this.currentuser.name=authResult.user.displayName
+                            // User successfully signed in.
+                            // Return type determines whether we continue the redirect automatically
+                            // or whether we leave that to developer to handle.
+                                return false;
+                            },
+                        },
+                    });
+                },
+                logout: function(){
+                    // 1. currentuser 초기화
+                    this.currentuser={
+                        uid: '',
+                        email: '',
+                        name: '',
+                    }
+                    // 2. firebase auth한테 로그아웃 알리기
+                    auth.signOut().then(()=>{
+
+                    }).catch((error)=>{
+
+                    })
+                },
+            },
+            mounted: function(){
+                auth.onAuthStateChanged((user)=>{
+                    if (user) {
+                        this.currentuser.uid=user.uid
+                        this.currentuser.email=user.email
+                        this.currentuser.name=user.displayName
+                    } else {
+                        this.initui()
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>

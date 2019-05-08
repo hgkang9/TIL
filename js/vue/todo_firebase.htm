@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+    <script>
+    // Initialize Firebase
+    // TODO: Replace with your project's customized code snippet
+    var config = {
+        apiKey: "AIzaSyADprO9m9734--HWSypjR3p8JsWGXGuLjs",
+        authDomain: "vue-todo-26c5c.firebaseapp.com",
+        databaseURL: "https://vue-todo-26c5c.firebaseio.com",
+        projectId: "vue-todo-26c5c",
+    };
+    firebase.initializeApp(config);
+    </script>
+    <style>
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <select v-model="status">
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+        </select>
+        <ul>
+            <!-- <li v-for="todo in todos" v-if="!todo.completed" v-on:click="check(todo)"> -->
+            <li v-for="todo in todosbystatus" v-bind:key="todo.id">
+                <input type="checkbox" v-model="todo.completed" v-on:change="updatetodo(todo)">
+                <span v-bind:class="todo.completed ? 'completed':''">{{ todo.content }}</span>
+                <!--?왼쪽이 조건 :앞쪽은 true일 경우, 뒤쪽은 false일 경우-->
+                <!--<span v-bind:class="{complete: todo.completed}">{{ todo.content }}</span>도 가능 / {}안에서 ,로 구분해서 여러 조건 가능-->
+            </li>
+            <!-- <li v-else-if="true"></li> -->
+            <!-- <li v-else v-on:click="check(todo)">[완료!]</li> -->
+            <!-- v-on : 어떠한 행동이 발생했을 때 -->
+            <!-- <div v-bind:style="{color: 'red', fontSize: '30px'}"> / 'red' 대신에 newtodo 가능, newtodo 폼에 red, blue 등 입력 가능 
+                <span>Red Text, 30px</span>
+            </div> -->
+        </ul>
+        <div>
+            <input type="text" v-model="newtodo" v-on:keyup.enter="addtodo"> <!--어떤 키를 눌렀을때 실행할지 설정(enter(keycode=13) 등)-->
+            <button v-on:click='addtodo'>+</button>
+        </div>
+        <footer>
+            <button v-on:click='clearcompleted'>Clear Completed</button> <!--완료된 항목 없애기-->
+        </footer>
+    </div>
+
+    <script>
+        const database = firebase.database()
+        const app = new Vue({
+            el: '#app',
+            data: {
+                status: 'all',
+                newtodo: '',
+                // todos: [
+                //     {
+                //         id: 1,
+                //         content: '점심 메뉴 고민',
+                //         completed: true,
+                //     },
+                //     {
+                //         id: 2,
+                //         content: '사다리 타기',
+                //         completed: false,
+                //     },
+                //     {
+                //         id: 3,
+                //         content: '낮잠',
+                //         completed: false,
+                //     },
+                //     {
+                //         id: 4,
+                //         content: '야자',
+                //         completed: false,
+                //     },
+                // ]
+            },
+            firebase: {
+                todos: database.ref('messages'),
+            },
+            methods: { // 사용할 때 () 붙는다
+                check: function(todo){
+                    todo.completed = !todo.completed
+                },
+                addtodo: function(){
+                    this.$firebaseRefs.todos.push({
+                        id: Date.now(),
+                        content: this.newtodo,
+                        completed: false,
+                    })
+                    this.newtodo=''
+                },
+                clearcompleted: function(){
+                    const completedtodos=this.todos.filter((todo)=>{ // 핵심은 .filter
+                        return todo.completed
+                    }) // [{...}, {...}] 완료되지 않은 항목들로만 이루어진 새로운 배열 생성
+                    completedtodos.forEach((todo)=>{
+                        this.$firebaseRefs.todos.child(todo['.key']).remove()
+                    })
+                },
+                updatetodo: function(todo){
+                    const newtodo = { ...todo } // todo를 모두 쪼갬, spread operator
+                    // todo = {'content':'hi', completed:true}
+                    // {'content':'hi', completed:true} -> 복사하기 위해서 값만 그대로 가지고 옴                    
+                    delete newtodo['.key']
+                    this.$firebaseRefs.todos.child(todo['.key']).set(newtodo)
+                },
+            },
+            computed: { // 바로 사용 가능
+                todosbystatus: function(){
+                    if (this.status==='active'){
+                        return this.todos.filter((todo)=>{
+                            return !todo.completed
+                        }) 
+                    }
+
+                    if (this.status==='completed'){
+                        return this.todos.filter((todo)=>{
+                            return todo.completed
+                        })
+                    }
+
+                    return this.todos
+                },
+            }
+        })
+    </script>
+</body>
+</html>
